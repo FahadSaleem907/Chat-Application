@@ -26,6 +26,7 @@ class chatCell: UITableViewCell
     
     func commonInit()
     {
+        self.backgroundColor = UIColor.clear
         contentView.addSubview(bubbleView.dateLbl)
         
         contentView.addSubview(bubbleView)

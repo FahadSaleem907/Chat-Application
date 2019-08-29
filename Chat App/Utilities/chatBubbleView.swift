@@ -52,7 +52,7 @@ class ChatBubbleView :UIView
         
         NSLayoutConstraint.activate([
             chatLbl.topAnchor.constraint(equalTo: topAnchor, constant: 12.0),
-            chatLbl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0),
+            chatLbl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -22.0),
             chatLbl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12.0),
             chatLbl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12.0)
             ])

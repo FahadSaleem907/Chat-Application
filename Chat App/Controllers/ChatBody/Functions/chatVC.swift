@@ -1,14 +1,10 @@
 import UIKit
+import GrowingTextView
+import IQKeyboardManager
 
 class chatVC: UIViewController
 {
-    
-    fileprivate var filtered = [String]()
-    fileprivate var filterring = false
-    
     //MARK: - Constants
-    //let lbl = customChatTVCell()
-    
     let tmpArray = ["A short message.",
                     "A medium length message, longer than short.",
                     "A long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content.",
@@ -32,6 +28,7 @@ class chatVC: UIViewController
     
     @IBOutlet weak var chat: UITableView!
     @IBOutlet weak var typedMsgView: UIView!
+    @IBOutlet weak var msgTxt: GrowingTextView!
     
     @IBOutlet weak var camera: UIButton!
     @IBOutlet weak var mic: UIButton!
@@ -39,28 +36,50 @@ class chatVC: UIViewController
     
     
     //MARK: - Functions
+    func handleButton()
+    {
+        if msgTxt.text.isEmpty == true
+        {
+            mic.isHidden = false
+            gallery.setImage(UIImage(named: "gallery"), for: .normal)
+        }
+        else
+        {
+            mic.isHidden = true
+            gallery.setImage(UIImage(named: "send"), for: .normal)
+        }
+    }
     
     override func viewDidLayoutSubviews()
     {
         typedMsgView.layer.cornerRadius = 20
+        typedMsgView.layer.borderWidth = 2
+        typedMsgView.layer.borderColor = UIColor.gray.cgColor
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        //navigationController?.navigationBar.isHidden = true
+        
+        IQKeyboardManager.shared().isEnableAutoToolbar = true
+        IQKeyboardManager.shared().isEnabled = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        IQKeyboardManager.shared().isEnableAutoToolbar = false
+//        IQKeyboardManager.shared().isEnabled = false
         
         chat.delegate   = self
         chat.dataSource = self
         
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.font: UIFont(name: "Avenir", size: 30) ?? UIFont.systemFont(ofSize: 30)]
-        navigationController?.navigationBar.sizeToFit()
+        msgTxt.delegate = self
+
         
-        let search = UISearchController(searchResultsController: nil)
-        search.searchResultsUpdater = self
-        self.navigationItem.searchController = search
         
-        //checkTextView()
         // Do any additional setup after loading the view.
         
         chat.register(chatCell.self, forCellReuseIdentifier: "cell")
@@ -72,6 +91,10 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = chat.dequeueReusableCell(withIdentifier: "cell",for: indexPath) as! chatCell
         cell.setData(theData[indexPath.row])
+        cell.contentView.backgroundColor = UIColor.clear
+        chat.backgroundColor = UIColor.clear
+        cell.bubbleView.backgroundColor = UIColor.clear
+
         return cell
     }
     
@@ -88,33 +111,18 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         let cell = chat.cellForRow(at: indexPath) as! chatCell
-        
-//        cell.contentView.topAnchor.constraint(equalTo: cell.bubbleView.topAnchor, constant: 30)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath)
     {
         let cell = chat.cellForRow(at: indexPath) as! chatCell
-        
-//        cell.contentView.topAnchor.constraint(equalTo: cell.bubbleView.topAnchor, constant: 12)
     }
 }
 
-extension chatVC: UISearchResultsUpdating{
-    func updateSearchResults(for searchController: UISearchController)
+extension chatVC: UITextViewDelegate
+{
+    func textViewDidChange(_ textView: UITextView)
     {
-        if let text = searchController.searchBar.text, !text.isEmpty {
-            self.filtered = self.tmpArray.filter({ (i) -> Bool in
-                //return tmpArray.lowercased().contains(text.lowercased())
-                
-                return i.lowercased().contains(text.lowercased())
-            })
-            self.filterring = true
-        }
-        else {
-            self.filterring = false
-            self.filtered = [String]()
-        }
-        self.chat.reloadData()
+        handleButton()
     }
 }
