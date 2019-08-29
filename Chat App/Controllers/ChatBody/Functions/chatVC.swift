@@ -31,10 +31,19 @@ class chatVC: UIViewController
     // MARK: - Outlets
     
     @IBOutlet weak var chat: UITableView!
+    @IBOutlet weak var typedMsgView: UIView!
+    
+    @IBOutlet weak var camera: UIButton!
+    @IBOutlet weak var mic: UIButton!
+    @IBOutlet weak var gallery: UIButton!
     
     
     //MARK: - Functions
     
+    override func viewDidLayoutSubviews()
+    {
+        typedMsgView.layer.cornerRadius = 20
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,13 +53,13 @@ class chatVC: UIViewController
         chat.dataSource = self
         
         navigationController?.navigationBar.prefersLargeTitles = true
-        
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.font: UIFont(name: "Avenir", size: 30) ?? UIFont.systemFont(ofSize: 30)]
         navigationController?.navigationBar.sizeToFit()
         
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
         self.navigationItem.searchController = search
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.font: UIFont(name: "Avenir", size: 30) ?? UIFont.systemFont(ofSize: 30)]
+        
         //checkTextView()
         // Do any additional setup after loading the view.
         

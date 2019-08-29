@@ -51,7 +51,7 @@
                                             <color key="titleColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <segue destination="oxP-nu-9xx" kind="show" id="Zb8-9p-oLH"/>
+                                            <segue destination="kPX-oA-op3" kind="show" id="Zb8-9p-oLH"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NG3-Nv-2Vp">
@@ -60,6 +60,9 @@
                                         <state key="normal" title="S i g n U p   H e r e !">
                                             <color key="titleColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="KDN-c2-c4R" kind="show" id="kl5-T6-HZB"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -99,13 +102,25 @@
             </objects>
             <point key="canvasLocation" x="99" y="78"/>
         </scene>
+        <!--chatBodyTBC-->
+        <scene sceneID="IwN-j9-Vrq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ChatBody" referencedIdentifier="chatBodyTBC" id="KDN-c2-c4R" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Ruh-Zr-y9k"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Kf-Bs-8rf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="886" y="589"/>
+        </scene>
         <!--chatFunctions-->
         <scene sceneID="azd-OE-8Lm">
             <objects>
-                <viewControllerPlaceholder storyboardName="chatFunctions" id="oxP-nu-9xx" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="chatFunctions" id="oxP-nu-9xx" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="3Sq-2S-rgJ"/>
+                </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GAG-Ba-ar2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="99" y="497"/>
+            <point key="canvasLocation" x="759" y="765"/>
         </scene>
         <!--Sign UpVC-->
         <scene sceneID="4yk-iM-OWp">
@@ -193,7 +208,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5lO-in-ohq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="975" y="-228"/>
+            <point key="canvasLocation" x="2828.985507246377" y="-249.10714285714283"/>
         </scene>
         <!--Reset PassVC-->
         <scene sceneID="QcZ-08-Agt">
@@ -252,7 +267,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyp-cS-ScS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1009" y="419"/>
+            <point key="canvasLocation" x="1918.840579710145" y="418.52678571428572"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="thm-Kw-ybg">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kPX-oA-op3" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="9Ju-3T-ucd">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="oxP-nu-9xx" kind="relationship" relationship="rootViewController" id="vdf-am-Lgb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hPj-kF-hLw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="99" y="765"/>
         </scene>
     </scenes>
     <resources>
