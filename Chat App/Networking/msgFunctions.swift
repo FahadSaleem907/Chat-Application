@@ -7,3 +7,29 @@
 //
 
 import Foundation
+import UIKit
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseStorage
+
+public class messageFunctions
+{
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    lazy var db = Firestore.firestore()
+    
+    func createMessage()
+    {
+        
+    }
+    
+    func deleteMessage()
+    {
+        
+    }
+    
+    func getMessages()
+    {
+        
+    }
+}

@@ -20,17 +20,15 @@ class chatListVC: UIViewController
     {
         super.viewDidLoad()
         
-       navigationController?.navigationBar.isHidden = false
+        //navigationController?.navigationBar.isHidden = false
        
         navigationController?.navigationItem.title = "Chats"
         navigationController?.navigationBar.prefersLargeTitles = true
-       
-       
-        
-       navigationController?.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.blue, NSAttributedString.Key.font: UIFont(name: "Avenir", size: 30) ?? UIFont.systemFont(ofSize: 30)]
         navigationController?.navigationBar.sizeToFit()
+        
+//       navigationController?.navigationItem.largeTitleDisplayMode = .never
+//        navigationController?.navigationItem.largeTitleDisplayMode = .always
         
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
