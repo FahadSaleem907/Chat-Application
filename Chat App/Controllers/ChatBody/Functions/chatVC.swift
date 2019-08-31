@@ -78,8 +78,6 @@ class chatVC: UIViewController
         
         msgTxt.delegate = self
 
-        
-        
         // Do any additional setup after loading the view.
         
         chat.register(chatCell.self, forCellReuseIdentifier: "cell")
