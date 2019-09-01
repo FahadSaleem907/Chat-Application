@@ -116,7 +116,7 @@
         <!--New MessageVC-->
         <scene sceneID="ihN-cy-k3K">
             <objects>
-                <viewController id="AGN-6f-QyJ" customClass="newMessageVC" customModule="Chat_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="newMessageVC" id="AGN-6f-QyJ" customClass="newMessageVC" customModule="Chat_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OcP-gC-dYp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

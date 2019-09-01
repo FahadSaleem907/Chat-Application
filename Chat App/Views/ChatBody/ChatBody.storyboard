@@ -10,6 +10,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--newMessageVC-->
+        <scene sceneID="bOb-e8-Loo">
+            <objects>
+                <viewControllerPlaceholder storyboardName="chatFunctions" referencedIdentifier="newMessageVC" id="A0G-Of-Imp" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GJF-lh-ZSd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1923" y="1858"/>
+        </scene>
         <!--Calls-->
         <scene sceneID="cm2-gG-epu">
             <objects>
@@ -172,7 +180,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2WC-Ar-oQf"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Chats" id="wId-rB-jM5"/>
+                    <navigationItem key="navigationItem" title="Chats" id="wId-rB-jM5">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="OhB-Tt-vyO">
+                            <connections>
+                                <segue destination="A0G-Of-Imp" kind="show" id="2JA-sf-Y96"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="chatList" destination="7vK-mj-ZDx" id="Kcx-bk-MXo"/>
                     </connections>

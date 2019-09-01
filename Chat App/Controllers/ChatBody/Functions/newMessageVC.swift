@@ -13,6 +13,9 @@ class newMessageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.title = "Contacts"
+        self.navigationItem.largeTitleDisplayMode = .never
+        
         // Do any additional setup after loading the view.
     }
     
