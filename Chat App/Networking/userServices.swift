@@ -9,6 +9,7 @@ public class userFunctions
 {
     let delegate = UIApplication.shared.delegate as! AppDelegate
     lazy var db = Firestore.firestore()
+    var userList = [User?]()
     
 //    func login(email:String,password:String,completion:@escaping(User?,String)->Void)
 //    {
@@ -55,14 +56,16 @@ public class userFunctions
                 
                 print("User Created: \(users.uid! + users.name!)")
                 
-                let dataDic : [String:Any] = ["name":"\(users.name!)",
-                                              "email":"\(users.email!)",
-                                              "dateOfBirth":"\(users.dateOfBirth!)",
-                                              "gender":"\(users.gender!)",
-                                              "downloadURL":"\(users.downloadURL!)",
-                                              "isOnline":users.isOnline!,
-                                              "uid":"\(users.uid!)"
-                                             ]
+                let dataDic : [String:Any]  =   [
+                                                "name":"\(users.name!)",
+                                                "email":"\(users.email!)",
+                                                "dateOfBirth":"\(users.dateOfBirth!)",
+                                                "gender":"\(users.gender!)",
+                                                "downloadURL":"\(users.downloadURL!)",
+                                                "isOnline":users.isOnline!,
+                                                "uid":"\(users.uid!)",
+                                                "conversations":[]
+                                                ]
                 
                 ref = self.db.collection("Users").document("\(users.uid!)")
                 ref?.setData(dataDic, completion:
@@ -96,7 +99,25 @@ public class userFunctions
     
     func getUser()
     {
+        let fetchUsers = self.db.collection("Users")
         
+        fetchUsers.addSnapshotListener
+            {
+                (snapshot, error) in
+                if let error = error
+                {
+                    print(error.localizedDescription)
+                }
+                else
+                {
+                    for i in snapshot!.documents
+                    {
+                        self.userList = []
+                        
+                        let tmpUser = User(name: i.data()["name"] as! String, email: i.data()["email"] as! String, password: nil, dateOfBirth: i.data()["dateOfBirth"] as! String, gender: i.data()["gender"] as! String, downloadURL: i.data()["downloadURL"] as! String, isOnline: false, uid: i.data()["uid"] as! String)
+                    }
+                }
+            }
     }
     
     func uploadImg(uid:String?,image:UIImage?,completion:@escaping(_ url:String?,_ error:String?)->Void)
@@ -142,6 +163,13 @@ public class userFunctions
                 })
             }
         }
+    }
+    
+    func updateIMGUrl(users:User?,url:String?)
+    {
+        let ref = self.db.collection("Users").document("\(users!.uid!)")
+        
+        ref.setData(["downloadURL" : "\(url!)"], merge: true)
     }
     
 }

@@ -15,12 +15,12 @@ class chatVC: UIViewController
     
     let theData: [Message] = [
         
-        Message(uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A short message."),
-        Message(uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "A medium length message, longer than short."),
-        Message(uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content."),
-        Message(uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "Another short message."),
-        Message(uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "Another medium length message, longer than short."),
-        Message(uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "Another long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content.")
+        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A short message."),
+        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "A medium length message, longer than short."),
+        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content."),
+        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "Another short message."),
+        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "Another medium length message, longer than short."),
+        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "Another long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content.")
     ]
     
     

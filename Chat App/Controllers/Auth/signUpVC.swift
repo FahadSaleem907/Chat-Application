@@ -33,7 +33,7 @@ class signUpVC: UIViewController
     
     func createUser()
     {
-        let user1 = User(name: name.text, email: email.text, password: password.text,dateOfBirth: dateOfBirth.text, gender: gender.text, downloadURL: "aaa", isOnline: false, uid: nil)
+        let user1 = User(name: name.text, email: email.text, password: password.text,dateOfBirth: dateOfBirth.text, gender: gender.text, downloadURL: "\(self.downloadURL)", isOnline: false, uid: nil)
 
         userServices.createUser(user: user1)
         {
@@ -58,6 +58,7 @@ class signUpVC: UIViewController
                         }
 
                         self.downloadURL = url
+                        self.userServices.updateIMGUrl(users: newUser, url: self.downloadURL)
                     })
             }
         }

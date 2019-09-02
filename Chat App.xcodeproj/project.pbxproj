@@ -25,8 +25,10 @@
 		A3E3FDB12310929900BD23FB /* chatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB02310929900BD23FB /* chatVC.swift */; };
 		A3E3FDB32310938200BD23FB /* chatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB22310938200BD23FB /* chatBubbleView.swift */; };
 		A3E3FDB5231096BB00BD23FB /* chatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB4231096BB00BD23FB /* chatCell.swift */; };
-		E1B166C6231A832500E1DD97 /* userFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B166C5231A832500E1DD97 /* userFunctions.swift */; };
-		E1B166C8231A833200E1DD97 /* msgFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B166C7231A833200E1DD97 /* msgFunctions.swift */; };
+		E179CC2C231CD02100765E4D /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E179CC2B231CD02100765E4D /* Conversation.swift */; };
+		E179CC2E231CD10300765E4D /* conversationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E179CC2D231CD10300765E4D /* conversationServices.swift */; };
+		E1B166C6231A832500E1DD97 /* userServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B166C5231A832500E1DD97 /* userServices.swift */; };
+		E1B166C8231A833200E1DD97 /* msgServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B166C7231A833200E1DD97 /* msgServices.swift */; };
 		E1C99234231AE575004BD02F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1C99233231AE575004BD02F /* GoogleService-Info.plist */; };
 		E1DB0EC42317D9FF00992092 /* callListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DB0EC32317D9FF00992092 /* callListCell.swift */; };
 		E1DB0EC62317DA1000992092 /* chatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DB0EC52317DA1000992092 /* chatListCell.swift */; };
@@ -57,8 +59,10 @@
 		A3E3FDB4231096BB00BD23FB /* chatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatCell.swift; sourceTree = "<group>"; };
 		AD89F57B78F1AF9F1A9E13F6 /* Pods_Chat_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chat_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0D9A95B729E3274EB90382B /* Pods-Chat App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat App.debug.xcconfig"; path = "Target Support Files/Pods-Chat App/Pods-Chat App.debug.xcconfig"; sourceTree = "<group>"; };
-		E1B166C5231A832500E1DD97 /* userFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userFunctions.swift; sourceTree = "<group>"; };
-		E1B166C7231A833200E1DD97 /* msgFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = msgFunctions.swift; sourceTree = "<group>"; };
+		E179CC2B231CD02100765E4D /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		E179CC2D231CD10300765E4D /* conversationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = conversationServices.swift; sourceTree = "<group>"; };
+		E1B166C5231A832500E1DD97 /* userServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userServices.swift; sourceTree = "<group>"; };
+		E1B166C7231A833200E1DD97 /* msgServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = msgServices.swift; sourceTree = "<group>"; };
 		E1C99233231AE575004BD02F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E1DB0EC32317D9FF00992092 /* callListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = callListCell.swift; sourceTree = "<group>"; };
 		E1DB0EC52317DA1000992092 /* chatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatListCell.swift; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 			children = (
 				A30BF8F92315879600B04EEC /* Message.swift */,
 				A30BF8FB23158B3D00B04EEC /* User.swift */,
+				E179CC2B231CD02100765E4D /* Conversation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -227,8 +232,9 @@
 		E1B166C4231A830C00E1DD97 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				E1B166C5231A832500E1DD97 /* userFunctions.swift */,
-				E1B166C7231A833200E1DD97 /* msgFunctions.swift */,
+				E1B166C5231A832500E1DD97 /* userServices.swift */,
+				E1B166C7231A833200E1DD97 /* msgServices.swift */,
+				E179CC2D231CD10300765E4D /* conversationServices.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -352,7 +358,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3E3FDB12310929900BD23FB /* chatVC.swift in Sources */,
-				E1B166C8231A833200E1DD97 /* msgFunctions.swift in Sources */,
+				E1B166C8231A833200E1DD97 /* msgServices.swift in Sources */,
 				E1DB0EC82317E0EA00992092 /* newMessageVC.swift in Sources */,
 				A37AEADD231087E400699D29 /* signUpVC.swift in Sources */,
 				A3E3FDB32310938200BD23FB /* chatBubbleView.swift in Sources */,
@@ -361,13 +367,15 @@
 				E1DB0EC62317DA1000992092 /* chatListCell.swift in Sources */,
 				A3E3FDB5231096BB00BD23FB /* chatCell.swift in Sources */,
 				A30BF8FA2315879600B04EEC /* Message.swift in Sources */,
+				E179CC2E231CD10300765E4D /* conversationServices.swift in Sources */,
+				E179CC2C231CD02100765E4D /* Conversation.swift in Sources */,
 				A37AEAE3231089C000699D29 /* callListVC.swift in Sources */,
 				A30BF8FC23158B3D00B04EEC /* User.swift in Sources */,
 				E1DB0EC42317D9FF00992092 /* callListCell.swift in Sources */,
 				A37AEAC1231084E200699D29 /* AppDelegate.swift in Sources */,
 				A37AEAE1231089AD00699D29 /* chatListVC.swift in Sources */,
 				E1DB0ECA2317E14300992092 /* newMessageCell.swift in Sources */,
-				E1B166C6231A832500E1DD97 /* userFunctions.swift in Sources */,
+				E1B166C6231A832500E1DD97 /* userServices.swift in Sources */,
 				A37AEADF231087F900699D29 /* resetPassVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
