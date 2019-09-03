@@ -16,6 +16,9 @@ class conversationFunctions
 {
     let delegate = UIApplication.shared.delegate as! AppDelegate
     lazy var db = Firestore.firestore()
+    var conversationDic = [String?:Int]()
+    var selectedConvoID:String?
+    var selectedConvoVal:Int?
     
     func createConversation(conversation:Conversation?,completion:@escaping(Conversation?,Bool?,String?)->Void)
     {
@@ -28,7 +31,7 @@ class conversationFunctions
         let dataDic : [String:Any]  =   [
                                         "conversationID":"\(ref!.documentID)",
                                         "dateTimeCreated":"\(conversation1.dateCreated)",
-                                        "users":[conversation1.users]
+                                        "users":conversation1.users
                                         ]
         
         ref?.setData(dataDic, completion:
@@ -47,30 +50,56 @@ class conversationFunctions
             })
     }
     
-    func getConversationID(users:[String]?,completion:@escaping(String?,String?)->Void)
+    func getConversationID(users:[String]?,completion:@escaping(String?,String?,Int?,Int?)->Void)
     {
-        let user1Ref = self.db.collection("conversations").whereField("users", arrayContains: "\(users![0])")
-        let user2Ref = self.db.collection("conversations").whereField("users", arrayContains: "\(users![1])")
-        let user3Ref = self.db.collection("conversations").whereField("users", arrayContains: "\(users![3])")
-        
-        user1Ref.addSnapshotListener
-            {
-                (snapshot, error) in
-                
-                if let error = error
+        conversationDic = [:]
+
+        for i in users!
+        {
+            let userRef = self.db.collection("conversation").whereField("users", arrayContains: i)
+            
+            userRef.addSnapshotListener
                 {
-                    print("Error: \(error.localizedDescription)")
-                    completion(nil,error.localizedDescription)
-                }
-                else
-                {
-                    for i in snapshot!.documents
+                    (snapshot, error) in
+                    
+                    guard let snapshot = snapshot else
                     {
-                        
+                        print("Error: \(error?.localizedDescription)")
+                        completion(nil,error?.localizedDescription,nil,nil)
+                        return
                     }
-                }
+                    
+                    for j in snapshot.documents
+                    {
+                        let value = j.data()["conversationID"] as! String
+                        
+                        if self.conversationDic.keys.contains(value) == true
+                        {
+                            var tmpVal = self.conversationDic["\(value)"]
+                            tmpVal = tmpVal! + 1
+                            self.conversationDic.updateValue(tmpVal!, forKey: value)
+                        }
+                        else
+                        {
+                            self.conversationDic.updateValue(1, forKey: value)
+                        }
+                        
+                        let convoID = self.conversationDic.sorted(by:
+                        {
+                            (a, b) -> Bool in
+                            return a.value > b.value
+                        })
+                        
+                        self.selectedConvoID = convoID.first!.key
+                        self.selectedConvoVal = convoID.first!.value
+                    }
+                    completion(self.selectedConvoID!,nil,users!.count,self.selectedConvoVal!)
             }
+        }
+        
     }
+    
+    
     
     func deleteConversation(conversationID:String?)
     {

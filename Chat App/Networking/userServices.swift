@@ -142,7 +142,10 @@ public class userFunctions
                     {
                         let tmpUser = User(name: i.data()["name"] as! String, email: i.data()["email"] as! String, password: nil, dateOfBirth: i.data()["dateOfBirth"] as! String, gender: i.data()["gender"] as! String, downloadURL: i.data()["downloadURL"] as! String, isOnline: false, uid: i.data()["uid"] as! String)
                         
-                        self.userList.append(tmpUser)
+                        if tmpUser.email != self.delegate.currentUser?.email
+                        {
+                            self.userList.append(tmpUser)
+                        }
                     }
                     
                     completion(self.userList as! [User])

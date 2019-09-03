@@ -12,10 +12,11 @@ class newMessageVC: UIViewController
     {
         didSet
         {
+
             self.userList.sort
                 {
                     (a, b) -> Bool in
-                return a!.name! > b!.name!
+                return a!.name! < b!.name!
             }
             userListTable.reloadData()
         }

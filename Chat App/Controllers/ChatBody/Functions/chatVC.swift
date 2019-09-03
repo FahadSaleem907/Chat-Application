@@ -1,11 +1,13 @@
 import UIKit
 import GrowingTextView
 import IQKeyboardManager
+import FirebaseFirestore
 
 class chatVC: UIViewController
 {
     //MARK: - Constants
     let delegate = UIApplication.shared.delegate as! AppDelegate
+    let conversationService = conversationFunctions()
     
     let tmpArray = ["A short message.",
                     "A medium length message, longer than short.",
@@ -27,7 +29,8 @@ class chatVC: UIViewController
     
     // MARK: -Variables
     var receiverID:String?
-    var users:[String?]?
+    var conversationID:String?
+    var users:[String?] = []
     
     
     // MARK: - Outlets
@@ -55,27 +58,83 @@ class chatVC: UIViewController
         }
     }
     
+    func getConvoID(completion:@escaping(String)->Void)
+    {
+        if users.count != nil
+        {
+            conversationService.getConversationID(users: users as! [String])
+            {
+                (id, err, userCount, convoCount) in
+                guard let id = id
+                    else
+                {
+                    print(err)
+                    return
+                }
+                
+                self.conversationID = id
+                completion(self.conversationID!)
+                
+//                if userCount! > convoCount!
+//                {
+//                    self.createConversation(completion:
+//                        {
+//                            (id) in
+//                            print(id)
+//                        })
+//                }
+//                else
+//                {
+//                    self.conversationID = id
+//                    completion(self.conversationID!)
+//                }
+            }
+        }
+    }
+    
+    func createConversation(completion:@escaping(String)->Void)
+    {
+        if users.count != nil
+        {
+            let convo1 = Conversation(conversationID: "asd", dateCreated: "12321", users: users as! [String])
+
+            conversationService.createConversation(conversation: convo1)
+            {
+                (convo, success, error) in
+                if error != nil
+                {
+                    print(error)
+                }
+                else
+                {
+                    self.conversationID = convo?.conversationID
+                    print(self.conversationID)
+                }
+            }
+        }
+    }
+    
     func handleCurrentUser()
     {
-        if users?.contains(delegate.currentUser?.uid) == true
+        if users.contains(delegate.currentUser!.uid) == true
         {
             return
         }
         else
         {
-            users?.append(delegate.currentUser?.uid)
+            users.append(delegate.currentUser!.uid)
         }
     }
     
     func handleOtherUsers()
     {
-        if users?.contains(receiverID!) == true
+        if users.contains(receiverID!) == true
         {
             return
         }
         else
         {
-            users?.append(receiverID!)
+            users.append(receiverID!)
         }
     }
     
@@ -93,7 +152,13 @@ class chatVC: UIViewController
         handleCurrentUser()
         handleOtherUsers()
         
-        print(users?.count)
+        //createConversation()
+        getConvoID
+            {
+                (id) in
+                
+                print(id)
+            }
     }
     
     override func viewDidLoad() {
