@@ -1,18 +1,13 @@
-//
-//  newMessageVC.swift
-//  Chat App
-//
-//  Created by Fahad Saleem on 8/29/19.
-//  Copyright © 2019 SunnyMac. All rights reserved.
-//
-
 import UIKit
 import SDWebImage
 
 class newMessageVC: UIViewController
 {
     //MARK: -Constants
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    
     //MARK: -Variables
+    var receiverID:String?
     var userList = [User?]()
     {
         didSet
@@ -127,5 +122,20 @@ extension newMessageVC: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         self.performSegue(withIdentifier: "chatVC", sender: self)
+        
+        //let cell = userListTable.cellForRow(at: indexPath) as! newMessageCell
+        
+        //self.receiverID = userList[indexPath.row]?.uid
+        
+        print("-------------------")
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        let data = segue.destination as! chatVC
+        receiverID = ""
+        self.receiverID = userList[userListTable.indexPathForSelectedRow!.row]?.uid
+        data.receiverID = receiverID
     }
 }

@@ -5,6 +5,8 @@ import IQKeyboardManager
 class chatVC: UIViewController
 {
     //MARK: - Constants
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    
     let tmpArray = ["A short message.",
                     "A medium length message, longer than short.",
                     "A long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content.",
@@ -23,9 +25,12 @@ class chatVC: UIViewController
         Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "Another long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content.")
     ]
     
+    // MARK: -Variables
+    var receiverID:String?
+    var users:[String?]?
+    
     
     // MARK: - Outlets
-    
     @IBOutlet weak var chat: UITableView!
     @IBOutlet weak var typedMsgView: UIView!
     @IBOutlet weak var msgTxt: GrowingTextView!
@@ -50,20 +55,45 @@ class chatVC: UIViewController
         }
     }
     
+    func handleCurrentUser()
+    {
+        if users?.contains(delegate.currentUser?.uid) == true
+        {
+            return
+        }
+        else
+        {
+            users?.append(delegate.currentUser?.uid)
+        }
+    }
+    
+    func handleOtherUsers()
+    {
+        if users?.contains(receiverID!) == true
+        {
+            return
+        }
+        else
+        {
+            users?.append(receiverID!)
+        }
+    }
+    
     override func viewDidLayoutSubviews()
     {
         typedMsgView.layer.cornerRadius = 20
         typedMsgView.layer.borderWidth = 2
         typedMsgView.layer.borderColor = UIColor.gray.cgColor
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool)
     {
         navigationController?.navigationBar.isHidden = false
-        
         tabBarController?.tabBar.isHidden = true
+        handleCurrentUser()
+        handleOtherUsers()
+        
+        print(users?.count)
     }
     
     override func viewDidLoad() {
@@ -74,6 +104,7 @@ class chatVC: UIViewController
         
         msgTxt.delegate = self
 
+        
         // Do any additional setup after loading the view.
         
         chat.register(chatCell.self, forCellReuseIdentifier: "cell")
