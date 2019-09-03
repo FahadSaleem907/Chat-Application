@@ -11,23 +11,49 @@ public class userFunctions
     lazy var db = Firestore.firestore()
     var userList = [User?]()
     
-//    func login(email:String,password:String,completion:@escaping(User?,String)->Void)
-//    {
-//        Auth.auth().signIn(withEmail: email, password: password)
-//        {
-//            (result, error) in
-//
-//            if error != nil
-//            {
-//                let error = error!.localizedDescription
-//                completion(nil,error)
-//            }
-//            else
-//            {
-//
-//            }
-//        }
-//    }
+    func login(email:String,password:String,completion:@escaping(User?,String?)->Void)
+    {
+        delegate.currentUser = User(name: "asd", email: "asd", password: nil, dateOfBirth: "asd", gender: "asd", downloadURL: "asd", isOnline: true, uid: "asd")
+        
+        Auth.auth().signIn(withEmail: email, password: password)
+        {
+            (result, error) in
+
+            guard let user = result?.user else
+            {
+                print("Error : \(error?.localizedDescription)")
+                completion(nil,error!.localizedDescription)
+                return
+            }
+            
+            let uid = user.uid
+            print(uid)
+            
+            let ref = self.db.collection("Users").document("\(uid)")
+            
+            ref.addSnapshotListener(
+                {
+                    (snapshot, error) in
+                    
+                    guard let snapshot = snapshot else
+                    {
+                        print("Error: \(error?.localizedDescription)")
+                        completion(nil,error!.localizedDescription)
+                        return
+                    }
+                    
+                    self.delegate.currentUser!.name = snapshot.data()!["name"] as! String
+                    self.delegate.currentUser!.email = snapshot.data()!["email"] as! String
+                    self.delegate.currentUser!.dateOfBirth = snapshot.data()!["dateOfBirth"] as! String
+                    self.delegate.currentUser!.gender = snapshot.data()!["gender"] as! String
+                    self.delegate.currentUser!.uid = snapshot.data()!["uid"] as! String
+                    self.delegate.currentUser!.downloadURL = snapshot.data()!["downloadURL"] as! String
+                    self.delegate.currentUser!.isOnline = snapshot.data()!["isOnline"] as! Bool
+                    
+                    completion(self.delegate.currentUser,nil)
+            })
+        }
+    }
     
     func createUser(user:User?,completion:@escaping(User?,Bool,String?)->Void)
     {

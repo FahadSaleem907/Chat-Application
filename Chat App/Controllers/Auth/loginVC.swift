@@ -4,7 +4,7 @@ class loginVC: UIViewController
 {
 
     // MARK: - Constants
-    
+    let userServiecs = userFunctions()
     
     // MARK: - Variables
     // MARK: - Outlets
@@ -15,13 +15,30 @@ class loginVC: UIViewController
     // MARK: - Actions
     @IBAction func loginBtn(_ sender: UIButton)
     {
-        
+        login()
     }
     
     
     
     // MARK: - Functions
-
+    func login()
+    {
+        userServiecs.login(email: userName.text!, password: password.text!)
+        {
+            (user, error) in
+            if error != nil
+            {
+                print(error)
+            }
+            else
+            {
+                
+                self.performSegue(withIdentifier: "login", sender: self)
+            }
+        }
+    }
+    
+    
     override func viewDidLayoutSubviews()
     {
         
@@ -34,6 +51,8 @@ class loginVC: UIViewController
     
     override func viewDidLoad()
     {
+        userName.text = "test@test.com"
+        password.text = "123123"
         super.viewDidLoad()
     }
 }

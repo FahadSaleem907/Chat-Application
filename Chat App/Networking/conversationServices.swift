@@ -71,4 +71,9 @@ class conversationFunctions
                 }
             }
     }
+    
+    func deleteConversation(conversationID:String?)
+    {
+        
+    }
 }

@@ -224,18 +224,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMf-ge-1pv">
-                                <rect key="frame" x="186" y="201" width="48" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lue-gI-jOG">
-                                <rect key="frame" x="189" y="230" width="44" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Status"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJJ-gZ-a7z">
                                 <rect key="frame" x="140" y="103" width="134" height="134.5"/>
                                 <constraints>
@@ -243,16 +231,35 @@
                                 </constraints>
                                 <state key="normal" image="chat"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMf-ge-1pv">
+                                <rect key="frame" x="183" y="247.5" width="48" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lue-gI-jOG">
+                                <rect key="frame" x="185" y="278.5" width="44" height="30"/>
+                                <state key="normal" title="Status"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.58081901069999997" green="0.088427625600000004" blue="0.31863921880000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="sJJ-gZ-a7z" firstAttribute="top" secondItem="afa-bz-FFa" secondAttribute="top" constant="15" id="0Te-O6-aWt"/>
                             <constraint firstItem="sJJ-gZ-a7z" firstAttribute="centerX" secondItem="afa-bz-FFa" secondAttribute="centerX" id="2Wa-BY-efP"/>
                             <constraint firstItem="sJJ-gZ-a7z" firstAttribute="height" secondItem="biX-fn-ayn" secondAttribute="height" multiplier="0.15" id="6dr-gI-zV0"/>
+                            <constraint firstItem="lue-gI-jOG" firstAttribute="centerX" secondItem="afa-bz-FFa" secondAttribute="centerX" id="K7Q-Wu-BVU"/>
+                            <constraint firstItem="iMf-ge-1pv" firstAttribute="centerX" secondItem="afa-bz-FFa" secondAttribute="centerX" id="chu-EC-wr2"/>
+                            <constraint firstItem="iMf-ge-1pv" firstAttribute="top" secondItem="sJJ-gZ-a7z" secondAttribute="bottom" constant="10" id="vaY-AI-DaF"/>
+                            <constraint firstItem="lue-gI-jOG" firstAttribute="top" secondItem="iMf-ge-1pv" secondAttribute="bottom" constant="10" id="xzv-Ni-b1U"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="afa-bz-FFa"/>
                     </view>
                     <navigationItem key="navigationItem" title="More" id="Bw4-Pf-WKe"/>
+                    <connections>
+                        <outlet property="name" destination="iMf-ge-1pv" id="okf-or-Q3j"/>
+                        <outlet property="profileImgOut" destination="sJJ-gZ-a7z" id="yOX-hD-xtP"/>
+                        <outlet property="statusOut" destination="lue-gI-jOG" id="4dp-vB-vUq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vNe-Wg-wQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

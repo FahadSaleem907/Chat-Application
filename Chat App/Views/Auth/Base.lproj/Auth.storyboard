@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zWc-TW-KDq">
     <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -52,7 +52,6 @@
                                         </state>
                                         <connections>
                                             <action selector="loginBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bwC-bt-LLh"/>
-                                            <segue destination="oxP-nu-9xx" kind="show" id="OQq-fQ-bS5"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NG3-Nv-2Vp">
@@ -61,9 +60,6 @@
                                         <state key="normal" title="S i g n U p   H e r e !">
                                             <color key="titleColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
-                                        <connections>
-                                            <segue destination="KDN-c2-c4R" kind="show" id="kl5-T6-HZB"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -99,6 +95,7 @@
                     <connections>
                         <outlet property="password" destination="pWz-83-XFv" id="9B3-2f-nC3"/>
                         <outlet property="userName" destination="QY5-Pw-jdD" id="5Ji-it-do5"/>
+                        <segue destination="KDN-c2-c4R" kind="show" identifier="login" id="ZJ4-pz-MAJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

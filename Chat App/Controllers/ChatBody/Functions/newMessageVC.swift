@@ -87,12 +87,11 @@ extension newMessageVC: UITableViewDelegate, UITableViewDataSource
     {
         let cell = userListTable.dequeueReusableCell(withIdentifier: "cell") as! newMessageCell
         
-        let imgURLString = "\(userList[indexPath.row]!.downloadURL!)"
-        
-        let imgURL = URL(string: imgURLString)
-        print(imgURL!)
 //        cell.img.sd_setImage (with: imgURL! as URL, placeholderImage: UIImage(named: "profilePic"))
 
+        
+        let imgURLString = "\(userList[indexPath.row]!.downloadURL!)"
+        let imgURL = URL(string: imgURLString)
         cell.img.sd_setImage(with: imgURL!, completed: nil)
         
         cell.userName.text = userList[indexPath.row]?.name
