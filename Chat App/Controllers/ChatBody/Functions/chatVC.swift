@@ -62,6 +62,8 @@ class chatVC: UIViewController
     override func viewWillAppear(_ animated: Bool)
     {
         navigationController?.navigationBar.isHidden = false
+        
+        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidLoad() {

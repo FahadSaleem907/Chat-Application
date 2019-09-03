@@ -97,7 +97,7 @@ public class userFunctions
         
     }
     
-    func getUser()
+    func getUser(completion:@escaping(_ users:[User]?)->Void)
     {
         let fetchUsers = self.db.collection("Users")
         
@@ -107,15 +107,19 @@ public class userFunctions
                 if let error = error
                 {
                     print(error.localizedDescription)
+                    completion([])
                 }
                 else
                 {
+                    self.userList = []
                     for i in snapshot!.documents
                     {
-                        self.userList = []
-                        
                         let tmpUser = User(name: i.data()["name"] as! String, email: i.data()["email"] as! String, password: nil, dateOfBirth: i.data()["dateOfBirth"] as! String, gender: i.data()["gender"] as! String, downloadURL: i.data()["downloadURL"] as! String, isOnline: false, uid: i.data()["uid"] as! String)
+                        
+                        self.userList.append(tmpUser)
                     }
+                    
+                    completion(self.userList as! [User])
                 }
             }
     }

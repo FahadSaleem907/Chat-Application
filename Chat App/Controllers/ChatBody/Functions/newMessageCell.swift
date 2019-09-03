@@ -11,15 +11,36 @@ import UIKit
 class newMessageCell: UITableViewCell {
 
     //MARK: -Outlets
+    @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var img: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var status: UIImageView!
     
     //MARK: -Functions
     
+    func roundedImg()
+    {
+        let height = img.frame.height
+        
+        img.layer.cornerRadius = height/2
+        img.layer.masksToBounds = true
+        img.contentMode = .scaleToFill
+        
+        layoutIfNeeded()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        roundedImg()
+    }
+    
     override func awakeFromNib()
     {
         super.awakeFromNib()
+        
+        //roundedImg()
+        
         // Initialization code
     }
 

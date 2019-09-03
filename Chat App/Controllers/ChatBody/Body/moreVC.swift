@@ -9,6 +9,13 @@ class moreVC: UIViewController
     // MARK: - Actions
     // MARK: - Functions
     
+    
+    override func viewWillAppear(_ animated: Bool)
+    {
+        tabBarController?.tabBar.isHidden = false
+    }
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
