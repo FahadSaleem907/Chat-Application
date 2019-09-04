@@ -4,11 +4,20 @@ class chatListVC: UIViewController
 {
 
     // MARK: - Constants
-    var testArray = ["A","B","c","d","F","g"]
+    let conversationServices = conversationFunctions()
+    
     
     // MARK: - Variables
-    fileprivate var filtered = [String]()
+    fileprivate var filtered = [Conversation?]()
     fileprivate var filterring = false
+    var userList = [String?]()
+    var convoList = [Conversation?]()
+    {
+        didSet
+        {
+            chatList.reloadData()
+        }
+    }
     
     // MARK: - Outlets
     @IBOutlet weak var chatList: UITableView!
@@ -16,9 +25,34 @@ class chatListVC: UIViewController
     // MARK: - Actions
     // MARK: - Functions
     
+    func getConvoList(completion:@escaping([Conversation?]?)->Void)
+    {
+        conversationServices.getConversations { (conversation, error) in
+            
+            if error != nil
+            {
+                print(error)
+            }
+            else
+            {
+                print(conversation)
+                completion(conversation!)
+            }
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool)
     {
+        getConvoList
+            {
+                (convo) in
+                guard let convo = convo else { return }
+                
+                self.convoList.removeAll()
+                self.convoList = convo
+                print(self.convoList)
+            }
+        
         tabBarController?.tabBar.isHidden = false
     }
     
@@ -39,6 +73,9 @@ class chatListVC: UIViewController
         let search = UISearchController(searchResultsController: nil)
         search.searchResultsUpdater = self
         self.navigationItem.searchController = search
+        
+        chatList.delegate   = self
+        chatList.dataSource = self
     }
 }
 
@@ -47,16 +84,18 @@ extension chatListVC:UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController)
     {
         if let text = searchController.searchBar.text, !text.isEmpty {
-            self.filtered = self.testArray.filter({ (i) -> Bool in
+            self.filtered = self.convoList.filter({ (i) -> Bool in
                 //return tmpArray.lowercased().contains(text.lowercased())
                 
-                return i.lowercased().contains(text.lowercased())
+                //return i.lowercased().contains(text.lowercased())
+                
+                return (i!.conversationID?.lowercased().contains(text.lowercased()))!
             })
             self.filterring = true
         }
         else {
             self.filterring = false
-            self.filtered = [String]()
+            self.filtered = [Conversation?]()
         }
         self.chatList.reloadData()
     }
@@ -67,15 +106,34 @@ extension chatListVC: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = chatList.dequeueReusableCell(withIdentifier: "cell") as! chatListCell
+        
+        cell.chatName.text = convoList[indexPath.row]?.conversationID
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return testArray.count
+        return convoList.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        performSegue(withIdentifier: "chatVC", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let chatVCData = segue.destination as! chatVC
+        
+        userList = []
+        userList = convoList[chatList.indexPathForSelectedRow!.row]!.users!
+        
+        chatVCData.users = userList
+        print("\(userList)")
+        print("==========")
+        print("\(chatVCData.users)")
     }
 }

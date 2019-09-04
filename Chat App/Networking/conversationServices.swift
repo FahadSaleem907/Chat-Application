@@ -16,6 +16,7 @@ class conversationFunctions
 {
     let delegate = UIApplication.shared.delegate as! AppDelegate
     lazy var db = Firestore.firestore()
+    var conversationArray = [Conversation?]()
     var conversationDic = [String?:Int]()
     var selectedConvoID:String?
     var selectedConvoVal:Int?
@@ -100,6 +101,34 @@ class conversationFunctions
     }
     
     
+    func getConversations(completion:@escaping([Conversation?]?,String?)->Void)
+    {
+        let fetchConvos = self.db.collection("conversation")
+        
+        fetchConvos.addSnapshotListener
+            {
+                (snapshot, error) in
+                
+                self.conversationArray = []
+                
+                guard let snapshot = snapshot
+                else
+                {
+                    print("Error : \(error?.localizedDescription)")
+                    completion(nil,error?.localizedDescription)
+                    return
+                }
+                
+                for i in snapshot.documents
+                {
+                    print(i)
+                    let tmpConvo = Conversation(conversationID: i.data()["conversationID"] as! String, dateCreated: i.data()["dateTimeCreated"] as! String, users: i.data()["users"] as! [String]?)
+                    
+                    self.conversationArray.append(tmpConvo)
+                }
+                completion(self.conversationArray,nil)
+        }
+    }
     
     func deleteConversation(conversationID:String?)
     {

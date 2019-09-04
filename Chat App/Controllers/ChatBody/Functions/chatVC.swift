@@ -147,10 +147,14 @@ class chatVC: UIViewController
     
     override func viewWillAppear(_ animated: Bool)
     {
+        navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = true
-        handleCurrentUser()
-        handleOtherUsers()
+        if users.isEmpty == true
+        {
+            handleCurrentUser()
+            handleOtherUsers()
+        }
         
         //createConversation()
         getConvoID
