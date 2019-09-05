@@ -13,7 +13,7 @@ class chatVC: UIViewController
     let userService = userFunctions()
     
 //    let theData: [Message] = [
-//        
+//
 //        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A short message."),
 //        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "A medium length message, longer than short."),
 //        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content."),
@@ -36,7 +36,7 @@ class chatVC: UIViewController
                 }
         }
     }
-    var users1:[String?] = []
+    var messages:[Message?] = []
     {
         didSet
         {
@@ -47,6 +47,8 @@ class chatVC: UIViewController
             }
         }
     }
+    
+    
     
     // MARK: - Outlets
     @IBOutlet weak var chat: UITableView!
@@ -315,7 +317,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = chat.dequeueReusableCell(withIdentifier: "cell",for: indexPath) as! chatCell
-        cell.setData(theData[indexPath.row])
+        cell.setData(messages[indexPath.row]!)
         cell.contentView.backgroundColor = UIColor.clear
         chat.backgroundColor = UIColor.clear
         cell.bubbleView.backgroundColor = UIColor.clear
@@ -325,7 +327,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return theData.count
+        return 5
     }
     
     func numberOfSections(in tableView: UITableView) -> Int
