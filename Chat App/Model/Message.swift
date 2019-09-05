@@ -9,6 +9,7 @@ struct Message
     var date:String?            = ""
     var time:String?            = ""
     var conversationID:String?  = ""
+    var combineID:String?       = ""
     var incoming: Bool?         = false
     var message: String?        = ""
 }

@@ -8,6 +8,17 @@ class newMessageVC: UIViewController
     
     //MARK: -Variables
     var receiverID:String?
+    var users = [String?]()
+    {
+        didSet
+        {
+            self.users.sort
+                {
+                    (a, b) -> Bool in
+                    return a! < b!
+                }
+        }
+    }
     var userList = [User?]()
     {
         didSet
@@ -135,8 +146,12 @@ extension newMessageVC: UITableViewDelegate, UITableViewDataSource
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
         let data = segue.destination as! chatVC
+        users = []
+        users = [userList[userListTable.indexPathForSelectedRow!.row]?.uid!]
+        data.users = users
+        
         receiverID = ""
-        self.receiverID = userList[userListTable.indexPathForSelectedRow!.row]?.uid
+        receiverID = userList[userListTable.indexPathForSelectedRow!.row]?.uid
         data.receiverID = receiverID
     }
 }

@@ -27,28 +27,56 @@ class conversationFunctions
         
         let conversation1 = Conversation(conversationID: conversation!.conversationID!, dateCreated: conversation!.dateCreated!, users: conversation!.users!)
         
-        ref = self.db.collection("conversation").document()
-        
-        let dataDic : [String:Any]  =   [
-                                        "conversationID":"\(ref!.documentID)",
+        if conversation1.users?.count == 2
+        {
+            ref = self.db.collection("conversation").document("\(conversation1.users![0]+conversation1.users![1])")
+            
+            let dataDic:[String:Any] = [
+                                    "conversationID":"\(conversation1.users![0]+conversation1.users![1])",
                                         "dateTimeCreated":"\(conversation1.dateCreated)",
                                         "users":conversation1.users
                                         ]
-        
-        ref?.setData(dataDic, completion:
-            {
-                (error) in
-                if let err = error
+            
+            ref?.setData(dataDic, completion:
                 {
-                    print("Error: \(err.localizedDescription)")
-                    completion(nil,false,err.localizedDescription)
-                }
-                else
-                {
-                    print("conversation created")
-                    completion(conversation,true,nil)
-                }
+                    (error) in
+                    if let err = error
+                    {
+                        print(err.localizedDescription)
+                        completion(nil,false,err.localizedDescription)
+                    }
+                    else
+                    {
+                        print("conversation created")
+                        completion(conversation,true,nil)
+                    }
             })
+        }
+        else
+        {
+            ref = self.db.collection("conversation").document()
+            
+            let dataDic : [String:Any]  =   [
+                "conversationID":"\(ref!.documentID)",
+                "dateTimeCreated":"\(conversation1.dateCreated)",
+                "users":conversation1.users
+            ]
+            
+            ref?.setData(dataDic, completion:
+                {
+                    (error) in
+                    if let err = error
+                    {
+                        print("Error: \(err.localizedDescription)")
+                        completion(nil,false,err.localizedDescription)
+                    }
+                    else
+                    {
+                        print("conversation created")
+                        completion(conversation,true,nil)
+                    }
+            })
+        }
     }
     
     func getConversationID(users:[String]?,completion:@escaping(String?,String?,Int?,Int?)->Void)
@@ -127,6 +155,40 @@ class conversationFunctions
                     self.conversationArray.append(tmpConvo)
                 }
                 completion(self.conversationArray,nil)
+        }
+    }
+    
+    func checkIfConvoExists(users:[String]?,completion:@escaping(Int?)->Void)
+    {
+        let checkIfExists = self.db.collection("conversation")
+        
+        let query = checkIfExists.whereField("conversationID", isEqualTo: "\(users![0]+users![1])")
+        
+        query.addSnapshotListener
+            {
+                (snapshot, error) in
+                guard let snapshot = snapshot
+                else
+                {
+                    print("Error: \(error?.localizedDescription)")
+                    completion(nil)
+                    return
+                }
+                
+                if snapshot.documents.isEmpty == false
+                {
+                    for i in snapshot.documents
+                    {
+                        print(i)
+                    }
+                    completion(snapshot.documents.count)
+                }
+                else
+                {
+                    print("its empty")
+                    completion(nil)
+                }
+                
         }
     }
     

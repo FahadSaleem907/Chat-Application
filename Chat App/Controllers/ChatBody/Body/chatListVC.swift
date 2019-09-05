@@ -125,15 +125,16 @@ extension chatListVC: UITableViewDelegate, UITableViewDataSource
         performSegue(withIdentifier: "chatVC", sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let chatVCData = segue.destination as! chatVC
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
         
-        userList = []
-        userList = convoList[chatList.indexPathForSelectedRow!.row]!.users!
+        if segue.identifier == "chatVC"
+        {
+            let chatVCData = segue.destination as! chatVC
         
-        chatVCData.users = userList
-        print("\(userList)")
-        print("==========")
-        print("\(chatVCData.users)")
+            userList = []
+            userList = convoList[chatList.indexPathForSelectedRow!.row]!.users!
+            chatVCData.users = userList
+        }
     }
 }

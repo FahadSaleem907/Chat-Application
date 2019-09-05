@@ -22,7 +22,7 @@ public class messageFunctions
     {
         var ref:DocumentReference? = nil
         
-        let message1 = Message(msgid: message!.msgid!, uid: message!.uid, dateTime: message!.dateTime!, date: message!.date!, time: message!.time!, conversationID: message!.conversationID!, incoming: false, message: message!.message!)
+        let message1 = Message(msgid: message!.msgid!, uid: message!.uid, dateTime: message!.dateTime!, date: message!.date!, time: message!.time!, conversationID: message!.conversationID!, combineID: message!.combineID!, incoming: false, message: message!.message!)
         
         let dataDic : [String:Any] = [
                                         "msgid":"\(message1.msgid)",
@@ -31,6 +31,7 @@ public class messageFunctions
                                         "date":"\(message1.date)",
                                         "time":"\(message1.time)",
                                         "conversationID":"\(message1.conversationID)",
+                                        "combineID":"\(message1.combineID)",
                                         "incoming":false,
                                         "message":"\(message1.message)"
                         ]

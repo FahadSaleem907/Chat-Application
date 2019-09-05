@@ -27,6 +27,7 @@
 		A3E3FDB5231096BB00BD23FB /* chatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB4231096BB00BD23FB /* chatCell.swift */; };
 		E179CC2C231CD02100765E4D /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E179CC2B231CD02100765E4D /* Conversation.swift */; };
 		E179CC2E231CD10300765E4D /* conversationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E179CC2D231CD10300765E4D /* conversationServices.swift */; };
+		E19762AA2321148700700CE3 /* oneToOneConvoServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19762A92321148700700CE3 /* oneToOneConvoServices.swift */; };
 		E1B166C6231A832500E1DD97 /* userServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B166C5231A832500E1DD97 /* userServices.swift */; };
 		E1B166C8231A833200E1DD97 /* msgServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B166C7231A833200E1DD97 /* msgServices.swift */; };
 		E1C99234231AE575004BD02F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1C99233231AE575004BD02F /* GoogleService-Info.plist */; };
@@ -61,6 +62,7 @@
 		E0D9A95B729E3274EB90382B /* Pods-Chat App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat App.debug.xcconfig"; path = "Target Support Files/Pods-Chat App/Pods-Chat App.debug.xcconfig"; sourceTree = "<group>"; };
 		E179CC2B231CD02100765E4D /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		E179CC2D231CD10300765E4D /* conversationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = conversationServices.swift; sourceTree = "<group>"; };
+		E19762A92321148700700CE3 /* oneToOneConvoServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = oneToOneConvoServices.swift; sourceTree = "<group>"; };
 		E1B166C5231A832500E1DD97 /* userServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userServices.swift; sourceTree = "<group>"; };
 		E1B166C7231A833200E1DD97 /* msgServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = msgServices.swift; sourceTree = "<group>"; };
 		E1C99233231AE575004BD02F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				E1B166C5231A832500E1DD97 /* userServices.swift */,
 				E1B166C7231A833200E1DD97 /* msgServices.swift */,
 				E179CC2D231CD10300765E4D /* conversationServices.swift */,
+				E19762A92321148700700CE3 /* oneToOneConvoServices.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				A37AEAE3231089C000699D29 /* callListVC.swift in Sources */,
 				A30BF8FC23158B3D00B04EEC /* User.swift in Sources */,
 				E1DB0EC42317D9FF00992092 /* callListCell.swift in Sources */,
+				E19762AA2321148700700CE3 /* oneToOneConvoServices.swift in Sources */,
 				A37AEAC1231084E200699D29 /* AppDelegate.swift in Sources */,
 				A37AEAE1231089AD00699D29 /* chatListVC.swift in Sources */,
 				E1DB0ECA2317E14300992092 /* newMessageCell.swift in Sources */,

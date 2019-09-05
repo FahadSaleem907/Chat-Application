@@ -205,7 +205,7 @@
                     <navigationItem key="navigationItem" title="Chats" id="wId-rB-jM5">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OhB-Tt-vyO">
                             <connections>
-                                <segue destination="A0G-Of-Imp" kind="show" id="2JA-sf-Y96"/>
+                                <segue destination="A0G-Of-Imp" kind="show" identifier="newMessage" id="2JA-sf-Y96"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -205,4 +205,41 @@ public class userFunctions
         ref.setData(["downloadURL" : "\(url!)"], merge: true)
     }
     
+    func updateConversationList(convoID:String?,users:[String?])
+    {
+        //let ref = self.db.collection("conversation").document("\(convoID)")
+        
+        for i in users
+        {
+            let ref = self.db.collection("Users").document("\(i!)")
+            var tmpArray = [String]()
+            tmpArray = []
+            print(i)
+            //ref.setData(["conversations":[convoID!]], merge:true)
+            
+//            ref.addSnapshotListener
+//                { (snapshot, error) in
+//                guard let snapshot = snapshot
+//                else
+//                {
+//                    print("Error : \(error?.localizedDescription)")
+//                    return
+//                }
+//
+//                print(snapshot.data()!["email"] as! String)
+//                let tmpArr = snapshot.data()!["conversations"] as! Any
+//
+//
+//
+//                //print(snapshot.data()!["conversations"] as! String)
+//                print(tmpArray)
+//
+//            }
+            
+            ref.updateData(["conversations": FieldValue.arrayUnion([convoID!])])
+            //ref.updateData(["conversations":[convoID!]])
+        }
+        
+    }
+    
 }
