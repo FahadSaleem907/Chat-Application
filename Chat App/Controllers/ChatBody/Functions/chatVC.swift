@@ -9,25 +9,18 @@ class chatVC: UIViewController
     let delegate = UIApplication.shared.delegate as! AppDelegate
     let conversationService = conversationFunctions()
     let oneToOneConvoService = oneToOneConvoFunctions()
+    let messageService = messageFunctions()
     let userService = userFunctions()
     
-    let tmpArray = ["A short message.",
-                    "A medium length message, longer than short.",
-                    "A long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content.",
-                    "Another short message.",
-                    "Another medium length message, longer than short.",
-                    "Another long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content."
-    ]
-    
-    let theData: [Message] = [
-        
-        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil,combineID: nil, incoming: false, message: "A short message."),
-        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil,combineID: nil, incoming: true, message: "A medium length message, longer than short."),
-        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil,combineID: nil, incoming: false, message: "A long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content."),
-        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil,combineID: nil, incoming: true, message: "Another short message."),
-        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil,combineID: nil, incoming: false, message: "Another medium length message, longer than short."),
-        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil,combineID: nil, incoming: true, message: "Another long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content.")
-    ]
+//    let theData: [Message] = [
+//        
+//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A short message."),
+//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "A medium length message, longer than short."),
+//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content."),
+//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "Another short message."),
+//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "Another medium length message, longer than short."),
+//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "Another long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content.")
+//    ]
     
     // MARK: -Variables
     var receiverID:String?
@@ -64,6 +57,23 @@ class chatVC: UIViewController
     @IBOutlet weak var mic: UIButton!
     @IBOutlet weak var gallery: UIButton!
     
+    //MARK: -Actions
+    
+    @IBAction func cameraBtn(_ sender: UIButton)
+    {
+        print("camera")
+    }
+
+    @IBAction func micBtn(_ sender: UIButton)
+    {
+        print("mic")
+    }
+    
+    
+    @IBAction func picOrSendBtn(_ sender: UIButton)
+    {
+        handleSendButton()
+    }
     
     //MARK: - Functions
     func handleButton(){
@@ -76,6 +86,21 @@ class chatVC: UIViewController
         }
     }
     
+    func handleSendButton()
+    {
+        if gallery.currentImage == UIImage(named: "gallery")
+        {
+            print("gallery")
+        }
+        else
+        {
+            sendMessage(conversationID: self.conversationID!)
+            print("\(msgTxt.text!)")
+            msgTxt.text = ""
+            handleButton()
+        }
+    }
+    
     func createConvo(users:[String?],completion:@escaping(Bool,String?)->Void)
     {
         let convo1 = Conversation(conversationID: "\(users[0]!+users[1]!)", dateCreated: "123", users: users as! [String])
@@ -84,7 +109,8 @@ class chatVC: UIViewController
             if success == true{
                 print("Convo created : \(convo?.conversationID)")
                 self.userService.updateConversationList(convoID: convo?.conversationID, users: users)
-                completion(true,nil)
+                
+                completion(true,convo?.conversationID)
             }else{
                 print(error)
                 completion(false,error)
@@ -106,6 +132,24 @@ class chatVC: UIViewController
             {
                 print("ConvoDoesNotExist")
                 completion(false)
+            }
+        }
+    }
+    
+    func sendMessage(conversationID:String)
+    {
+        let message1 = Message(msgid: "test", uid: delegate.currentUser!.uid!, dateTime: "123", date: "123", time: "123", conversationID: self.conversationID, incoming: false, message: msgTxt.text)
+            
+        messageService.createMessage(message: message1, ConvoID: self.conversationID)
+        {
+            (message, success, error) in
+            if success == true
+            {
+                print("Sent Successfully: \(message)")
+            }
+            else
+            {
+                print(error)
             }
         }
     }
@@ -229,10 +273,12 @@ class chatVC: UIViewController
                 {
                     self.createConvo(users: self.users, completion:
                         {
-                            (success, error) in
+                            (success, result) in
                             if success == true
                             {
                                 print("Convo Created")
+                                self.conversationID = result
+                                print("1:\(self.conversationID)")
                             }
                             else
                             {
@@ -259,7 +305,6 @@ class chatVC: UIViewController
         
         msgTxt.delegate = self
 
-        
         // Do any additional setup after loading the view.
         
         chat.register(chatCell.self, forCellReuseIdentifier: "cell")

@@ -18,26 +18,37 @@ public class messageFunctions
     let delegate = UIApplication.shared.delegate as! AppDelegate
     lazy var db = Firestore.firestore()
     
-    func createMessage(message:Message?,completion:@escaping(Message?,Bool?,String?)->Void)
+    func createMessage(message:Message?,ConvoID:String?,completion:@escaping(Message?,Bool?,String?)->Void)
     {
         var ref:DocumentReference? = nil
         
-        let message1 = Message(msgid: message!.msgid!, uid: message!.uid, dateTime: message!.dateTime!, date: message!.date!, time: message!.time!, conversationID: message!.conversationID!, combineID: message!.combineID!, incoming: false, message: message!.message!)
+        let message1 = Message(msgid: message!.msgid!, uid: message!.uid, dateTime: message!.dateTime!, date: message!.date!, time: message!.time!, conversationID: message!.conversationID!, incoming: false, message: message!.message!)
         
         let dataDic : [String:Any] = [
-                                        "msgid":"\(message1.msgid)",
-                                        "uid":"\(message1.uid)",
-                                        "dateTime":"\(message1.dateTime)",
-                                        "date":"\(message1.date)",
-                                        "time":"\(message1.time)",
-                                        "conversationID":"\(message1.conversationID)",
-                                        "combineID":"\(message1.combineID)",
+                                        "msgid":"\(message1.msgid!)",
+                                        "uid":"\(message1.uid!)",
+                                        "dateTime":"\(message1.dateTime!)",
+                                        "date":"\(message1.date!)",
+                                        "time":"\(message1.time!)",
+                                        "conversationID":"\(message1.conversationID!)",
                                         "incoming":false,
-                                        "message":"\(message1.message)"
+                                        "message":"\(message1.message!)"
                         ]
         
         
-        //ref = self.db.collection("Messages").document("\()")
+        ref = self.db.collection("Messages").document("\(ConvoID!)").collection("\(delegate.currentUser!.uid!)").document()
+        ref?.setData(dataDic, completion:
+            {
+                (error) in
+                if error != nil
+                {
+                    print("\(error?.localizedDescription)")
+                }
+                else
+                {
+                    print("message sent")
+                }
+        })
         
     }
     

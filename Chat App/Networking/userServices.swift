@@ -112,17 +112,6 @@ public class userFunctions
         }
     }
     
-    
-    func updateUser()
-    {
-        
-    }
-    
-    func deleteUser()
-    {
-        
-    }
-    
     func getUser(completion:@escaping(_ users:[User]?)->Void)
     {
         let fetchUsers = self.db.collection("Users")
@@ -201,45 +190,21 @@ public class userFunctions
     func updateIMGUrl(users:User?,url:String?)
     {
         let ref = self.db.collection("Users").document("\(users!.uid!)")
-        
         ref.setData(["downloadURL" : "\(url!)"], merge: true)
     }
     
     func updateConversationList(convoID:String?,users:[String?])
     {
-        //let ref = self.db.collection("conversation").document("\(convoID)")
-        
         for i in users
         {
             let ref = self.db.collection("Users").document("\(i!)")
-            var tmpArray = [String]()
-            tmpArray = []
-            print(i)
-            //ref.setData(["conversations":[convoID!]], merge:true)
-            
-//            ref.addSnapshotListener
-//                { (snapshot, error) in
-//                guard let snapshot = snapshot
-//                else
-//                {
-//                    print("Error : \(error?.localizedDescription)")
-//                    return
-//                }
-//
-//                print(snapshot.data()!["email"] as! String)
-//                let tmpArr = snapshot.data()!["conversations"] as! Any
-//
-//
-//
-//                //print(snapshot.data()!["conversations"] as! String)
-//                print(tmpArray)
-//
-//            }
-            
             ref.updateData(["conversations": FieldValue.arrayUnion([convoID!])])
-            //ref.updateData(["conversations":[convoID!]])
         }
-        
     }
     
+    func updateUser(){
+    }
+    
+    func deleteUser(){
+    }
 }

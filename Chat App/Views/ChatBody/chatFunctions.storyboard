@@ -28,6 +28,9 @@
                                             <constraint firstAttribute="width" secondItem="cSb-NU-Mzl" secondAttribute="height" multiplier="1:1" id="Y0c-eS-0fG"/>
                                         </constraints>
                                         <state key="normal" image="cam60"/>
+                                        <connections>
+                                            <action selector="cameraBtn:" destination="7bC-YX-f90" eventType="touchUpInside" id="wRM-2o-3fR"/>
+                                        </connections>
                                     </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jhk-fF-ssu" customClass="GrowingTextView" customModule="GrowingTextView">
                                         <rect key="frame" x="52" y="5.5" width="246" height="43.5"/>
@@ -57,6 +60,9 @@
                                                     <constraint firstAttribute="width" secondItem="oUJ-Zx-AW1" secondAttribute="height" multiplier="1:1" id="PbZ-97-j3x"/>
                                                 </constraints>
                                                 <state key="normal" image="mic60"/>
+                                                <connections>
+                                                    <action selector="micBtn:" destination="7bC-YX-f90" eventType="touchUpInside" id="Jw6-jI-1mq"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="faf-cl-azJ">
                                                 <rect key="frame" x="45" y="0.0" width="40" height="40"/>
@@ -65,6 +71,9 @@
                                                     <constraint firstAttribute="width" secondItem="faf-cl-azJ" secondAttribute="height" multiplier="1:1" id="gSf-J7-KGL"/>
                                                 </constraints>
                                                 <state key="normal" image="gallery"/>
+                                                <connections>
+                                                    <action selector="picOrSendBtn:" destination="7bC-YX-f90" eventType="touchUpInside" id="Pmc-Ub-OLv"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>

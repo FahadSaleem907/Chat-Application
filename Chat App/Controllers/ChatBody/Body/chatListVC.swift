@@ -6,7 +6,6 @@ class chatListVC: UIViewController
     // MARK: - Constants
     let conversationServices = conversationFunctions()
     
-    
     // MARK: - Variables
     fileprivate var filtered = [Conversation?]()
     fileprivate var filterring = false
@@ -55,6 +54,12 @@ class chatListVC: UIViewController
         
         tabBarController?.tabBar.isHidden = false
     }
+    
+    func sendMessage()
+    {
+        
+    }
+    
     
     override func viewDidLoad()
     {
@@ -135,6 +140,7 @@ extension chatListVC: UITableViewDelegate, UITableViewDataSource
             userList = []
             userList = convoList[chatList.indexPathForSelectedRow!.row]!.users!
             chatVCData.users = userList
+            chatVCData.conversationID = convoList[chatList.indexPathForSelectedRow!.row]!.conversationID
         }
     }
 }
