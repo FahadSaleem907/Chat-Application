@@ -68,6 +68,16 @@ class chatCell: UITableViewCell
         
         leadingOrTrailingConstraints.isActive = false
         
+        if message.message!.count < 11 && bubbleView.isIncoming == true
+        {
+            NSLayoutConstraint.activate([
+                bubbleView.timeLbl.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
+                bubbleView.timeLbl.leadingAnchor.constraint(equalTo: bubbleView.chatLbl.leadingAnchor, constant: (CGFloat(message.message!.count * 10)+20)),
+                bubbleView.chatLbl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+                bubbleView.chatLbl.topAnchor.constraint(equalTo: topAnchor, constant: 30)
+                ])
+        }
+        
         if delegate.currentUser?.uid == message.uid
         {
             leadingOrTrailingConstraints = bubbleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12.0)
