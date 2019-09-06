@@ -91,7 +91,13 @@
                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="mBK-hq-ZaC"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U7S-zb-VfY">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Messages Exchanged. Send Now!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZaO-uT-80I">
+                                <rect key="frame" x="0.0" y="441" width="414" height="24.5"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="22"/>
+                                <color key="textColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U7S-zb-VfY">
                                 <rect key="frame" x="0.0" y="44" width="414" height="782.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -100,8 +106,11 @@
                         <color key="backgroundColor" red="0.58081901069999997" green="0.088427625600000004" blue="0.31863921880000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="8nA-48-GKx" firstAttribute="trailing" secondItem="U7S-zb-VfY" secondAttribute="trailing" id="6mo-jx-8uH"/>
+                            <constraint firstItem="ZaO-uT-80I" firstAttribute="centerY" secondItem="8nA-48-GKx" secondAttribute="centerY" id="DzF-06-fv4"/>
                             <constraint firstItem="Il9-8G-oZ8" firstAttribute="centerX" secondItem="8nA-48-GKx" secondAttribute="centerX" id="LTn-Hi-Nvm"/>
                             <constraint firstItem="U7S-zb-VfY" firstAttribute="leading" secondItem="8nA-48-GKx" secondAttribute="leading" id="WUh-eJ-9ji"/>
+                            <constraint firstItem="ZaO-uT-80I" firstAttribute="width" secondItem="yAh-ob-8Am" secondAttribute="width" id="X6B-OV-ncF"/>
+                            <constraint firstItem="ZaO-uT-80I" firstAttribute="centerX" secondItem="8nA-48-GKx" secondAttribute="centerX" id="aE6-eD-75D"/>
                             <constraint firstItem="Il9-8G-oZ8" firstAttribute="width" secondItem="yAh-ob-8Am" secondAttribute="width" multiplier="0.95" id="dqD-W1-mqg"/>
                             <constraint firstItem="Il9-8G-oZ8" firstAttribute="bottom" secondItem="yAh-ob-8Am" secondAttribute="bottom" constant="-15" id="gNu-Ri-hWU"/>
                             <constraint firstItem="U7S-zb-VfY" firstAttribute="top" secondItem="8nA-48-GKx" secondAttribute="top" id="giv-yx-pei"/>
@@ -115,6 +124,7 @@
                         <outlet property="gallery" destination="faf-cl-azJ" id="JYx-S1-xJN"/>
                         <outlet property="mic" destination="oUJ-Zx-AW1" id="1WW-DO-VOx"/>
                         <outlet property="msgTxt" destination="Jhk-fF-ssu" id="gGd-Od-yJw"/>
+                        <outlet property="noMsgTxt" destination="ZaO-uT-80I" id="mBA-Jp-nOZ"/>
                         <outlet property="typedMsgView" destination="Il9-8G-oZ8" id="fQB-qR-t2L"/>
                     </connections>
                 </viewController>

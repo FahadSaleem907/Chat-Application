@@ -5,6 +5,7 @@ class chatCell: UITableViewCell
     //    @IBInspectable public var color1 = UIColor.green
     //    @IBInspectable public var color2 = UIColor.black
     
+    let delegate = UIApplication.shared.delegate as! AppDelegate
     let bubbleView:ChatBubbleView =
     {
         let bubble = ChatBubbleView()
@@ -54,11 +55,20 @@ class chatCell: UITableViewCell
         bubbleView.dateLbl.text = "12-12-2019"
         bubbleView.timeLbl.text = "03:30 AM"
         bubbleView.chatLbl.text = message.message
-        bubbleView.isIncoming   = message.incoming!
+
+        if message.uid == delegate.currentUser?.uid
+        {
+            bubbleView.isIncoming   = message.incoming!
+        }
+        else
+        {
+            bubbleView.isIncoming   = !message.incoming!
+        }
+        
         
         leadingOrTrailingConstraints.isActive = false
         
-        if message.incoming!
+        if delegate.currentUser?.uid == message.uid
         {
             leadingOrTrailingConstraints = bubbleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12.0)
             //bubbleView.chatLbl.backgroundColor = color1

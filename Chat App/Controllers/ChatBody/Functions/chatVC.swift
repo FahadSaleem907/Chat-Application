@@ -12,19 +12,13 @@ class chatVC: UIViewController
     let messageService = messageFunctions()
     let userService = userFunctions()
     
-//    let theData: [Message] = [
-//
-//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A short message."),
-//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "A medium length message, longer than short."),
-//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "A long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content."),
-//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "Another short message."),
-//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: false, message: "Another medium length message, longer than short."),
-//        Message(msgid: nil,uid: nil,dateTime: nil , date: nil, time: nil, conversationID: nil, incoming: true, message: "Another long message. This one should be long enough to wrap onto multiple lines, showing that this message bubble cell will auto-size itself to the message content.")
-//    ]
     
     // MARK: -Variables
     var receiverID:String?
     var conversationID:String?
+    var dateAndTime:String?
+    var dateOnly:String?
+    var timeOnly:String?
     var users:[String?] = []
     {
         didSet
@@ -40,11 +34,28 @@ class chatVC: UIViewController
     {
         didSet
         {
-            self.users.sort
-                {
-                    (a, b) -> Bool in
-                    return a! < b!
+            if self.messages.count > 1
+            {
+                self.messages.sort
+                    {
+                        (a, b) -> Bool in
+                        
+                    let isoDateA = a?.dateTime
+                    let isoDateB = b?.dateTime
+
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateStyle = .medium
+                    dateFormatter.timeStyle = .medium
+                    let dateA = dateFormatter.date(from: isoDateA!)
+                    let dateB = dateFormatter.date(from: isoDateB!)
+                        
+                    return dateA! < dateB!
+//                    dateFormatter.dateFormat = "dd-MM-yyyy HH:MM:SS"
+//                    return a!.dateTime > b!.dateTime
+                    }
             }
+            //messageService.updateIncomingStatus(users: users, convoID: self.conversationID!, message: self.messages)
+            chat.reloadData()
         }
     }
     
@@ -55,6 +66,7 @@ class chatVC: UIViewController
     @IBOutlet weak var typedMsgView: UIView!
     @IBOutlet weak var msgTxt: GrowingTextView!
     
+    @IBOutlet weak var noMsgTxt: UILabel!
     @IBOutlet weak var camera: UIButton!
     @IBOutlet weak var mic: UIButton!
     @IBOutlet weak var gallery: UIButton!
@@ -70,7 +82,6 @@ class chatVC: UIViewController
     {
         print("mic")
     }
-    
     
     @IBAction func picOrSendBtn(_ sender: UIButton)
     {
@@ -102,6 +113,53 @@ class chatVC: UIViewController
             handleButton()
         }
     }
+    
+    
+    func getDateTime()
+    {
+        let dateTime = Date()
+        let dateTimeFormat = DateFormatter()
+        dateTimeFormat.dateStyle = .medium
+        dateTimeFormat.timeStyle = .medium
+        dateAndTime = dateTimeFormat.string(from: dateTime)
+    }
+    
+    
+    func getDate()
+    {
+        let date = Date()
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .medium
+        dateFormat.timeStyle = .none
+        dateOnly = dateFormat.string(from: date)
+    }
+
+    func getTime()
+    {
+        let time = Date()
+        let timeFormat = DateFormatter()
+        timeFormat.dateStyle = .none
+        timeFormat.timeStyle = .medium
+        timeOnly = timeFormat.string(from: time)
+    }
+    
+    
+//    func getMessages(userArr:[String?],completion:@escaping([Message?]?)->Void)
+//    {
+//        self.messageService.getMsgs(convoID: self.conversationID, users: userArr)
+//        {
+//            (msgArray, error) in
+//            guard let msgArray = msgArray else
+//            {
+//                print("Error : \(error)")
+//                completion(nil)
+//                return
+//            }
+//
+//            print(msgArray.count)
+//            completion(msgArray)
+//        }
+//    }
     
     func createConvo(users:[String?],completion:@escaping(Bool,String?)->Void)
     {
@@ -140,7 +198,11 @@ class chatVC: UIViewController
     
     func sendMessage(conversationID:String)
     {
-        let message1 = Message(msgid: "test", uid: delegate.currentUser!.uid!, dateTime: "123", date: "123", time: "123", conversationID: self.conversationID, incoming: false, message: msgTxt.text)
+        getDateTime()
+        getDate()
+        getTime()
+        
+        let message1 = Message(msgid: "test", uid: delegate.currentUser!.uid!, dateTime: "\(dateAndTime!)", date: "\(dateOnly!)", time: "\(timeOnly!)", conversationID: self.conversationID, incoming: false, message: msgTxt.text)
             
         messageService.createMessage(message: message1, ConvoID: self.conversationID)
         {
@@ -153,6 +215,20 @@ class chatVC: UIViewController
             {
                 print(error)
             }
+        }
+    }
+    
+    func getMsgs()
+    {
+        messageService.getOneToOneMsgs(convoID: self.conversationID!) { (messageArray, error) in
+            guard let messageArray = messageArray else
+            {
+                print("Error: \(error!)")
+                return
+            }
+            self.messages.removeAll()
+            self.messages = messageArray
+            print(self.messages.count)
         }
     }
     
@@ -264,12 +340,27 @@ class chatVC: UIViewController
             print(users)
         }
         
+        
         checkForExistance
             {
                 (success) in
                 if success == true
                 {
                     print("Enjoy")
+                    self.getMsgs()
+//                    self.messages = []
+//                    self.getMessages(userArr: self.users, completion:
+//                        {
+//                            (msgArr) in
+//                            guard let msgArr = msgArr else
+//                            {
+//                                print("No Messages")
+//                                return
+//                            }
+//                            self.messages.removeAll()
+//                            self.messages = msgArr
+//                            print(msgArr.count)
+//                    })
                 }
                 else
                 {
@@ -281,6 +372,22 @@ class chatVC: UIViewController
                                 print("Convo Created")
                                 self.conversationID = result
                                 print("1:\(self.conversationID)")
+
+                                self.getMsgs()
+//                                self.messages = []
+//
+//                                self.getMessages(userArr: self.users, completion:
+//                                    {
+//                                        (msgArr) in
+//                                        guard let msgArr = msgArr else
+//                                        {
+//                                            print("No Messages")
+//                                            return
+//                                        }
+//                                        self.messages.removeAll()
+//                                        self.messages = msgArr
+//                                        print(msgArr.count)
+//                                })
                             }
                             else
                             {
@@ -289,6 +396,8 @@ class chatVC: UIViewController
                         })
                 }
             }
+        
+
 //        checkIfConvoExists()
 //        createConversation()
 //        getConvoID
@@ -317,7 +426,18 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = chat.dequeueReusableCell(withIdentifier: "cell",for: indexPath) as! chatCell
-        cell.setData(messages[indexPath.row]!)
+        
+        if messages.count == 0
+        {
+            noMsgTxt.isHidden = false
+            chat.isHidden = true
+        }
+        else
+        {
+            noMsgTxt.isHidden = true
+            chat.isHidden = false
+            cell.setData(messages[indexPath.row]!)
+        }
         cell.contentView.backgroundColor = UIColor.clear
         chat.backgroundColor = UIColor.clear
         cell.bubbleView.backgroundColor = UIColor.clear
@@ -327,7 +447,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return 5
+        return messages.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int
