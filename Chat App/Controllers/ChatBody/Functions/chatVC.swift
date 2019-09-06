@@ -442,7 +442,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
             noMsgTxt.isHidden = true
             chat.isHidden = false
             cell.setData(messages[indexPath.row]!)
-            //chat.scrollToRow(at: indexPath, at: .bottom, animated: true)
+//            chat.scrollToRow(at: indexPath, at: .bottom, animated: true)          
         }
         cell.contentView.backgroundColor = UIColor.clear
         chat.backgroundColor = UIColor.clear
