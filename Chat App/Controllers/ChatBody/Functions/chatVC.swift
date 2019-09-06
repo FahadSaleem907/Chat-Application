@@ -86,6 +86,7 @@ class chatVC: UIViewController
     @IBAction func picOrSendBtn(_ sender: UIButton)
     {
         handleSendButton()
+        
     }
     
     //MARK: - Functions
@@ -110,6 +111,7 @@ class chatVC: UIViewController
             sendMessage(conversationID: self.conversationID!)
             print("\(msgTxt.text!)")
             msgTxt.text = ""
+            self.view.endEditing(true)
             handleButton()
         }
     }
@@ -321,6 +323,10 @@ class chatVC: UIViewController
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     override func viewDidLayoutSubviews()
     {
         typedMsgView.layer.cornerRadius = 20
@@ -396,7 +402,6 @@ class chatVC: UIViewController
                         })
                 }
             }
-        
 
 //        checkIfConvoExists()
 //        createConversation()
@@ -437,6 +442,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
             noMsgTxt.isHidden = true
             chat.isHidden = false
             cell.setData(messages[indexPath.row]!)
+            //chat.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
         cell.contentView.backgroundColor = UIColor.clear
         chat.backgroundColor = UIColor.clear

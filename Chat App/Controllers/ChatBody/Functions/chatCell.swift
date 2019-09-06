@@ -52,8 +52,8 @@ class chatCell: UITableViewCell
     
     func setData(_ message: Message) -> Void
     {
-        bubbleView.dateLbl.text = "12-12-2019"
-        bubbleView.timeLbl.text = "03:30 AM"
+        bubbleView.dateLbl.text = "\(message.date!)"
+        bubbleView.timeLbl.text = "\(message.time!)"
         bubbleView.chatLbl.text = message.message
 
         if message.uid == delegate.currentUser?.uid
