@@ -16,7 +16,8 @@ class oneToOneConvoFunctions
 {
     let delegate = UIApplication.shared.delegate as! AppDelegate
     lazy var db = Firestore.firestore()
-    
+    var convoList = [String?]()
+    var conversations = [Conversation?]()
     
     func checkIfOneToOneConvoExists(users:[String?],completion:@escaping(Int?)->Void)
     {
@@ -81,4 +82,62 @@ class oneToOneConvoFunctions
                 }
             })
     }
+    
+    func getConversations(completion:@escaping([String?]?,String?)->Void)
+    {
+        
+        var ref = self.db.collection("Users")
+        
+        let query = ref.whereField("uid", isEqualTo: self.delegate.currentUser!.uid!)
+        
+        query.addSnapshotListener
+            {
+                (snapshot, error) in
+                
+                guard let snapshot = snapshot else
+                {
+                    print("Error: \(error?.localizedDescription)")
+                    completion(nil,error?.localizedDescription)
+                    return
+                }
+                
+                self.convoList = []
+                
+                for i in snapshot.documents
+                {
+                    let tmpArray = i.data()["conversations"] as! Any
+                    print(tmpArray)
+                    self.convoList = tmpArray as! [String?]
+                    completion(self.convoList,nil)
+                }
+            }
+    }
+    
+//    func getConvoUsers(convoID:String?,completion:@escaping([Conversation?]?,String?)->Void)
+//    {
+//        var ref = self.db.collection("conversation")
+//
+//        let fetchUsers = ref.whereField("conversationID", isEqualTo: convoID!)/*("conversations", arrayContains: "\(convoID!)")*/
+//
+//        print(convoID!)
+//        fetchUsers.addSnapshotListener{
+//            (snapshot, error) in
+//            guard let snapshot = snapshot else
+//                {
+//                    print("Error: \(error?.localizedDescription)")
+//                    completion(nil,error?.localizedDescription)
+//                    return
+//                }
+//
+//                self.conversations = []
+//
+//                for i in snapshot.documents
+//                {
+//                    let tmpConvo = Conversation(conversationID: i.data()["conversationID"] as! String, dateCreated: i.data()["dateTimeCreated"] as! String, users: i.data()["users"] as! [String])
+//
+//                        self.conversations.append(tmpConvo)
+//                }
+//                completion(self.conversations , nil)
+//        }
+//    }
 }

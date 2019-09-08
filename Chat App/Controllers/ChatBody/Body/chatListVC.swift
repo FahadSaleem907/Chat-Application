@@ -5,12 +5,21 @@ class chatListVC: UIViewController
 
     // MARK: - Constants
     let conversationServices = conversationFunctions()
+    let oneToOneConvoServices = oneToOneConvoFunctions()
     
     // MARK: - Variables
-    fileprivate var filtered = [Conversation?]()
+    fileprivate var filtered = [String?]()
     fileprivate var filterring = false
+    var convoID:String?
     var userList = [String?]()
-    var convoList = [Conversation?]()
+    var convos = [Conversation?]()
+    {
+        didSet
+        {
+            chatList.reloadData()
+        }
+    }
+    var convoList = [String?]()
     {
         didSet
         {
@@ -27,7 +36,7 @@ class chatListVC: UIViewController
     func getConvoList(completion:@escaping([Conversation?]?)->Void)
     {
         conversationServices.getConversations { (conversation, error) in
-            
+
             if error != nil
             {
                 print(error)
@@ -40,17 +49,77 @@ class chatListVC: UIViewController
         }
     }
     
+//    func getConvoUsers1(completion:@escaping([Conversation?]?)->Void)
+//    {
+//        oneToOneConvoServices.getConvoUsers(convoID: convoList[chatList.indexPathForSelectedRow!.row], completion:
+//            {
+//                (conversation, error) in
+//
+//                if error != nil
+//                {
+//                    print(error)
+//                }
+//                else
+//                {
+//                    print(conversation)
+//                    completion(conversation!)
+//                }
+//            })
+//    }
+    
+    func getOneToOneConvoList(completion:@escaping([String?]?)->Void)
+    {
+        oneToOneConvoServices.getConversations { (convoArr, error) in
+            if error != nil
+            {
+                print(error)
+            }
+            else
+            {
+                print("Got Conversation List")
+                completion(convoArr)
+            }
+        }
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool)
     {
         getConvoList
             {
                 (convo) in
                 guard let convo = convo else { return }
-                
-                self.convoList.removeAll()
-                self.convoList = convo
-                print(self.convoList)
+
+                self.convos.removeAll()
+                self.convos = convo
+                print(self.convos)
             }
+
+        getOneToOneConvoList
+            {
+                (array) in
+                guard let array = array else
+                {
+                    print("No Convo Found")
+                    return
+                }
+                self.convoList.removeAll()
+                self.convoList = array
+        }
+        
+//        getConvoUsers { (conversations) in
+//            guard let conversations = conversations else
+//            {
+//                return
+//            }
+//
+//            self.userList = []
+//
+//            for i in conversations
+//            {
+//                self.userList = i!.users!
+//            }
+//        }
         
         tabBarController?.tabBar.isHidden = false
     }
@@ -85,6 +154,7 @@ class chatListVC: UIViewController
         
         chatList.delegate   = self
         chatList.dataSource = self
+    
     }
 }
 
@@ -98,13 +168,14 @@ extension chatListVC:UISearchResultsUpdating
                 
                 //return i.lowercased().contains(text.lowercased())
                 
-                return (i!.conversationID?.lowercased().contains(text.lowercased()))!
+                return (i!.lowercased().contains(text.lowercased()))
+                //return (i!.conversationID?.lowercased().contains(text.lowercased()))!
             })
             self.filterring = true
         }
         else {
             self.filterring = false
-            self.filtered = [Conversation?]()
+            self.filtered = [String?]()
         }
         self.chatList.reloadData()
     }
@@ -116,7 +187,7 @@ extension chatListVC: UITableViewDelegate, UITableViewDataSource
     {
         let cell = chatList.dequeueReusableCell(withIdentifier: "cell") as! chatListCell
         
-        cell.chatName.text = convoList[indexPath.row]?.conversationID
+        cell.chatName.text = convoList[indexPath.row]//.conversationID
         return cell
     }
     
@@ -132,6 +203,20 @@ extension chatListVC: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         performSegue(withIdentifier: "chatVC", sender: self)
+        
+//        getConvoUsers1 { (conversations) in
+//            guard let conversations = conversations else
+//            {
+//                return
+//            }
+//
+//            self.userList = []
+//
+//            for i in conversations
+//            {
+//                self.userList = i!.users!
+//            }
+//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -142,9 +227,42 @@ extension chatListVC: UITableViewDelegate, UITableViewDataSource
             let chatVCData = segue.destination as! chatVC
         
             userList = []
-            userList = convoList[chatList.indexPathForSelectedRow!.row]!.users!
+            self.userList = convos[chatList.indexPathForSelectedRow!.row]!.users!
+            convoID = convoList[chatList.indexPathForSelectedRow!.row]//!.users!
+//            oneToOneConvoServices.getConvoUsers(convoID: convoID!)
+//            {
+//                (usersArray, error) in
+//                guard let usersArray = usersArray else
+//                {
+//                    print("Error: \(error)")
+//                    return
+//                }
+//
+//                for i in usersArray
+//                {
+//                    self.userList.append(i!.uid)
+//                    print(i?.uid)
+//                }
+//                chatVCData.users = self.userList
+//            }
+            
+//            getConvoUsers1 { (conversations) in
+//                guard let conversations = conversations else
+//                {
+//                    return
+//                }
+//
+//                self.userList = []
+//
+//                for i in conversations
+//                {
+//                    self.userList = i!.users!
+//                }
+//            }
+            print(userList)
+            
             chatVCData.users = userList
-            chatVCData.conversationID = convoList[chatList.indexPathForSelectedRow!.row]!.conversationID
+            chatVCData.conversationID = convoID! //convoList[chatList.indexPathForSelectedRow!.row]//!.conversationID
         }
     }
 }

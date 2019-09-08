@@ -8,7 +8,7 @@ class chatVC: UIViewController
     //MARK: - Constants
     let delegate = UIApplication.shared.delegate as! AppDelegate
     let conversationService = conversationFunctions()
-    let oneToOneConvoService = oneToOneConvoFunctions()
+    let oneToOneConvoServices = oneToOneConvoFunctions()
     let messageService = messageFunctions()
     let userService = userFunctions()
     
@@ -167,7 +167,7 @@ class chatVC: UIViewController
     {
         let convo1 = Conversation(conversationID: "\(users[0]!+users[1]!)", dateCreated: "123", users: users as! [String])
         
-        oneToOneConvoService.createOneToOneConvo(conversation: convo1) { (convo, success, error) in
+        oneToOneConvoServices.createOneToOneConvo(conversation: convo1) { (convo, success, error) in
             if success == true{
                 print("Convo created : \(convo?.conversationID)")
                 self.userService.updateConversationList(convoID: convo?.conversationID, users: users)
@@ -183,7 +183,7 @@ class chatVC: UIViewController
     
     func checkForExistance(completion:@escaping(Bool)->Void)
     {
-        oneToOneConvoService.checkIfOneToOneConvoExists(users: users as! [String]) { (count) in
+        oneToOneConvoServices.checkIfOneToOneConvoExists(users: users as! [String]) { (count) in
             
             if count != nil
             {
@@ -233,6 +233,47 @@ class chatVC: UIViewController
             print(self.messages.count)
         }
     }
+    
+//    func getConvoUsers2(completion:@escaping([Conversation?]?)->Void)
+//    {
+//        oneToOneConvoServices.getConvoUsers(convoID: self.conversationID, completion:
+//            {
+//                (conversation, error) in
+//                
+//                if error != nil
+//                {
+//                    print(error)
+//                }
+//                else
+//                {
+//                    print(conversation)
+//                    completion(conversation!)
+//                }
+//        })
+//    }
+    
+//    func getConvoUsers(completion:@escaping([String?]?)->Void)
+//    {
+//
+//        oneToOneConvoService.getConvoUsers(convoID: self.conversationID!)
+//        {
+//            (usersArray, error) in
+//            guard let usersArray = usersArray else
+//            {
+//                print("Error: \(error)")
+//                completion(nil)
+//                return
+//            }
+//
+//            for i in usersArray
+//            {
+//                self.users.append(i!.uid)
+//                print(i!.uid)
+//            }
+//            completion(self.users)
+//            print(self.users)
+//        }
+//    }
     
 //    func getConvoID(completion:@escaping(String)->Void)
 //    {
@@ -339,6 +380,38 @@ class chatVC: UIViewController
         navigationController?.navigationBar.prefersLargeTitles = false
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = true
+        
+//        getConvoUsers2
+//            {
+//                (conversations) in
+//                guard let conversations = conversations else
+//                {
+//                    return
+//                }
+//
+//                self.users = []
+//
+//                for i in conversations
+//                {
+//                    self.users = i!.users!
+//                }
+//            }
+        
+//        getConvoUsers
+//            {
+//                (usersArray) in
+//                guard let usersArray = usersArray else
+//                {
+//                    print("Get ready for error Error Time")
+//                    return
+//                }
+//
+//                self.users.removeAll()
+//                self.users = usersArray
+//
+//                print(self.users)
+//        }
+        
         if users.isEmpty == true || users.count == 1
         {
             handleCurrentUser()
@@ -354,6 +427,21 @@ class chatVC: UIViewController
                 {
                     print("Enjoy")
                     self.getMsgs()
+                    
+//                    self.getConvoUsers
+//                        {
+//                            (usersArray) in
+//                            guard let usersArray = usersArray else
+//                            {
+//                                print("Get ready for error Error Time")
+//                                return
+//                            }
+//
+//                            self.users.removeAll()
+//                            self.users = usersArray
+//
+//                            print(self.users)
+//                    }
 //                    self.messages = []
 //                    self.getMessages(userArr: self.users, completion:
 //                        {
@@ -380,6 +468,22 @@ class chatVC: UIViewController
                                 print("1:\(self.conversationID)")
 
                                 self.getMsgs()
+                                
+//                                self.getConvoUsers
+//                                    {
+//                                        (usersArray) in
+//                                        guard let usersArray = usersArray else
+//                                        {
+//                                            print("Get ready for error Error Time")
+//                                            return
+//                                        }
+//
+//                                        self.users.removeAll()
+//                                        self.users = usersArray
+//
+//                                        print(self.users)
+//                                }
+                                
 //                                self.messages = []
 //
 //                                self.getMessages(userArr: self.users, completion:
