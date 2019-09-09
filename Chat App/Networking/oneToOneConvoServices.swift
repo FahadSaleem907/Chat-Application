@@ -31,7 +31,7 @@ class oneToOneConvoFunctions
                 guard let snapshot = snapshot
                     else
                 {
-                    print("Error: \(error?.localizedDescription)")
+                    print("Error: \(error!.localizedDescription)")
                     completion(nil)
                     return
                 }
@@ -64,10 +64,10 @@ class oneToOneConvoFunctions
         let dataDic:[String:Any] = [
             "conversationID":"\(conversation1.users![0]+conversation1.users![1])",
             "dateTimeCreated":"\(conversation1.dateCreated!)",
-            "users":conversation1.users,
-            "conversationName":"\(conversation1.convoName)",
-            "conversationLastMessage":"\(conversation1.convoLastMessage)",
-            "conversationLastMessageTime":"\(conversation1.convoLastMessageTime)"
+            "users":conversation1.users!,
+            "conversationName":"\(conversation1.convoName!)",
+            "conversationLastMessage":"\(conversation1.convoLastMessage!)",
+            "conversationLastMessageTime":"\(conversation1.convoLastMessageTime!)"
         ]
         
         ref?.setData(dataDic, completion:
@@ -89,7 +89,7 @@ class oneToOneConvoFunctions
     func getConversations(completion:@escaping([String?]?,String?)->Void)
     {
         
-        var ref = self.db.collection("Users")
+        let ref = self.db.collection("Users")
         
         let query = ref.whereField("uid", isEqualTo: self.delegate.currentUser!.uid!)
         
@@ -99,8 +99,8 @@ class oneToOneConvoFunctions
                 
                 guard let snapshot = snapshot else
                 {
-                    print("Error: \(error?.localizedDescription)")
-                    completion(nil,error?.localizedDescription)
+                    print("Error: \(error!.localizedDescription)")
+                    completion(nil,error!.localizedDescription)
                     return
                 }
                 
@@ -108,7 +108,7 @@ class oneToOneConvoFunctions
                 
                 for i in snapshot.documents
                 {
-                    let tmpArray = i.data()["conversations"] as! Any
+                    let tmpArray = i.data()["conversations"] as Any
                     print(tmpArray)
                     self.convoList = tmpArray as! [String?]
                     completion(self.convoList,nil)

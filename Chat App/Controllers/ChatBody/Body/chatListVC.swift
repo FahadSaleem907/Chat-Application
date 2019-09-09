@@ -32,6 +32,7 @@ class chatListVC: UIViewController
     
     // MARK: - Outlets
     @IBOutlet weak var chatList: UITableView!
+    @IBOutlet weak var noChatsLbl: UILabel!
     
     // MARK: - Actions
     // MARK: - Functions
@@ -42,11 +43,11 @@ class chatListVC: UIViewController
 
             if error != nil
             {
-                print(error)
+                print(error!)
             }
             else
             {
-                print(conversation)
+                print(conversation!)
                 completion(conversation!)
             }
         }
@@ -75,7 +76,7 @@ class chatListVC: UIViewController
         oneToOneConvoServices.getConversations { (convoArr, error) in
             if error != nil
             {
-                print(error)
+                print(error!)
             }
             else
             {
@@ -85,6 +86,19 @@ class chatListVC: UIViewController
         }
     }
     
+    func handleChatList()
+    {
+        if convoList.count == 0
+        {
+            noChatsLbl.isHidden = false
+            chatList.isHidden   = true
+        }
+        else
+        {
+            chatList.isHidden   = false
+            noChatsLbl.isHidden = true
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool)
     {
@@ -108,7 +122,13 @@ class chatListVC: UIViewController
                 }
                 self.convoList.removeAll()
                 self.convoList = array
+                print(array)
+                self.handleChatList()
+                print(self.convoList.count)
         }
+        
+        print(convoList.count)
+        
         
 //        getConvoUsers { (conversations) in
 //            guard let conversations = conversations else
@@ -190,6 +210,9 @@ extension chatListVC: UITableViewDelegate, UITableViewDataSource
     {
         let cell = chatList.dequeueReusableCell(withIdentifier: "cell") as! chatListCell
         
+        cell.mainView.backgroundColor = .init(red: 140/255, green: 200/255, blue: 62/255, alpha: 0.5)
+        cell.layer.cornerRadius = 25
+        cell.backgroundColor = .clear
         cell.chatName.text = convoList[indexPath.row]//.conversationID
         return cell
     }
@@ -308,12 +331,12 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                     
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                             }
                             else
                             {
-                                lastDate = "\(dateDifference) Days"
+                                lastDate = "\(dateDifference!) Days"
                             }
                         }
                         else if nameOfMonth == "February"
@@ -333,7 +356,7 @@ extension chatListVC
                                     {
                                         dateDifference = sinceDate.years(sinceDate: sinceDate)
                                         
-                                        lastDate = "\(dateDifference) Years"
+                                        lastDate = "\(dateDifference!) Years"
                                     }
                                     else
                                     {
@@ -342,7 +365,7 @@ extension chatListVC
                                 }
                                 else
                                 {
-                                    lastDate = "\(dateDifference)  Days"
+                                    lastDate = "\(dateDifference!)  Days"
                                 }
                             }
                             else
@@ -354,7 +377,7 @@ extension chatListVC
                                     {
                                         dateDifference = sinceDate.years(sinceDate: sinceDate)
                                         
-                                        lastDate = "\(dateDifference) Years"
+                                        lastDate = "\(dateDifference!) Years"
                                     }
                                     else
                                     {
@@ -363,7 +386,7 @@ extension chatListVC
                                 }
                                 else
                                 {
-                                    lastDate = "\(dateDifference) Days"
+                                    lastDate = "\(dateDifference!) Days"
                                 }
                             }
                         }
@@ -376,7 +399,7 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                 
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                                 else
                                 {
@@ -385,7 +408,7 @@ extension chatListVC
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                         else if nameOfMonth == "April"
@@ -396,7 +419,7 @@ extension chatListVC
                                 if dateDifference! > 12
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                                 else
                                 {
@@ -405,7 +428,7 @@ extension chatListVC
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                         else if nameOfMonth == "May"
@@ -417,7 +440,7 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                 
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                                 else
                                 {
@@ -426,7 +449,7 @@ extension chatListVC
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                         else if nameOfMonth == "June"
@@ -438,7 +461,7 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                     
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                                 else
                                 {
@@ -447,7 +470,7 @@ extension chatListVC
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                         else if nameOfMonth == "July"
@@ -459,7 +482,7 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                 
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                                 else
                                 {
@@ -468,7 +491,7 @@ extension chatListVC
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                         else if nameOfMonth == "August"
@@ -480,7 +503,7 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                 
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                                 else
                                 {
@@ -489,7 +512,7 @@ extension chatListVC
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                         else if nameOfMonth == "September"
@@ -501,7 +524,7 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                 
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                                 else
                                 {
@@ -510,7 +533,7 @@ extension chatListVC
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                         else if nameOfMonth == "October"
@@ -522,7 +545,7 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                 
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                                 else
                                 {
@@ -531,7 +554,7 @@ extension chatListVC
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                         else if nameOfMonth == "November"
@@ -543,7 +566,7 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                     
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                                 else
                                 {
@@ -552,7 +575,7 @@ extension chatListVC
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                         else if nameOfMonth == "December"
@@ -564,29 +587,29 @@ extension chatListVC
                                 {
                                     dateDifference = sinceDate.years(sinceDate: sinceDate)
                                     
-                                    lastDate = "\(dateDifference) Years"
+                                    lastDate = "\(dateDifference!) Years"
                                 }
                             }
                             else
                             {
-                                lastDate = "\(dateDifference)  Days"
+                                lastDate = "\(dateDifference!)  Days"
                             }
                         }
                     }
                 }
                 else
                 {
-                    lastDate = "\(dateDifference) Hours"
+                    lastDate = "\(dateDifference!) Hours"
                 }
             }
             else
             {
-                lastDate = "\(dateDifference) Minutes"
+                lastDate = "\(dateDifference!) Minutes"
             }
         }
         else
         {
-            lastDate = "\(dateDifference) Seconds"
+            lastDate = "\(dateDifference!) Seconds"
         }
         return lastDate
     }

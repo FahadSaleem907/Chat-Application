@@ -28,7 +28,7 @@ class loginVC: UIViewController
             (user, error) in
             if error != nil
             {
-                print(error)
+                print(error!)
             }
             else
             {

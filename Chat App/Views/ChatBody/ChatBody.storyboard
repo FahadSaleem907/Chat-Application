@@ -111,19 +111,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7vK-mj-ZDx">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7vK-mj-ZDx">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" rowHeight="180" id="ppM-7P-cOb" customClass="chatListCell" customModule="Chat_App" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ppM-7P-cOb" id="I54-gV-2Ra">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="179.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="180"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51R-jt-ZEB">
-                                                    <rect key="frame" x="0.0" y="2.5" width="414" height="174.5"/>
+                                                    <rect key="frame" x="0.0" y="2.5" width="414" height="175"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Message Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyz-5f-ySV">
                                                             <rect key="frame" x="257.5" y="0.0" width="146.5" height="20.5"/>
@@ -132,25 +132,25 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="FFg-Vh-IfQ">
-                                                            <rect key="frame" x="12.5" y="22" width="389" height="130.5"/>
+                                                            <rect key="frame" x="12" y="22" width="390" height="131"/>
                                                             <subviews>
                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="call" translatesAutoresizingMaskIntoConstraints="NO" id="HGo-99-vip">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="130.5" height="130.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="131.5" height="131"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="HGo-99-vip" secondAttribute="height" multiplier="1:1" id="OQi-fI-sMu"/>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="eeK-gi-fxA">
-                                                                    <rect key="frame" x="140.5" y="19" width="248.5" height="92.5"/>
+                                                                    <rect key="frame" x="141.5" y="19.5" width="248.5" height="92.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pnB-cf-qfe">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="248.5" height="44"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="248.5" height="43.5"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lih-QI-Ol3">
-                                                                            <rect key="frame" x="0.0" y="49" width="248.5" height="43.5"/>
+                                                                            <rect key="frame" x="0.0" y="48.5" width="248.5" height="44"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
@@ -160,7 +160,7 @@
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="HGo-99-vip" firstAttribute="height" secondItem="51R-jt-ZEB" secondAttribute="height" multiplier="0.75" id="0yg-oJ-dRN"/>
                                                         <constraint firstItem="FFg-Vh-IfQ" firstAttribute="centerX" secondItem="51R-jt-ZEB" secondAttribute="centerX" id="6Ca-79-lkc"/>
@@ -192,13 +192,22 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Chats Available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qjQ-MK-q8W">
+                                <rect key="frame" x="0.0" y="436.5" width="414" height="28"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldMT" family="Times New Roman" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.58081901069999997" green="0.088427625600000004" blue="0.31863921880000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="2WC-Ar-oQf" firstAttribute="bottom" secondItem="7vK-mj-ZDx" secondAttribute="bottom" id="AQa-SE-TyM"/>
                             <constraint firstItem="7vK-mj-ZDx" firstAttribute="top" secondItem="2WC-Ar-oQf" secondAttribute="top" id="Qcl-qX-WE6"/>
+                            <constraint firstItem="qjQ-MK-q8W" firstAttribute="centerY" secondItem="2WC-Ar-oQf" secondAttribute="centerY" id="R1G-0o-77O"/>
+                            <constraint firstItem="qjQ-MK-q8W" firstAttribute="width" secondItem="7pH-5i-yWS" secondAttribute="width" id="REd-aK-5tG"/>
                             <constraint firstItem="2WC-Ar-oQf" firstAttribute="trailing" secondItem="7vK-mj-ZDx" secondAttribute="trailing" id="Tct-pu-pbe"/>
                             <constraint firstItem="7vK-mj-ZDx" firstAttribute="leading" secondItem="2WC-Ar-oQf" secondAttribute="leading" id="emW-AL-g5o"/>
+                            <constraint firstItem="qjQ-MK-q8W" firstAttribute="centerX" secondItem="2WC-Ar-oQf" secondAttribute="centerX" id="qdv-pW-A7T"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2WC-Ar-oQf"/>
                     </view>
@@ -211,6 +220,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="chatList" destination="7vK-mj-ZDx" id="Kcx-bk-MXo"/>
+                        <outlet property="noChatsLbl" destination="qjQ-MK-q8W" id="ZlY-EN-OH2"/>
                         <segue destination="np6-Lz-KgB" kind="show" identifier="chatVC" id="MQ9-Yb-I1n"/>
                     </connections>
                 </viewController>

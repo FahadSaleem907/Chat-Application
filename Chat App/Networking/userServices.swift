@@ -21,7 +21,7 @@ public class userFunctions
 
             guard let user = result?.user else
             {
-                print("Error : \(error?.localizedDescription)")
+                print("Error : \(error!.localizedDescription)")
                 completion(nil,error!.localizedDescription)
                 return
             }
@@ -37,18 +37,18 @@ public class userFunctions
                     
                     guard let snapshot = snapshot else
                     {
-                        print("Error: \(error?.localizedDescription)")
+                        print("Error: \(error!.localizedDescription)")
                         completion(nil,error!.localizedDescription)
                         return
                     }
                     
-                    self.delegate.currentUser!.name = snapshot.data()!["name"] as! String
-                    self.delegate.currentUser!.email = snapshot.data()!["email"] as! String
-                    self.delegate.currentUser!.dateOfBirth = snapshot.data()!["dateOfBirth"] as! String
-                    self.delegate.currentUser!.gender = snapshot.data()!["gender"] as! String
-                    self.delegate.currentUser!.uid = snapshot.data()!["uid"] as! String
-                    self.delegate.currentUser!.downloadURL = snapshot.data()!["downloadURL"] as! String
-                    self.delegate.currentUser!.isOnline = snapshot.data()!["isOnline"] as! Bool
+                    self.delegate.currentUser!.name = snapshot.data()!["name"] as? String
+                    self.delegate.currentUser!.email = snapshot.data()!["email"] as? String
+                    self.delegate.currentUser!.dateOfBirth = snapshot.data()!["dateOfBirth"] as? String
+                    self.delegate.currentUser!.gender = snapshot.data()!["gender"] as? String
+                    self.delegate.currentUser!.uid = snapshot.data()!["uid"] as? String
+                    self.delegate.currentUser!.downloadURL = snapshot.data()!["downloadURL"] as? String
+                    self.delegate.currentUser!.isOnline = snapshot.data()!["isOnline"] as? Bool
                     
                     completion(self.delegate.currentUser,nil)
             })
@@ -129,7 +129,7 @@ public class userFunctions
                     self.userList = []
                     for i in snapshot!.documents
                     {
-                        let tmpUser = User(name: i.data()["name"] as! String, email: i.data()["email"] as! String, password: nil, dateOfBirth: i.data()["dateOfBirth"] as! String, gender: i.data()["gender"] as! String, downloadURL: i.data()["downloadURL"] as! String, isOnline: false, uid: i.data()["uid"] as! String)
+                        let tmpUser = User(name: i.data()["name"] as? String, email: i.data()["email"] as? String, password: nil, dateOfBirth: i.data()["dateOfBirth"] as? String, gender: i.data()["gender"] as? String, downloadURL: i.data()["downloadURL"] as? String, isOnline: false, uid: i.data()["uid"] as? String)
                         
                         if tmpUser.email != self.delegate.currentUser?.email
                         {
@@ -137,7 +137,7 @@ public class userFunctions
                         }
                     }
                     
-                    completion(self.userList as! [User])
+                    completion(self.userList as? [User])
                 }
             }
     }
@@ -161,7 +161,7 @@ public class userFunctions
             (metaData, error) in
             if error != nil
             {
-                print("ERROR : \(error?.localizedDescription)")
+                print("ERROR : \(error!.localizedDescription)")
                 return
             }
             else

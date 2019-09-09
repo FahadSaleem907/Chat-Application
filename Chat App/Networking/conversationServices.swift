@@ -33,11 +33,11 @@ class conversationFunctions
             
             let dataDic:[String:Any] = [
                                     "conversationID":"\(conversation1.users![0]+conversation1.users![1])",
-                                    "dateTimeCreated":"\(conversation1.dateCreated)",
-                                    "users":conversation1.users,
-                                    "conversationName":"\(conversation1.convoName)",
-                                    "conversationLastMessage":"\(conversation1.convoLastMessage)",
-                                    "conversationLastMessageTime":"\(conversation1.convoLastMessageTime)"
+                                    "dateTimeCreated":"\(conversation1.dateCreated!)",
+                                    "users":conversation1.users!,
+                                    "conversationName":"\(conversation1.convoName!)",
+                                    "conversationLastMessage":"\(conversation1.convoLastMessage!)",
+                                    "conversationLastMessageTime":"\(conversation1.convoLastMessageTime!)"
                                         ]
             
             ref?.setData(dataDic, completion:
@@ -61,11 +61,11 @@ class conversationFunctions
             
             let dataDic : [String:Any]  =   [
                 "conversationID":"\(ref!.documentID)",
-                "dateTimeCreated":"\(conversation1.dateCreated)",
-                "users":conversation1.users,
-                "conversationName":"\(conversation1.convoName)",
-                "conversationLastMessage":"\(conversation1.convoLastMessage)",
-                "conversationLastMessageTime":"\(conversation1.convoLastMessageTime)"
+                "dateTimeCreated":"\(conversation1.dateCreated!)",
+                "users":conversation1.users!,
+                "conversationName":"\(conversation1.convoName!)",
+                "conversationLastMessage":"\(conversation1.convoLastMessage!)",
+                "conversationLastMessageTime":"\(conversation1.convoLastMessageTime!)"
             ]
             
             ref?.setData(dataDic, completion:
@@ -99,7 +99,7 @@ class conversationFunctions
                     
                     guard let snapshot = snapshot else
                     {
-                        print("Error: \(error?.localizedDescription)")
+                        print("Error: \(error!.localizedDescription)")
                         completion(nil,error?.localizedDescription,nil,nil)
                         return
                     }
@@ -148,7 +148,7 @@ class conversationFunctions
                 guard let snapshot = snapshot
                 else
                 {
-                    print("Error : \(error?.localizedDescription)")
+                    print("Error : \(error!.localizedDescription)")
                     completion(nil,error?.localizedDescription)
                     return
                 }
@@ -156,7 +156,7 @@ class conversationFunctions
                 for i in snapshot.documents
                 {
                     print(i)
-                    let tmpConvo = Conversation(conversationID: i.data()["conversationID"] as! String, dateCreated: i.data()["dateTimeCreated"] as! String, users: i.data()["users"] as! [String]?, convoName: i.data()["conversationName"] as! String, convoLastMessage: i.data()["conversationLastMessage"] as! String, convoLastMessageTime: i.data()["conversationLastMessageTime"] as! String)
+                    let tmpConvo = Conversation(conversationID: i.data()["conversationID"] as? String, dateCreated: i.data()["dateTimeCreated"] as? String, users: i.data()["users"] as! [String]?, convoName: i.data()["conversationName"] as? String, convoLastMessage: i.data()["conversationLastMessage"] as? String, convoLastMessageTime: i.data()["conversationLastMessageTime"] as? String)
                     
                     self.conversationArray.append(tmpConvo)
                 }
@@ -176,7 +176,7 @@ class conversationFunctions
                 guard let snapshot = snapshot
                 else
                 {
-                    print("Error: \(error?.localizedDescription)")
+                    print("Error: \(error!.localizedDescription)")
                     completion(nil)
                     return
                 }

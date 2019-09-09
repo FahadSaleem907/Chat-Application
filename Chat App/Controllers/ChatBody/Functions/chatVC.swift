@@ -165,16 +165,16 @@ class chatVC: UIViewController
     
     func createConvo(users:[String?],completion:@escaping(Bool,String?)->Void)
     {
-        let convo1 = Conversation(conversationID: "\(users[0]!+users[1]!)", dateCreated: "123", users: users as! [String], convoName: nil, convoLastMessage: nil , convoLastMessageTime: nil)
+        let convo1 = Conversation(conversationID: "\(users[0]!+users[1]!)", dateCreated: "123", users: users as? [String], convoName: "", convoLastMessage: "" , convoLastMessageTime:"")
         
         oneToOneConvoServices.createOneToOneConvo(conversation: convo1) { (convo, success, error) in
             if success == true{
-                print("Convo created : \(convo?.conversationID)")
+                print("Convo created : \(convo!.conversationID!)")
                 self.userService.updateConversationList(convoID: convo?.conversationID, users: users)
                 
                 completion(true,convo?.conversationID)
             }else{
-                print(error)
+                print(error!)
                 completion(false,error)
             }
         }
@@ -211,18 +211,18 @@ class chatVC: UIViewController
             (message, success, error) in
             if success == true
             {
-                print("Sent Successfully: \(message)")
+                print("Sent Successfully: \(message!)")
             }
             else
             {
-                print(error)
+                print(error!)
             }
         }
     }
     
     func getMsgs()
     {
-        messageService.getOneToOneMsgs(convoID: self.conversationID!) { (messageArray, error) in
+        messageService.getOneToOneMsgs(convoID: "\(users[0]!+users[1]!)"/*self.conversationID!*/) { (messageArray, error) in
             guard let messageArray = messageArray else
             {
                 print("Error: \(error!)")
@@ -465,7 +465,7 @@ class chatVC: UIViewController
                             {
                                 print("Convo Created")
                                 self.conversationID = result
-                                print("1:\(self.conversationID)")
+                                //print("1:\(self.conversationID)")
 
                                 self.getMsgs()
                                 
@@ -567,12 +567,12 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let cell = chat.cellForRow(at: indexPath) as! chatCell
+        //let cell = chat.cellForRow(at: indexPath) as! chatCell
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath)
     {
-        let cell = chat.cellForRow(at: indexPath) as! chatCell
+        //let cell = chat.cellForRow(at: indexPath) as! chatCell
     }
 }
 

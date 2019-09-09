@@ -42,7 +42,7 @@ public class messageFunctions
                 (error) in
                 if error != nil
                 {
-                    print("\(error?.localizedDescription)")
+                    print("\(error!.localizedDescription)")
                 }
                 else
                 {
@@ -69,7 +69,7 @@ public class messageFunctions
                     (snapshot, error) in
                     guard let snapshot = snapshot else
                     {
-                        print("Error : \(error?.localizedDescription)")
+                        print("Error : \(error!.localizedDescription)")
                         completion(nil,error!.localizedDescription)
                         return
                     }
@@ -77,7 +77,7 @@ public class messageFunctions
 //                    self.tmpArray = []
                     for j in snapshot.documents
                     {
-                        let tmpMessage = Message(msgid: j.data()["msgid"] as! String, uid: j.data()["uid"] as! String, dateTime: j.data()["dateTime"] as! String, date: j.data()["date"] as! String, time: j.data()["time"] as! String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as! String)
+                        let tmpMessage = Message(msgid: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                         
                         print(tmpMessage)
                         tmpArray.append(tmpMessage)
@@ -123,7 +123,7 @@ public class messageFunctions
                 (snapshot, error) in
                 guard let snapshot = snapshot else
                 {
-                    print("Error : \(error?.localizedDescription)")
+                    print("Error : \(error!.localizedDescription)")
                     completion(nil,error!.localizedDescription)
                     return
                 }
@@ -131,7 +131,7 @@ public class messageFunctions
                 tmpArray = []
                 for j in snapshot.documents
                 {
-                    let tmpMessage = Message(msgid: j.data()["msgid"] as! String, uid: j.data()["uid"] as! String, dateTime: j.data()["dateTime"] as! String, date: j.data()["date"] as! String, time: j.data()["time"] as! String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as! String)
+                    let tmpMessage = Message(msgid: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                     
                     tmpArray.append(tmpMessage)
                 }
