@@ -187,6 +187,24 @@ public class userFunctions
         }
     }
     
+    func getSpecificUser(userID:String?,completion:@escaping(User?,String?)->Void)
+    {
+        let ref = self.db.collection("Users").document("\(userID!)")
+        
+        ref.addSnapshotListener { (snapshot, error) in
+            guard let snapshot = snapshot else
+            {
+                print("Error: \(error!.localizedDescription)")
+                completion(nil,error!.localizedDescription)
+                return
+            }
+            
+            let specificUser = User(name: snapshot.data()!["name"] as? String, email: snapshot.data()!["email"] as? String, password: nil, dateOfBirth: snapshot.data()!["dateOfBirth"] as? String, gender: snapshot.data()!["gender"] as? String, downloadURL: snapshot.data()!["downloadURL"] as? String, isOnline: snapshot.data()!["isOnline"] as? Bool, uid: snapshot.data()!["uid"] as? String)
+            
+            completion(specificUser,nil)
+        }
+    }
+    
     func updateIMGUrl(users:User?,url:String?)
     {
         let ref = self.db.collection("Users").document("\(users!.uid!)")

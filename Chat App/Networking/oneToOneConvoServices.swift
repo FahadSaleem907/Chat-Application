@@ -57,7 +57,7 @@ class oneToOneConvoFunctions
     {
         var ref:DocumentReference? = nil
         
-        let conversation1 = Conversation(conversationID: conversation!.conversationID!, dateCreated: conversation!.dateCreated!, users: conversation!.users!, convoName: conversation?.convoName!, convoLastMessage: conversation?.convoLastMessage!, convoLastMessageTime: conversation?.convoLastMessageTime!)
+        let conversation1 = Conversation(conversationID: conversation!.conversationID!, dateCreated: conversation!.dateCreated!, users: conversation!.users!, convoName: conversation?.convoName!, convoLastMessage: conversation?.convoLastMessage!, convoLastMessageTime: conversation?.convoLastMessageTime!, convoImgURL: conversation?.convoImgURL)
         
         ref = self.db.collection("conversation").document("\(conversation1.users![0]+conversation1.users![1])")
         

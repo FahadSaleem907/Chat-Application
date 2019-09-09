@@ -17,4 +17,5 @@ struct Conversation
     var convoName:String? = ""
     var convoLastMessage:String? = ""
     var convoLastMessageTime:String? = ""
+    var convoImgURL:String? = ""
 }

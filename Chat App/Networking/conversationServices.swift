@@ -25,7 +25,7 @@ class conversationFunctions
     {
         var ref:DocumentReference? = nil
         
-        let conversation1 = Conversation(conversationID: conversation!.conversationID!, dateCreated: conversation!.dateCreated!, users: conversation!.users!, convoName: conversation?.convoName!, convoLastMessage: conversation?.convoLastMessage!, convoLastMessageTime: conversation?.convoLastMessageTime!)
+        let conversation1 = Conversation(conversationID: conversation!.conversationID!, dateCreated: conversation!.dateCreated!, users: conversation!.users!, convoName: conversation?.convoName!, convoLastMessage: conversation?.convoLastMessage!, convoLastMessageTime: conversation?.convoLastMessageTime!,convoImgURL: conversation?.convoImgURL)
         
         if conversation1.users?.count == 2
         {
@@ -156,7 +156,7 @@ class conversationFunctions
                 for i in snapshot.documents
                 {
                     print(i)
-                    let tmpConvo = Conversation(conversationID: i.data()["conversationID"] as? String, dateCreated: i.data()["dateTimeCreated"] as? String, users: i.data()["users"] as! [String]?, convoName: i.data()["conversationName"] as? String, convoLastMessage: i.data()["conversationLastMessage"] as? String, convoLastMessageTime: i.data()["conversationLastMessageTime"] as? String)
+                    let tmpConvo = Conversation(conversationID: i.data()["conversationID"] as? String, dateCreated: i.data()["dateTimeCreated"] as? String, users: i.data()["users"] as! [String]?, convoName: i.data()["conversationName"] as? String, convoLastMessage: i.data()["conversationLastMessage"] as? String, convoLastMessageTime: i.data()["conversationLastMessageTime"] as? String,convoImgURL: i.data()["conversationImgURL"] as? String)
                     
                     self.conversationArray.append(tmpConvo)
                 }
