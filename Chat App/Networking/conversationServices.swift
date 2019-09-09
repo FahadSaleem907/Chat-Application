@@ -25,7 +25,7 @@ class conversationFunctions
     {
         var ref:DocumentReference? = nil
         
-        let conversation1 = Conversation(conversationID: conversation!.conversationID!, dateCreated: conversation!.dateCreated!, users: conversation!.users!)
+        let conversation1 = Conversation(conversationID: conversation!.conversationID!, dateCreated: conversation!.dateCreated!, users: conversation!.users!, convoName: conversation?.convoName!, convoLastMessage: conversation?.convoLastMessage!, convoLastMessageTime: conversation?.convoLastMessageTime!)
         
         if conversation1.users?.count == 2
         {
@@ -33,8 +33,11 @@ class conversationFunctions
             
             let dataDic:[String:Any] = [
                                     "conversationID":"\(conversation1.users![0]+conversation1.users![1])",
-                                        "dateTimeCreated":"\(conversation1.dateCreated)",
-                                        "users":conversation1.users
+                                    "dateTimeCreated":"\(conversation1.dateCreated)",
+                                    "users":conversation1.users,
+                                    "conversationName":"\(conversation1.convoName)",
+                                    "conversationLastMessage":"\(conversation1.convoLastMessage)",
+                                    "conversationLastMessageTime":"\(conversation1.convoLastMessageTime)"
                                         ]
             
             ref?.setData(dataDic, completion:
@@ -59,7 +62,10 @@ class conversationFunctions
             let dataDic : [String:Any]  =   [
                 "conversationID":"\(ref!.documentID)",
                 "dateTimeCreated":"\(conversation1.dateCreated)",
-                "users":conversation1.users
+                "users":conversation1.users,
+                "conversationName":"\(conversation1.convoName)",
+                "conversationLastMessage":"\(conversation1.convoLastMessage)",
+                "conversationLastMessageTime":"\(conversation1.convoLastMessageTime)"
             ]
             
             ref?.setData(dataDic, completion:
@@ -150,7 +156,7 @@ class conversationFunctions
                 for i in snapshot.documents
                 {
                     print(i)
-                    let tmpConvo = Conversation(conversationID: i.data()["conversationID"] as! String, dateCreated: i.data()["dateTimeCreated"] as! String, users: i.data()["users"] as! [String]?)
+                    let tmpConvo = Conversation(conversationID: i.data()["conversationID"] as! String, dateCreated: i.data()["dateTimeCreated"] as! String, users: i.data()["users"] as! [String]?, convoName: i.data()["conversationName"] as! String, convoLastMessage: i.data()["conversationLastMessage"] as! String, convoLastMessageTime: i.data()["conversationLastMessageTime"] as! String)
                     
                     self.conversationArray.append(tmpConvo)
                 }

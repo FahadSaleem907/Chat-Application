@@ -25,6 +25,7 @@
 		A3E3FDB12310929900BD23FB /* chatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB02310929900BD23FB /* chatVC.swift */; };
 		A3E3FDB32310938200BD23FB /* chatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB22310938200BD23FB /* chatBubbleView.swift */; };
 		A3E3FDB5231096BB00BD23FB /* chatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB4231096BB00BD23FB /* chatCell.swift */; };
+		E15BB27A23267AD2001D4C28 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15BB27923267AD2001D4C28 /* extensions.swift */; };
 		E179CC2C231CD02100765E4D /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E179CC2B231CD02100765E4D /* Conversation.swift */; };
 		E179CC2E231CD10300765E4D /* conversationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E179CC2D231CD10300765E4D /* conversationServices.swift */; };
 		E19762AA2321148700700CE3 /* oneToOneConvoServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19762A92321148700700CE3 /* oneToOneConvoServices.swift */; };
@@ -60,6 +61,7 @@
 		A3E3FDB4231096BB00BD23FB /* chatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatCell.swift; sourceTree = "<group>"; };
 		AD89F57B78F1AF9F1A9E13F6 /* Pods_Chat_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chat_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0D9A95B729E3274EB90382B /* Pods-Chat App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat App.debug.xcconfig"; path = "Target Support Files/Pods-Chat App/Pods-Chat App.debug.xcconfig"; sourceTree = "<group>"; };
+		E15BB27923267AD2001D4C28 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		E179CC2B231CD02100765E4D /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		E179CC2D231CD10300765E4D /* conversationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = conversationServices.swift; sourceTree = "<group>"; };
 		E19762A92321148700700CE3 /* oneToOneConvoServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = oneToOneConvoServices.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				A3E3FDB22310938200BD23FB /* chatBubbleView.swift */,
+				E15BB27923267AD2001D4C28 /* extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				A3E3FDB12310929900BD23FB /* chatVC.swift in Sources */,
 				E1B166C8231A833200E1DD97 /* msgServices.swift in Sources */,
 				E1DB0EC82317E0EA00992092 /* newMessageVC.swift in Sources */,
+				E15BB27A23267AD2001D4C28 /* extensions.swift in Sources */,
 				A37AEADD231087E400699D29 /* signUpVC.swift in Sources */,
 				A3E3FDB32310938200BD23FB /* chatBubbleView.swift in Sources */,
 				A37AEAC3231084E200699D29 /* loginVC.swift in Sources */,

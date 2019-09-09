@@ -57,14 +57,17 @@ class oneToOneConvoFunctions
     {
         var ref:DocumentReference? = nil
         
-        let conversation1 = Conversation(conversationID: conversation!.conversationID!, dateCreated: conversation!.dateCreated!, users: conversation!.users!)
+        let conversation1 = Conversation(conversationID: conversation!.conversationID!, dateCreated: conversation!.dateCreated!, users: conversation!.users!, convoName: conversation?.convoName!, convoLastMessage: conversation?.convoLastMessage!, convoLastMessageTime: conversation?.convoLastMessageTime!)
         
         ref = self.db.collection("conversation").document("\(conversation1.users![0]+conversation1.users![1])")
         
         let dataDic:[String:Any] = [
             "conversationID":"\(conversation1.users![0]+conversation1.users![1])",
             "dateTimeCreated":"\(conversation1.dateCreated!)",
-            "users":conversation1.users
+            "users":conversation1.users,
+            "conversationName":"\(conversation1.convoName)",
+            "conversationLastMessage":"\(conversation1.convoLastMessage)",
+            "conversationLastMessageTime":"\(conversation1.convoLastMessageTime)"
         ]
         
         ref?.setData(dataDic, completion:

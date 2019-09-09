@@ -14,4 +14,7 @@ struct Conversation
     var conversationID:String? = ""
     var dateCreated:String? = ""
     var users:[String]? = []
+    var convoName:String? = ""
+    var convoLastMessage:String? = ""
+    var convoLastMessageTime:String? = ""
 }

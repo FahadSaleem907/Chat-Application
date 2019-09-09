@@ -165,7 +165,7 @@ class chatVC: UIViewController
     
     func createConvo(users:[String?],completion:@escaping(Bool,String?)->Void)
     {
-        let convo1 = Conversation(conversationID: "\(users[0]!+users[1]!)", dateCreated: "123", users: users as! [String])
+        let convo1 = Conversation(conversationID: "\(users[0]!+users[1]!)", dateCreated: "123", users: users as! [String], convoName: nil, convoLastMessage: nil , convoLastMessageTime: nil)
         
         oneToOneConvoServices.createOneToOneConvo(conversation: convo1) { (convo, success, error) in
             if success == true{

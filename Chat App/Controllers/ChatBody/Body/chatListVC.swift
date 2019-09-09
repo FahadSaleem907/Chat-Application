@@ -10,6 +10,9 @@ class chatListVC: UIViewController
     // MARK: - Variables
     fileprivate var filtered = [String?]()
     fileprivate var filterring = false
+    var lastDate:String?
+    var days:Int?
+    var dateDifference:Int?
     var convoID:String?
     var userList = [String?]()
     var convos = [Conversation?]()
@@ -264,5 +267,327 @@ extension chatListVC: UITableViewDelegate, UITableViewDataSource
             chatVCData.users = userList
             chatVCData.conversationID = convoID! //convoList[chatList.indexPathForSelectedRow!.row]//!.conversationID
         }
+    }
+}
+
+
+
+extension chatListVC
+{
+    func getDateDifference(sinceDate: Date) -> String?
+    {
+        dateDifference = sinceDate.seconds(sinceDate: sinceDate)
+        
+        if dateDifference! > 60
+        {
+            dateDifference = sinceDate.minutes(sinceDate: sinceDate)
+            if dateDifference! > 60
+            {
+                dateDifference = sinceDate.hours(sinceDate: sinceDate)
+                if dateDifference! > 24
+                {
+                    dateDifference = sinceDate.days(sinceDate: sinceDate)
+                    
+                    if dateDifference! == 1
+                    {
+                        lastDate = "Yesterday"
+                    }
+                    else
+                    {
+                        let now = Date()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "LLLL"
+                        let nameOfMonth = dateFormatter.string(from: now)
+                    
+                        if nameOfMonth == "January"
+                        {
+                            if dateDifference! > 31
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference) Days"
+                            }
+                        }
+                        else if nameOfMonth == "February"
+                        {
+                            let now = Date()
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy"
+                            let year = dateFormatter.string(from: now)
+                            let currentYear = Int(year)
+                            
+                            if currentYear! % 4 == 0
+                            {
+                                if dateDifference! > 29
+                                {
+                                    dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                    if dateDifference! > 12
+                                    {
+                                        dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                        
+                                        lastDate = "\(dateDifference) Years"
+                                    }
+                                    else
+                                    {
+                                        lastDate = "2 Months"
+                                    }
+                                }
+                                else
+                                {
+                                    lastDate = "\(dateDifference)  Days"
+                                }
+                            }
+                            else
+                            {
+                                if dateDifference! > 28
+                                {
+                                    dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                    if dateDifference! > 12
+                                    {
+                                        dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                        
+                                        lastDate = "\(dateDifference) Years"
+                                    }
+                                    else
+                                    {
+                                        lastDate = "2 Months"
+                                    }
+                                }
+                                else
+                                {
+                                    lastDate = "\(dateDifference) Days"
+                                }
+                            }
+                        }
+                        else if nameOfMonth == "March"
+                        {
+                            if dateDifference! > 31
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                                else
+                                {
+                                    lastDate = "3 Months"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                        else if nameOfMonth == "April"
+                        {
+                            if dateDifference! > 30
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                                else
+                                {
+                                    lastDate = "4 Months"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                        else if nameOfMonth == "May"
+                        {
+                            if dateDifference! > 31
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                                else
+                                {
+                                    lastDate = "5 Months"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                        else if nameOfMonth == "June"
+                        {
+                            if dateDifference! > 30
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                                else
+                                {
+                                    lastDate = "6 Months"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                        else if nameOfMonth == "July"
+                        {
+                            if dateDifference! > 31
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                                else
+                                {
+                                    lastDate = "7 Months"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                        else if nameOfMonth == "August"
+                        {
+                            if dateDifference! > 31
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                                else
+                                {
+                                    lastDate = "8 Months"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                        else if nameOfMonth == "September"
+                        {
+                            if dateDifference! > 30
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                                else
+                                {
+                                    lastDate = "9 Months"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                        else if nameOfMonth == "October"
+                        {
+                            if dateDifference! > 31
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                                else
+                                {
+                                    lastDate = "10 Months"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                        else if nameOfMonth == "November"
+                        {
+                            if dateDifference! > 30
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                                else
+                                {
+                                    lastDate = "11 Months"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                        else if nameOfMonth == "December"
+                        {
+                            if dateDifference! > 31
+                            {
+                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                if dateDifference! > 12
+                                {
+                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    
+                                    lastDate = "\(dateDifference) Years"
+                                }
+                            }
+                            else
+                            {
+                                lastDate = "\(dateDifference)  Days"
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    lastDate = "\(dateDifference) Hours"
+                }
+            }
+            else
+            {
+                lastDate = "\(dateDifference) Minutes"
+            }
+        }
+        else
+        {
+            lastDate = "\(dateDifference) Seconds"
+        }
+        return lastDate
     }
 }
