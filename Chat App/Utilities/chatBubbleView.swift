@@ -31,6 +31,14 @@ class ChatBubbleView :UIView
         return time
     }()
     
+    let imgView: UIImageView = {
+       let img = UIImageView()
+        img.translatesAutoresizingMaskIntoConstraints = false
+        img.contentMode = .scaleToFill
+        img.clipsToBounds = true
+        return img
+    }()
+    
     var isIncoming = false
     
     override init(frame: CGRect) {
@@ -48,6 +56,7 @@ class ChatBubbleView :UIView
         layer.addSublayer(bubbleLayer)
         addSubview(dateLbl)
         addSubview(chatLbl)
+        addSubview(imgView)
         chatLbl.addSubview(timeLbl)
         
         NSLayoutConstraint.activate([
@@ -104,5 +113,7 @@ class ChatBubbleView :UIView
         
         bubbleLayer.path = bezierPath.cgPath
     }
+    
+    
 }
 

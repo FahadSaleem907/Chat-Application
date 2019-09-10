@@ -19,6 +19,7 @@ class chatVC: UIViewController
     var dateAndTime:String?
     var dateOnly:String?
     var timeOnly:String?
+    var otherUser:User?
     var users:[String?] = []
     {
         didSet
@@ -511,6 +512,26 @@ class chatVC: UIViewController
                 }
             }
 
+        for i in users
+        {
+            if i != delegate.currentUser!.uid!
+            {
+                let tmpID = i!
+                
+                userService.getSpecificUser(userID: tmpID) { (user, error) in
+                    guard let user = user else
+                    {
+                        print("Error : \(error!)")
+                        return
+                    }
+                    
+                    self.otherUser = user
+                    
+                    self.navigationController?.navigationBar.topItem?.title = "\(self.otherUser!.name!)"
+                }
+            }
+        }
+        
 //        checkIfConvoExists()
 //        createConversation()
 //        getConvoID
@@ -532,6 +553,9 @@ class chatVC: UIViewController
         // Do any additional setup after loading the view.
         
         chat.register(chatCell.self, forCellReuseIdentifier: "cell")
+        
+        //Dont need HeightForRowAt when making tableviewcell like this
+        //self.chat.rowHeight = UITableView.automaticDimension
     }
 }
 
@@ -539,6 +563,18 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = chat.dequeueReusableCell(withIdentifier: "cell",for: indexPath) as! chatCell
+        
+        //This Code Inverts The TableView Completely, not what i need atm
+//        chat.transform = CGAffineTransform(scaleX: 1, y: -1)
+//        cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+//        cell.accessoryView?.transform = CGAffineTransform(scaleX: 1, y: -1)
+        
+        //Unable to test
+        func scrollToLastRow()
+        {
+            let indexPath = NSIndexPath(row: messages.count - 1, section: 0)
+            self.chat.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+        }
         
         if messages.count == 0
         {
@@ -556,6 +592,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
         chat.backgroundColor = UIColor.clear
         cell.bubbleView.backgroundColor = UIColor.clear
 
+        //scrollToLastRow()
         return cell
     }
     

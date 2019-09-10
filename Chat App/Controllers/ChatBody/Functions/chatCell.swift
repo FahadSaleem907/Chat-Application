@@ -68,7 +68,7 @@ class chatCell: UITableViewCell
         
         leadingOrTrailingConstraints.isActive = false
         
-        if message.message!.count < 11 && bubbleView.isIncoming == true
+        if message.message!.count < 10 && bubbleView.isIncoming == true
         {
             NSLayoutConstraint.activate([
                 bubbleView.timeLbl.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
@@ -84,6 +84,28 @@ class chatCell: UITableViewCell
                 bubbleView.timeLbl.leadingAnchor.constraint(equalTo: bubbleView.chatLbl.leadingAnchor, constant: (CGFloat(message.message!.count * 10)+20)),
                 bubbleView.chatLbl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
                 bubbleView.chatLbl.topAnchor.constraint(equalTo: topAnchor, constant: 30)
+                ])
+        }
+        else if message.message!.contains("https://firebasestorage") && bubbleView.isIncoming == true
+        {
+            bubbleView.sendSubviewToBack(bubbleView.chatLbl)
+            bubbleView.bringSubviewToFront(bubbleView.imgView)
+            NSLayoutConstraint.activate([
+                bubbleView.timeLbl.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
+                bubbleView.timeLbl.leadingAnchor.constraint(equalTo: bubbleView.imgView.leadingAnchor, constant: (CGFloat(200)+20)),
+                bubbleView.imgView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+                bubbleView.imgView.topAnchor.constraint(equalTo: topAnchor, constant: 30)
+                ])
+        }
+        else if message.message!.contains("https://firebasestorage") && bubbleView.isIncoming == false
+        {
+            bubbleView.sendSubviewToBack(bubbleView.chatLbl)
+            bubbleView.bringSubviewToFront(bubbleView.imgView)
+            NSLayoutConstraint.activate([
+                bubbleView.timeLbl.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
+                bubbleView.timeLbl.leadingAnchor.constraint(equalTo: bubbleView.imgView.leadingAnchor, constant: (CGFloat(message.message!.count * 10)+20)),
+                bubbleView.imgView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
+                bubbleView.imgView.topAnchor.constraint(equalTo: topAnchor, constant: 30)
                 ])
         }
         
