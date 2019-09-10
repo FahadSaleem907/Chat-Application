@@ -17,6 +17,22 @@ class chatListCell: UITableViewCell {
     @IBOutlet weak var chatName: UILabel!
     @IBOutlet weak var lastMessage: UILabel!
     
+    func roundedImg()
+    {
+        let height = img.frame.height
+        
+        img.layer.cornerRadius = height/2
+        img.layer.masksToBounds = true
+        img.contentMode = .scaleToFill
+        
+        layoutIfNeeded()
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        roundedImg()
+    }
     
     override func awakeFromNib()
     {

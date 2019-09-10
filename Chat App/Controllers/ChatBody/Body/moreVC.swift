@@ -1,10 +1,12 @@
 import UIKit
+import FirebaseAuth
 
 class moreVC: UIViewController
 {
 
     // MARK: - Constants
     let delegate = UIApplication.shared.delegate as! AppDelegate
+    let userServices = userFunctions()
     
     // MARK: - Variables
     // MARK: - Outlets
@@ -13,7 +15,29 @@ class moreVC: UIViewController
     @IBOutlet weak var statusOut: UIButton!
     
     // MARK: - Actions
+    @IBAction func logout(_ sender: UIButton)
+    {
+        handleLogout()
+    }
+    
+    
     // MARK: - Functions
+    
+    @objc func handleLogout()
+    {
+        do
+        {
+            try Auth.auth().signOut()
+           self.userServices.updateUserOfflineStatus(uid: delegate.currentUser!.uid!)
+            print(Auth.auth().currentUser?.uid)
+            
+            
+        }
+        catch let logoutError
+        {
+            print(logoutError)
+        }
+    }
     
     func getData()
     {

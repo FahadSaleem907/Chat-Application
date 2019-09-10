@@ -1,15 +1,19 @@
 import UIKit
+import SDWebImage
 
 class chatListVC: UIViewController
 {
 
     // MARK: - Constants
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    let userServices = userFunctions()
     let conversationServices = conversationFunctions()
     let oneToOneConvoServices = oneToOneConvoFunctions()
     
     // MARK: - Variables
     fileprivate var filtered = [String?]()
     fileprivate var filterring = false
+    var otherUser:User?
     var lastDate:String?
     var days:Int?
     var dateDifference:Int?
@@ -213,7 +217,42 @@ extension chatListVC: UITableViewDelegate, UITableViewDataSource
         cell.mainView.backgroundColor = .init(red: 140/255, green: 200/255, blue: 62/255, alpha: 0.5)
         cell.layer.cornerRadius = 25
         cell.backgroundColor = .clear
-        cell.chatName.text = convoList[indexPath.row]//.conversationID
+        
+        let tmpID = convoList[indexPath.row]!.replacingOccurrences(of: "\(delegate.currentUser!.uid!)", with: "")
+        userServices.getSpecificUser(userID: tmpID) { (user, error) in
+            guard let user = user else
+            {
+                print("Error : \(error!)")
+                return
+            }
+            
+            self.otherUser = user
+            cell.chatName.text = self.otherUser!.name!
+            let imgURLString = "\(self.otherUser!.downloadURL!)"
+            let imgURL = URL(string: imgURLString)
+            cell.img!.sd_setImage(with: imgURL!, completed: nil)
+        }
+        
+        oneToOneConvoServices.getSpecificConvoData(convoID: convoList[indexPath.row]!) { (conversation, error) in
+            guard let conversation = conversation else
+            {
+                print("Error: \(error!)")
+                return
+            }
+            
+            let timeSinceLastMessage = conversation.convoLastMessageTime
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .medium
+            let dateA = dateFormatter.date(from: timeSinceLastMessage!)
+            let time = self.getDateDifference(sinceDate: dateA!)
+            
+            cell.date.text = time
+            cell.lastMessage.text = conversation.convoLastMessage
+            
+        }
+        
         return cell
     }
     
@@ -299,17 +338,18 @@ extension chatListVC
 {
     func getDateDifference(sinceDate: Date) -> String?
     {
-        dateDifference = sinceDate.seconds(sinceDate: sinceDate)
-        
+        let date = Date()
+        dateDifference = date.seconds(sinceDate: sinceDate)
+        print(dateDifference!)
         if dateDifference! > 60
         {
-            dateDifference = sinceDate.minutes(sinceDate: sinceDate)
+            dateDifference = date.minutes(sinceDate: sinceDate)
             if dateDifference! > 60
             {
-                dateDifference = sinceDate.hours(sinceDate: sinceDate)
+                dateDifference = date.hours(sinceDate: sinceDate)
                 if dateDifference! > 24
                 {
-                    dateDifference = sinceDate.days(sinceDate: sinceDate)
+                    dateDifference = date.days(sinceDate: sinceDate)
                     
                     if dateDifference! == 1
                     {
@@ -326,10 +366,10 @@ extension chatListVC
                         {
                             if dateDifference! > 31
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                     
                                     lastDate = "\(dateDifference!) Years"
                                 }
@@ -351,10 +391,10 @@ extension chatListVC
                             {
                                 if dateDifference! > 29
                                 {
-                                    dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                    dateDifference = date.months(sinceDate: sinceDate)
                                     if dateDifference! > 12
                                     {
-                                        dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                        dateDifference = date.years(sinceDate: sinceDate)
                                         
                                         lastDate = "\(dateDifference!) Years"
                                     }
@@ -372,10 +412,10 @@ extension chatListVC
                             {
                                 if dateDifference! > 28
                                 {
-                                    dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                    dateDifference = date.months(sinceDate: sinceDate)
                                     if dateDifference! > 12
                                     {
-                                        dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                        dateDifference = date.years(sinceDate: sinceDate)
                                         
                                         lastDate = "\(dateDifference!) Years"
                                     }
@@ -394,10 +434,10 @@ extension chatListVC
                         {
                             if dateDifference! > 31
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                 
                                     lastDate = "\(dateDifference!) Years"
                                 }
@@ -415,10 +455,10 @@ extension chatListVC
                         {
                             if dateDifference! > 30
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                     lastDate = "\(dateDifference!) Years"
                                 }
                                 else
@@ -435,10 +475,10 @@ extension chatListVC
                         {
                             if dateDifference! > 31
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                 
                                     lastDate = "\(dateDifference!) Years"
                                 }
@@ -456,10 +496,10 @@ extension chatListVC
                         {
                             if dateDifference! > 30
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                     
                                     lastDate = "\(dateDifference!) Years"
                                 }
@@ -477,10 +517,10 @@ extension chatListVC
                         {
                             if dateDifference! > 31
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                 
                                     lastDate = "\(dateDifference!) Years"
                                 }
@@ -498,10 +538,10 @@ extension chatListVC
                         {
                             if dateDifference! > 31
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                 
                                     lastDate = "\(dateDifference!) Years"
                                 }
@@ -519,10 +559,10 @@ extension chatListVC
                         {
                             if dateDifference! > 30
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                 
                                     lastDate = "\(dateDifference!) Years"
                                 }
@@ -540,10 +580,10 @@ extension chatListVC
                         {
                             if dateDifference! > 31
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                 
                                     lastDate = "\(dateDifference!) Years"
                                 }
@@ -561,10 +601,10 @@ extension chatListVC
                         {
                             if dateDifference! > 30
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                     
                                     lastDate = "\(dateDifference!) Years"
                                 }
@@ -582,10 +622,10 @@ extension chatListVC
                         {
                             if dateDifference! > 31
                             {
-                                dateDifference = sinceDate.months(sinceDate: sinceDate)
+                                dateDifference = date.months(sinceDate: sinceDate)
                                 if dateDifference! > 12
                                 {
-                                    dateDifference = sinceDate.years(sinceDate: sinceDate)
+                                    dateDifference = date.years(sinceDate: sinceDate)
                                     
                                     lastDate = "\(dateDifference!) Years"
                                 }

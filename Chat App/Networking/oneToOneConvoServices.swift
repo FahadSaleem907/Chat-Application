@@ -116,6 +116,57 @@ class oneToOneConvoFunctions
             }
     }
     
+    func updateConvo(convoID:String?,msg:String?,time:String?)
+    {
+        let ref = self.db.collection("conversation")
+        
+        let dataDic:[String:Any] = [
+            "conversationLastMessage":"\(msg!)",
+            "conversationLastMessageTime":"\(time!)"
+        ]
+        
+        ref.document("\(convoID!)").updateData(dataDic)
+        {
+            (error) in
+            if error != nil
+            {
+                print("Error: \(error!.localizedDescription)")
+            }
+            else
+            {
+                print("Updated Conversation")
+            }
+        }
+    }
+    
+    
+    func getSpecificConvoData(convoID:String?,completion:@escaping(Conversation?,String?)->Void)
+    {
+        let ref = self.db.collection("conversation")
+        let query = ref.whereField("conversationID", isEqualTo: "\(convoID!)")
+        
+        query.addSnapshotListener
+            {
+                (snapshot, error) in
+                guard let snapshot = snapshot else
+                {
+                    print("Error: \(error!.localizedDescription)")
+                    completion(nil,error!.localizedDescription)
+                    return
+                }
+                
+                print(snapshot.documents)
+                
+                for i in snapshot.documents
+                {
+                    print(i.data())
+                    let tmpConvo = Conversation(conversationID: i.data()["conversationID"] as? String, dateCreated: i.data()["dateTimeCreated"] as? String, users: i.data()["users"] as? [String], convoName: i.data()["conversationName"] as? String, convoLastMessage: i.data()["conversationLastMessage"] as? String, convoLastMessageTime: i.data()["conversationLastMessageTime"] as? String, convoImgURL: "")
+                    
+                    completion(tmpConvo,nil)
+                }
+        }
+    }
+    
 //    func getConvoUsers(convoID:String?,completion:@escaping([Conversation?]?,String?)->Void)
 //    {
 //        var ref = self.db.collection("conversation")

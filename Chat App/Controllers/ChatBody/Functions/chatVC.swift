@@ -165,7 +165,9 @@ class chatVC: UIViewController
     
     func createConvo(users:[String?],completion:@escaping(Bool,String?)->Void)
     {
-        let convo1 = Conversation(conversationID: "\(users[0]!+users[1]!)", dateCreated: "123", users: users as? [String], convoName: "", convoLastMessage: "" , convoLastMessageTime:"", convoImgURL: "")
+        getDateTime()
+        
+        let convo1 = Conversation(conversationID: "\(users[0]!+users[1]!)", dateCreated: "\(dateAndTime!)", users: users as? [String], convoName: "", convoLastMessage: "" , convoLastMessageTime:"", convoImgURL: "")
         
         oneToOneConvoServices.createOneToOneConvo(conversation: convo1) { (convo, success, error) in
             if success == true{
@@ -218,6 +220,8 @@ class chatVC: UIViewController
                 print(error!)
             }
         }
+        
+        oneToOneConvoServices.updateConvo(convoID: self.conversationID!, msg: msgTxt.text, time: dateAndTime!)
     }
     
     func getMsgs()

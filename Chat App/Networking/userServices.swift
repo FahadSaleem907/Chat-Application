@@ -31,6 +31,8 @@ public class userFunctions
             
             let ref = self.db.collection("Users").document("\(uid)")
             
+            self.updateUserOnlineStatus(uid: "\(uid)")
+            
             ref.addSnapshotListener(
                 {
                     (snapshot, error) in
@@ -129,7 +131,7 @@ public class userFunctions
                     self.userList = []
                     for i in snapshot!.documents
                     {
-                        let tmpUser = User(name: i.data()["name"] as? String, email: i.data()["email"] as? String, password: nil, dateOfBirth: i.data()["dateOfBirth"] as? String, gender: i.data()["gender"] as? String, downloadURL: i.data()["downloadURL"] as? String, isOnline: false, uid: i.data()["uid"] as? String)
+                        let tmpUser = User(name: i.data()["name"] as? String, email: i.data()["email"] as? String, password: nil, dateOfBirth: i.data()["dateOfBirth"] as? String, gender: i.data()["gender"] as? String, downloadURL: i.data()["downloadURL"] as? String, isOnline: i.data()["isOnline"] as? Bool, uid: i.data()["uid"] as? String)
                         
                         if tmpUser.email != self.delegate.currentUser?.email
                         {
@@ -220,9 +222,41 @@ public class userFunctions
         }
     }
     
-    func updateUser(){
+    func updateUserOnlineStatus(uid:String?)
+    {
+        let ref = self.db.collection("Users").document("\(uid!)")
+        let dataDic:[String:Any] = ["isOnline":true]
+        
+        ref.updateData(dataDic)
+        {
+            (error) in
+            if error != nil
+            {
+                print("Error: \(error!.localizedDescription)")
+            }
+            else
+            {
+                print("Status Updated")
+            }
+        }
     }
     
-    func deleteUser(){
+    func updateUserOfflineStatus(uid:String?)
+    {
+        let ref = self.db.collection("Users").document("\(uid!)")
+        let dataDic:[String:Any] = ["isOnline":false]
+        
+        ref.updateData(dataDic)
+        {
+            (error) in
+            if error != nil
+            {
+                print("Error: \(error!.localizedDescription)")
+            }
+            else
+            {
+                print("Status Updated")
+            }
+        }
     }
 }

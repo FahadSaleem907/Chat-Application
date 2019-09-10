@@ -6,41 +6,42 @@ extension Date
     func years(sinceDate: Date) -> Int?
     {
         let years = Calendar.current.dateComponents([.year], from: sinceDate, to: self).year
-        
+        print(years!)
         return years!
     }
     
     func months(sinceDate: Date) -> Int?
     {
         let months = Calendar.current.dateComponents([.month], from: sinceDate, to: self).month
-        
+        print(months!)
         return months!
     }
     
     func days(sinceDate: Date) -> Int?
     {
         let days = Calendar.current.dateComponents([.day], from: sinceDate, to: self).day
+        print(days!)
         return days!
     }
     
     func hours(sinceDate: Date) -> Int?
     {
         let hours = Calendar.current.dateComponents([.hour], from: sinceDate, to: self).hour
-        
+        print(hours!)
         return hours!
     }
     
     func minutes(sinceDate: Date) -> Int?
     {
         let minutes = Calendar.current.dateComponents([.minute], from: sinceDate, to: self).minute
-        
+        print(minutes!)
         return minutes!
     }
     
     func seconds(sinceDate: Date) -> Int?
     {
         let seconds = Calendar.current.dateComponents([.second], from: sinceDate, to: self).second
-        
+        print(seconds!)
         return seconds!
     }
     
