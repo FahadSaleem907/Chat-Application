@@ -36,6 +36,8 @@
 		E1DB0EC62317DA1000992092 /* chatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DB0EC52317DA1000992092 /* chatListCell.swift */; };
 		E1DB0EC82317E0EA00992092 /* newMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DB0EC72317E0EA00992092 /* newMessageVC.swift */; };
 		E1DB0ECA2317E14300992092 /* newMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DB0EC92317E14300992092 /* newMessageCell.swift */; };
+		E1EDF3F22328349F007E0FDF /* loadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EDF3F02328349F007E0FDF /* loadingCell.swift */; };
+		E1EDF3F32328349F007E0FDF /* loadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1EDF3F12328349F007E0FDF /* loadingCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +74,8 @@
 		E1DB0EC52317DA1000992092 /* chatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatListCell.swift; sourceTree = "<group>"; };
 		E1DB0EC72317E0EA00992092 /* newMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newMessageVC.swift; sourceTree = "<group>"; };
 		E1DB0EC92317E14300992092 /* newMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newMessageCell.swift; sourceTree = "<group>"; };
+		E1EDF3F02328349F007E0FDF /* loadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadingCell.swift; sourceTree = "<group>"; };
+		E1EDF3F12328349F007E0FDF /* loadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = loadingCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,7 @@
 		A37AEAD22310860E00699D29 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E1EDF3F12328349F007E0FDF /* loadingCell.xib */,
 				A37AEAC9231084E400699D29 /* LaunchScreen.storyboard */,
 				A37AEAD62310867600699D29 /* Auth */,
 				A37AEAD72310868300699D29 /* ChatBody */,
@@ -171,6 +176,7 @@
 				A37AEADA231087B700699D29 /* Auth */,
 				A37AEADB231087BD00699D29 /* ChatBody */,
 				A37AEAC0231084E200699D29 /* AppDelegate.swift */,
+				E1EDF3F02328349F007E0FDF /* loadingCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -306,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A37AEAD9231086DF00699D29 /* ChatBody.storyboard in Resources */,
+				E1EDF3F32328349F007E0FDF /* loadingCell.xib in Resources */,
 				A37AEACB231084E400699D29 /* LaunchScreen.storyboard in Resources */,
 				A3E3FDAD2310924600BD23FB /* chatFunctions.storyboard in Resources */,
 				A37AEAC8231084E400699D29 /* Assets.xcassets in Resources */,
@@ -375,6 +382,7 @@
 				A3E3FDB5231096BB00BD23FB /* chatCell.swift in Sources */,
 				A30BF8FA2315879600B04EEC /* Message.swift in Sources */,
 				E179CC2E231CD10300765E4D /* conversationServices.swift in Sources */,
+				E1EDF3F22328349F007E0FDF /* loadingCell.swift in Sources */,
 				E179CC2C231CD02100765E4D /* Conversation.swift in Sources */,
 				A37AEAE3231089C000699D29 /* callListVC.swift in Sources */,
 				A30BF8FC23158B3D00B04EEC /* User.swift in Sources */,

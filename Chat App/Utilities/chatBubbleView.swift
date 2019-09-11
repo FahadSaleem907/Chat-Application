@@ -36,6 +36,7 @@ class ChatBubbleView :UIView
         img.translatesAutoresizingMaskIntoConstraints = false
         img.contentMode = .scaleToFill
         img.clipsToBounds = true
+        img.layer.cornerRadius = 15
         return img
     }()
     
@@ -64,6 +65,13 @@ class ChatBubbleView :UIView
             chatLbl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -22.0),
             chatLbl.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12.0),
             chatLbl.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12.0)
+            ])
+        
+        NSLayoutConstraint.activate([
+            imgView.topAnchor.constraint(equalTo: topAnchor, constant: 12.0),
+            imgView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -22.0),
+            imgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12.0),
+            imgView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12.0)
             ])
     }
     

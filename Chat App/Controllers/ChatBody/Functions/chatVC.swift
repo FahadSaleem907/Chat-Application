@@ -16,6 +16,7 @@ class chatVC: UIViewController
     // MARK: -Variables
     var receiverID:String?
     var conversationID:String?
+    var getMoreData = false
     var dateAndTime:String?
     var dateOnly:String?
     var timeOnly:String?
@@ -57,6 +58,14 @@ class chatVC: UIViewController
             }
             //messageService.updateIncomingStatus(users: users, convoID: self.conversationID!, message: self.messages)
             chat.reloadData()
+            self.view.layoutIfNeeded()
+            print(self.messages.count)
+//            DispatchQueue.main.async
+//            {
+//                let indexPath = IndexPath(row: (self.messages.count-1), section: 0)
+//                self.chat.scrollToRow(at: indexPath, at: .bottom, animated: true)
+//            }
+            
         }
     }
     
@@ -369,8 +378,23 @@ class chatVC: UIViewController
         }
     }
     
+    func scrollToLastRow()
+    {
+        let indexPath = NSIndexPath(row: messages.count - 1, section: 0)
+        self.chat.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+        //self.chat.selectRow(at: indexPath as IndexPath, animated: true, scrollPosition: .bottom)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool)
+    {
+//        DispatchQueue.main.async
+//        {
+//            self.scrollToLastRow()
+//        }
     }
     
     override func viewDidLayoutSubviews()
@@ -432,7 +456,7 @@ class chatVC: UIViewController
                 {
                     print("Enjoy")
                     self.getMsgs()
-                    
+        
 //                    self.getConvoUsers
 //                        {
 //                            (usersArray) in
@@ -553,6 +577,8 @@ class chatVC: UIViewController
         // Do any additional setup after loading the view.
         
         chat.register(chatCell.self, forCellReuseIdentifier: "cell")
+        let loadingNib = UINib(nibName: "loadingCell", bundle: nil)
+        chat.register(loadingNib, forCellReuseIdentifier: "loadingCell")
         
         //Dont need HeightForRowAt when making tableviewcell like this
         //self.chat.rowHeight = UITableView.automaticDimension
@@ -562,43 +588,75 @@ class chatVC: UIViewController
 extension chatVC : UITableViewDelegate,UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = chat.dequeueReusableCell(withIdentifier: "cell",for: indexPath) as! chatCell
+        
+//        if indexPath.section == 0
+//        {
+            let cell = chat.dequeueReusableCell(withIdentifier: "cell",for: indexPath) as! chatCell
         
         //This Code Inverts The TableView Completely, not what i need atm
 //        chat.transform = CGAffineTransform(scaleX: 1, y: -1)
 //        cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
 //        cell.accessoryView?.transform = CGAffineTransform(scaleX: 1, y: -1)
         
-        //Unable to test
-        func scrollToLastRow()
-        {
-            let indexPath = NSIndexPath(row: messages.count - 1, section: 0)
-            self.chat.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
-        }
+            if messages.count == 0
+            {
+                noMsgTxt.isHidden = false
+                chat.isHidden = true
+            }
+            else
+            {
+                noMsgTxt.isHidden = true
+                chat.isHidden = false
+            
+                if (messages[indexPath.row]!.message?.contains("https://firebasestorage"))!
+                {
+                    cell.bubbleView.chatLbl.isHidden = true
         
-        if messages.count == 0
-        {
-            noMsgTxt.isHidden = false
-            chat.isHidden = true
-        }
-        else
-        {
-            noMsgTxt.isHidden = true
-            chat.isHidden = false
-            cell.setData(messages[indexPath.row]!)
+                    cell.setData1(messages[indexPath.row]!)
+                }
+                else
+                {
+//                DispatchQueue.main.async {
+//                    cell.setData(self.messages[indexPath.row]!)
+//                    self.scrollToLastRow()
+//                }
+                    cell.bubbleView.chatLbl.isHidden = false
+                    cell.setData(messages[indexPath.row]!)
+                }
 //            chat.scrollToRow(at: indexPath, at: .bottom, animated: true)          
-        }
+            }
         cell.contentView.backgroundColor = UIColor.clear
         chat.backgroundColor = UIColor.clear
         cell.bubbleView.backgroundColor = UIColor.clear
 
-        //scrollToLastRow()
+//        DispatchQueue.main.async {
+//            self.scrollToLastRow()
+//        }
+        
         return cell
+//        }
+//        else
+//        {
+//            let cell = chat.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath) as! loadingCell
+//
+//            cell.spinner.startAnimating()
+//
+//            self.chat.rowHeight = 50
+//            return cell
+//        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return messages.count
+//        if section == 0
+//        {
+            return messages.count
+//        }
+//        else if section == 1 && getMoreData
+//        {
+//            return 1
+//        }
+//        return 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int
@@ -615,6 +673,31 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
     {
         //let cell = chat.cellForRow(at: indexPath) as! chatCell
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView)
+//    {
+//        let offsetY = scrollView.contentOffset.y
+//        let contentHeight = scrollView.contentSize.height
+//
+//        if offsetY > contentHeight - scrollView.frame.height * 2
+//        {
+//            if !getMoreData {
+//                fetchBatch()
+//            }
+//        }
+//    }
+    
+//    func fetchBatch()
+//    {
+//        getMoreData = true
+//        print("beginFetchingData")
+//        chat.reloadSections(IndexSet(integer: 1), with: .none)
+//        DispatchQueue.main.asyncAfter(deadline: .now()+1.0)
+//        {
+//            self.getMoreData = false
+//            self.chat.reloadData()
+//        }
+//    }
 }
 
 extension chatVC: UITextViewDelegate
