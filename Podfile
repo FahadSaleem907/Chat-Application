@@ -14,6 +14,6 @@ target 'Chat App' do
   pod 'SDWebImage', '~> 5.0'
   pod 'GrowingTextView', '0.7.1'
   pod 'IQKeyboardManager'
-
+  pod 'YPImagePicker'
 
 end

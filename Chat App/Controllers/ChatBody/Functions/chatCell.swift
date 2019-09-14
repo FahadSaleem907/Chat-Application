@@ -105,10 +105,10 @@ class chatCell: UITableViewCell
         {
             
             NSLayoutConstraint.activate([
-                bubbleView.imgView.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 0),
+                bubbleView.imgView.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 8),
                 bubbleView.imgView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 22),
-                bubbleView.imgView.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 0),
-                bubbleView.imgView.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: 0),
+                bubbleView.imgView.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 12),
+                bubbleView.imgView.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: 10),
                 bubbleView.timeLbl.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 0)
                 ])
         }

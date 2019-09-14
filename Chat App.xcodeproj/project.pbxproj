@@ -32,6 +32,7 @@
 		E1B166C6231A832500E1DD97 /* userServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B166C5231A832500E1DD97 /* userServices.swift */; };
 		E1B166C8231A833200E1DD97 /* msgServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B166C7231A833200E1DD97 /* msgServices.swift */; };
 		E1C99234231AE575004BD02F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1C99233231AE575004BD02F /* GoogleService-Info.plist */; };
+		E1CDF3B323292EA700F99409 /* ImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CDF3B223292EA700F99409 /* ImageVC.swift */; };
 		E1DB0EC42317D9FF00992092 /* callListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DB0EC32317D9FF00992092 /* callListCell.swift */; };
 		E1DB0EC62317DA1000992092 /* chatListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DB0EC52317DA1000992092 /* chatListCell.swift */; };
 		E1DB0EC82317E0EA00992092 /* newMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DB0EC72317E0EA00992092 /* newMessageVC.swift */; };
@@ -70,6 +71,7 @@
 		E1B166C5231A832500E1DD97 /* userServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userServices.swift; sourceTree = "<group>"; };
 		E1B166C7231A833200E1DD97 /* msgServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = msgServices.swift; sourceTree = "<group>"; };
 		E1C99233231AE575004BD02F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E1CDF3B223292EA700F99409 /* ImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageVC.swift; sourceTree = "<group>"; };
 		E1DB0EC32317D9FF00992092 /* callListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = callListCell.swift; sourceTree = "<group>"; };
 		E1DB0EC52317DA1000992092 /* chatListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatListCell.swift; sourceTree = "<group>"; };
 		E1DB0EC72317E0EA00992092 /* newMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = newMessageVC.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				A3E3FDB4231096BB00BD23FB /* chatCell.swift */,
 				E1DB0EC72317E0EA00992092 /* newMessageVC.swift */,
 				E1DB0EC92317E14300992092 /* newMessageCell.swift */,
+				E1CDF3B223292EA700F99409 /* ImageVC.swift */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				E19762AA2321148700700CE3 /* oneToOneConvoServices.swift in Sources */,
 				A37AEAC1231084E200699D29 /* AppDelegate.swift in Sources */,
 				A37AEAE1231089AD00699D29 /* chatListVC.swift in Sources */,
+				E1CDF3B323292EA700F99409 /* ImageVC.swift in Sources */,
 				E1DB0ECA2317E14300992092 /* newMessageCell.swift in Sources */,
 				E1B166C6231A832500E1DD97 /* userServices.swift in Sources */,
 				A37AEADF231087F900699D29 /* resetPassVC.swift in Sources */,

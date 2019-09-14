@@ -32,7 +32,6 @@ class loginVC: UIViewController
             }
             else
             {
-                
                 self.performSegue(withIdentifier: "login", sender: self)
             }
         }

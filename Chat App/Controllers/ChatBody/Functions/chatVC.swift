@@ -2,6 +2,7 @@ import UIKit
 import GrowingTextView
 import IQKeyboardManager
 import FirebaseFirestore
+import YPImagePicker
 
 class chatVC: UIViewController
 {
@@ -11,15 +12,19 @@ class chatVC: UIViewController
     let oneToOneConvoServices = oneToOneConvoFunctions()
     let messageService = messageFunctions()
     let userService = userFunctions()
+    let imgType = signUpVC()
     
     
     // MARK: -Variables
     var receiverID:String?
     var conversationID:String?
+    var selectedImage:UIImage?
     var getMoreData = false
     var dateAndTime:String?
     var dateOnly:String?
     var timeOnly:String?
+    var msgImg:UIImage?
+    var msgImgURL:String?
     var otherUser:User?
     var users:[String?] = []
     {
@@ -59,7 +64,7 @@ class chatVC: UIViewController
             //messageService.updateIncomingStatus(users: users, convoID: self.conversationID!, message: self.messages)
             chat.reloadData()
             self.view.layoutIfNeeded()
-            print(self.messages.count)
+
 //            DispatchQueue.main.async
 //            {
 //                let indexPath = IndexPath(row: (self.messages.count-1), section: 0)
@@ -86,6 +91,17 @@ class chatVC: UIViewController
     @IBAction func cameraBtn(_ sender: UIButton)
     {
         print("camera")
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera)
+        {
+            singleSnap()
+//            self.performSegue(withIdentifier: "imgView", sender: self)
+//            presentPhotoPicker(source: .camera)
+        }
+        else
+        {
+            print("Camera Not Accessable")
+        }
     }
 
     @IBAction func micBtn(_ sender: UIButton)
@@ -96,7 +112,6 @@ class chatVC: UIViewController
     @IBAction func picOrSendBtn(_ sender: UIButton)
     {
         handleSendButton()
-        
     }
     
     //MARK: - Functions
@@ -115,6 +130,12 @@ class chatVC: UIViewController
         if gallery.currentImage == UIImage(named: "gallery")
         {
             print("gallery")
+//            let ImgVC = storyboard?.instantiateViewController(withIdentifier: "ImageVC")
+//            self.present(ImgVC!, animated: true) {
+//                self.presentPhotoPicker(source: .photoLibrary)
+//            }
+//
+//            presentPhotoPicker(source: .photoLibrary)
         }
         else
         {
@@ -155,7 +176,27 @@ class chatVC: UIViewController
         timeOnly = timeFormat.string(from: time)
     }
     
-    
+    func singleSnap()
+    {
+        let picker = YPImagePicker()
+        picker.didFinishPicking { [unowned picker] items, _ in
+            if let photo = items.singlePhoto {
+                print(photo.fromCamera) // Image source (camera or library)
+                print(photo.image) // Final image selected by the user
+                print(photo.originalImage) // original image selected by the user, unfiltered
+                print(photo.modifiedImage) // Transformed image, can be nil
+                print(photo.exifMeta) // Print exif meta data of original image.
+                self.msgImg = photo.image
+            }
+//            picker.dismiss(animated: true, completion: nil)
+            picker.dismiss(animated: true, completion:
+                {
+                    self.sendImgMsg(conversationID: self.conversationID!)
+                    //print(self.msgImgURL!)
+                })
+        }
+        present(picker, animated: true, completion: nil)
+    }
 //    func getMessages(userArr:[String?],completion:@escaping([Message?]?)->Void)
 //    {
 //        self.messageService.getMsgs(convoID: self.conversationID, users: userArr)
@@ -172,6 +213,8 @@ class chatVC: UIViewController
 //            completion(msgArray)
 //        }
 //    }
+    
+    
     
     func createConvo(users:[String?],completion:@escaping(Bool,String?)->Void)
     {
@@ -210,6 +253,45 @@ class chatVC: UIViewController
         }
     }
     
+    func sendImgMsg(conversationID:String)
+    {
+        getDateTime()
+        getDate()
+        getTime()
+        
+        self.messageService.uploadMsgImg(convoID: "\(self.conversationID!)", image: self.msgImg, completion:
+            {
+                (url, error) in
+                guard let url = url
+                    else
+                {
+                    guard let error = error else { return }
+                    print("Error: \(error)")
+                    return
+                }
+                
+                self.msgImgURL = url
+                
+                
+                let message1 = Message(msgid: "test", uid: self.delegate.currentUser!.uid!, dateTime: "\(self.dateAndTime!)", date: "\(self.dateOnly!)", time: "\(self.timeOnly!)", conversationID: self.conversationID, incoming: false, message: self.msgImgURL!)
+                
+                self.messageService.createMessage(message: message1, ConvoID: self.conversationID)
+                {
+                    (message, success, error) in
+                    if success == true
+                    {
+                        print("Sent Successfully: \(message!)")
+                    }
+                    else
+                    {
+                        print(error!)
+                    }
+                }
+                
+                self.oneToOneConvoServices.updateConvo(convoID: self.conversationID!, msg: self.msgImgURL!, time: self.dateAndTime!)
+            })
+    }
+    
     func sendMessage(conversationID:String)
     {
         getDateTime()
@@ -236,7 +318,7 @@ class chatVC: UIViewController
     
     func getMsgs()
     {
-        messageService.getOneToOneMsgs(convoID: "\(users[0]!+users[1]!)"/*self.conversationID!*/) { (messageArray, error) in
+        messageService.getOneToOneMsgs(convoID: /*"\(users[0]!+users[1]!)"*/self.conversationID!) { (messageArray, error) in
             guard let messageArray = messageArray else
             {
                 print("Error: \(error!)")
@@ -380,8 +462,8 @@ class chatVC: UIViewController
     
     func scrollToLastRow()
     {
-        let indexPath = NSIndexPath(row: messages.count - 1, section: 0)
-        self.chat.scrollToRow(at: indexPath as IndexPath, at: .bottom, animated: true)
+        let indexPath = IndexPath(row: messages.count - 1, section: 0)
+        self.chat.scrollToRow(at: indexPath, at: .bottom, animated: true)
         //self.chat.selectRow(at: indexPath as IndexPath, animated: true, scrollPosition: .bottom)
     }
     
@@ -611,7 +693,6 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
                 if (messages[indexPath.row]!.message?.contains("https://firebasestorage"))!
                 {
                     cell.bubbleView.chatLbl.isHidden = true
-        
                     cell.setData1(messages[indexPath.row]!)
                 }
                 else
@@ -707,3 +788,45 @@ extension chatVC: UITextViewDelegate
         handleButton()
     }
 }
+
+
+//extension chatVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate
+//{
+//    func presentPhotoPicker(source: UIImagePickerController.SourceType)
+//    {
+//        let picker = UIImagePickerController()
+//        picker.delegate = self
+//        picker.sourceType = source
+//        present(picker , animated: true , completion: nil)
+//    }
+//
+//    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        picker.dismiss(animated: true) {
+//            self.performSegue(withIdentifier: "imgView", sender: self)
+//        }
+//
+//        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+//            print("got image")
+//            selectedImage = image
+//            //profileImgOut.setImage(image, for: .normal)
+//        }else {
+//            print("no image")
+//            let image = UIImage(named: "profilePic")
+//            //profileImgOut.setImage(image, for: .normal)
+//        }
+//    }
+//}
+
+//extension chatVC
+//{
+//    //MARK: -Prepare for Segue
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+//    {
+//        if segue.identifier == "imgView"
+//        {
+//            let imgData = segue.destination as! ImageVC
+//
+//            imgData.img = selectedImage
+//        }
+//    }
+//}

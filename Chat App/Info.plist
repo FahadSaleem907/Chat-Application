@@ -2,8 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow access to you Microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access to your Photos</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Do you want to allow use of camera for this application?</string>
+	<string>Allow access to your Camera</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

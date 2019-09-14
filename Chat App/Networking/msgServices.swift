@@ -114,7 +114,7 @@ public class messageFunctions
     
     func getOneToOneMsgs(convoID:String?,completion:@escaping([Message?]?,String?)->Void)
     {
-        var ref:DocumentReference? = nil
+        //var ref:DocumentReference? = nil
         var tmpArray = [Message]()
         let query = self.db.collection("Messages").whereField("conversationID", isEqualTo: convoID!)
         
@@ -139,6 +139,107 @@ public class messageFunctions
         })
     }
     
+    func getPaginatedOneToOneMsgs(convoID:String?,completion:@escaping([Message?]?,String?)->Void)
+    {
+        //var ref:DocumentReference? = nil
+        var tmpArray = [Message]()
+        let queryFirst = self.db.collection("Messages").whereField("conversationID", isEqualTo: convoID!).order(by: "dateTime").limit(to: 5)
+        
+        queryFirst.addSnapshotListener(
+            {
+                (snapshot, error) in
+                guard let snapshot = snapshot else
+                {
+                    print("Error : \(error!.localizedDescription)")
+                    completion(nil,error!.localizedDescription)
+                    return
+                }
+                
+                tmpArray = []
+                for j in snapshot.documents
+                {
+                    let tmpMessage = Message(msgid: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                    
+                    print(tmpArray)
+                    
+                    tmpArray.append(tmpMessage)
+                }
+                completion(tmpArray,nil)
+                
+                guard let lastSnapshot = snapshot.documents.last else
+                {
+                    return
+                }
+                
+                let nextMessagesBatch = self.db.collection("Messages").whereField("conversationID", isEqualTo: convoID!).order(by: "dateTime").start(afterDocument: lastSnapshot)
+                
+                nextMessagesBatch.addSnapshotListener({ (nextSnapshot, error) in
+                    guard let nextSnapshot = nextSnapshot else
+                    {
+                        print("Error : \(error!.localizedDescription)")
+                        completion(tmpArray,error!.localizedDescription)
+                        
+                        print(tmpArray)
+                        return
+                    }
+                    
+                    for j in nextSnapshot.documents
+                    {
+                        let tmpMessage = Message(msgid: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                        
+                        tmpArray.append(tmpMessage)
+                    }
+                    print(tmpArray)
+                    completion(tmpArray,nil)
+                })
+                
+        })
+    }
+    
+    func uploadMsgImg(convoID:String?,image:UIImage?,completion:@escaping(_ url:String?,_ error:String?)->Void)
+    {
+        let storageRef:StorageReference!
+        storageRef = Storage.storage().reference()
+        
+        let storageFile = storageRef.child("MessageImage").child("\(convoID!)")
+        var imageData:Data? = nil
+        
+        imageData = image?.jpegData(compressionQuality: 0.2)
+        print(imageData!)
+        
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        
+        storageFile.putData(imageData!, metadata: metaData)
+        {
+            (metaData, error) in
+            if error != nil
+            {
+                print("ERROR : \(error!.localizedDescription)")
+                return
+            }
+            else
+            {
+                let metaData = metaData
+                
+                storageFile.downloadURL(completion:
+                    {
+                        (url, error) in
+                        if let error = error
+                        {
+                            print("Error In Image: \(error.localizedDescription)")
+                            completion(nil,error.localizedDescription)
+                        }
+                        else
+                        {
+                            let downloadURL = url!.absoluteString
+                            print("Image uploaded successfully: \(downloadURL)")
+                            completion(downloadURL,nil)
+                        }
+                })
+            }
+        }
+    }
     
     func deleteMessage()
     {
