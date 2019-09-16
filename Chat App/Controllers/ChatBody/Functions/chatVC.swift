@@ -273,7 +273,7 @@ class chatVC: UIViewController
                 self.msgImgURL = url
                 
                 
-                let message1 = Message(msgid: "test", uid: self.delegate.currentUser!.uid!, dateTime: "\(self.dateAndTime!)", date: "\(self.dateOnly!)", time: "\(self.timeOnly!)", conversationID: self.conversationID, incoming: false, message: self.msgImgURL!)
+                let message1 = Message(type: "Image", uid: self.delegate.currentUser!.uid!, dateTime: "\(self.dateAndTime!)", date: "\(self.dateOnly!)", time: "\(self.timeOnly!)", conversationID: self.conversationID, incoming: false, message: self.msgImgURL!)
                 
                 self.messageService.createMessage(message: message1, ConvoID: self.conversationID)
                 {
@@ -298,7 +298,7 @@ class chatVC: UIViewController
         getDate()
         getTime()
         
-        let message1 = Message(msgid: "test", uid: delegate.currentUser!.uid!, dateTime: "\(dateAndTime!)", date: "\(dateOnly!)", time: "\(timeOnly!)", conversationID: self.conversationID, incoming: false, message: msgTxt.text)
+        let message1 = Message(type: "Text", uid: delegate.currentUser!.uid!, dateTime: "\(dateAndTime!)", date: "\(dateOnly!)", time: "\(timeOnly!)", conversationID: self.conversationID, incoming: false, message: msgTxt.text)
             
         messageService.createMessage(message: message1, ConvoID: self.conversationID)
         {

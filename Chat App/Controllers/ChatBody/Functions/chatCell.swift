@@ -51,18 +51,11 @@ class chatCell: UITableViewCell
             ])
         
         bubbleView.addSubview(bubbleView.imgView)
+    }
+    
+    func setMicData(_ message: Message) -> Void
+    {
         
-//        if bubbleView.imgView.isHidden == false
-//        {
-//            bubbleView.chatLbl.isHidden = true
-//        NSLayoutConstraint.activate([
-//            bubbleView.imgView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 5),
-//            bubbleView.imgView.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
-//            bubbleView.imgView.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 5),
-//            bubbleView.imgView.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: 5),
-//            bubbleView.heightAnchor.constraint(lessThanOrEqualTo: contentView.heightAnchor, multiplier: 0.20)
-//            ])
-//        }
     }
     
     func setData1(_ message: Message) -> Void
@@ -93,23 +86,17 @@ class chatCell: UITableViewCell
                 bubbleView.imgView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 22),
                 bubbleView.imgView.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 12),
                 bubbleView.imgView.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: 10),
-                bubbleView.timeLbl.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 0)
+                bubbleView.timeLbl.bottomAnchor.constraint(equalTo: bubbleView.imgView.bottomAnchor, constant: 0)
                 ])
-//                bubbleView.timeLbl.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
-//                bubbleView.timeLbl.leadingAnchor.constraint(equalTo: bubbleView.chatLbl.leadingAnchor, constant: (CGFloat(message.message!.count * 10)+20)),
-//                bubbleView.chatLbl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -12),
-//                bubbleView.chatLbl.topAnchor.constraint(equalTo: topAnchor, constant: 30)
-//                ])
         }
         else if bubbleView.isIncoming == false
         {
-            
             NSLayoutConstraint.activate([
                 bubbleView.imgView.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 8),
                 bubbleView.imgView.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 22),
                 bubbleView.imgView.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 12),
                 bubbleView.imgView.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: 10),
-                bubbleView.timeLbl.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 0)
+                bubbleView.timeLbl.bottomAnchor.constraint(equalTo: bubbleView.imgView.bottomAnchor, constant: 0)
                 ])
         }
         
@@ -142,9 +129,17 @@ class chatCell: UITableViewCell
         
         leadingOrTrailingConstraints.isActive = false
         
+        
+        NSLayoutConstraint.activate([
+            bubbleView.chatLbl.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
+            bubbleView.widthAnchor.constraint(greaterThanOrEqualToConstant: 90)
+            
+            ])
+        
         if message.message!.count < 10 && bubbleView.isIncoming == true
         {
-            bubbleView.chatLbl.numberOfLines = 1
+            print(bubbleView.chatLbl.frame.size.height)
+            print(bubbleView.chatLbl.frame.size.width)
             
             NSLayoutConstraint.activate([
                 bubbleView.timeLbl.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
@@ -155,6 +150,9 @@ class chatCell: UITableViewCell
         }
         else if message.message!.count < 10 && bubbleView.isIncoming == false
         {
+            print(bubbleView.chatLbl.frame.size.height)
+            print(bubbleView.chatLbl.frame.size.width)
+            
             NSLayoutConstraint.activate([
                 bubbleView.timeLbl.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
                 bubbleView.timeLbl.leadingAnchor.constraint(equalTo: bubbleView.chatLbl.leadingAnchor, constant: (CGFloat(message.message!.count * 10)+20)),
@@ -162,6 +160,14 @@ class chatCell: UITableViewCell
                 bubbleView.chatLbl.topAnchor.constraint(equalTo: topAnchor, constant: 30)
                 ])
         }
+//        else if message.message!.count > 9
+//        {
+//            NSLayoutConstraint.activate([
+//                bubbleView.chatLbl.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 5),
+//                bubbleView.widthAnchor.constraint(greaterThanOrEqualTo: bubbleView.widthAnchor, multiplier: 1,constant: 100)
+//
+//                ])
+//        }
         
         if delegate.currentUser?.uid == message.uid
         {

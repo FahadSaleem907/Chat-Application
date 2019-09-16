@@ -22,10 +22,10 @@ public class messageFunctions
     {
         var ref:DocumentReference? = nil
         
-        let message1 = Message(msgid: message!.msgid!, uid: message!.uid, dateTime: message!.dateTime!, date: message!.date!, time: message!.time!, conversationID: message!.conversationID!, incoming: true, message: message!.message!)
+        let message1 = Message(type: message!.type!, uid: message!.uid, dateTime: message!.dateTime!, date: message!.date!, time: message!.time!, conversationID: message!.conversationID!, incoming: true, message: message!.message!)
         
         let dataDic : [String:Any] = [
-                                        "msgid":"\(message1.msgid!)",
+                                        "msgid":"\(message1.type!)",
                                         "uid":"\(message1.uid!)",
                                         "dateTime":"\(message1.dateTime!)",
                                         "date":"\(message1.date!)",
@@ -77,7 +77,7 @@ public class messageFunctions
 //                    self.tmpArray = []
                     for j in snapshot.documents
                     {
-                        let tmpMessage = Message(msgid: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                        let tmpMessage = Message(type: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                         
                         print(tmpMessage)
                         tmpArray.append(tmpMessage)
@@ -131,7 +131,7 @@ public class messageFunctions
                 tmpArray = []
                 for j in snapshot.documents
                 {
-                    let tmpMessage = Message(msgid: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                    let tmpMessage = Message(type: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                     
                     tmpArray.append(tmpMessage)
                 }
@@ -158,7 +158,7 @@ public class messageFunctions
                 tmpArray = []
                 for j in snapshot.documents
                 {
-                    let tmpMessage = Message(msgid: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                    let tmpMessage = Message(type: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                     
                     print(tmpArray)
                     
@@ -185,7 +185,7 @@ public class messageFunctions
                     
                     for j in nextSnapshot.documents
                     {
-                        let tmpMessage = Message(msgid: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                        let tmpMessage = Message(type: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                         
                         tmpArray.append(tmpMessage)
                     }
@@ -201,7 +201,8 @@ public class messageFunctions
         let storageRef:StorageReference!
         storageRef = Storage.storage().reference()
         
-        let storageFile = storageRef.child("MessageImage").child("\(convoID!)")
+        let uuid = UUID().uuidString
+        let storageFile = storageRef.child("MessageImage").child("\(convoID!)").child(uuid)
         var imageData:Data? = nil
         
         imageData = image?.jpegData(compressionQuality: 0.2)
