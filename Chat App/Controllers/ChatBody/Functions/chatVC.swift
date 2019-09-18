@@ -63,8 +63,12 @@ class chatVC: UIViewController
             }
             //messageService.updateIncomingStatus(users: users, convoID: self.conversationID!, message: self.messages)
             chat.reloadData()
+            
             self.view.layoutIfNeeded()
-
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6)
+            {
+                self.scrollToLastRow()
+            }
 //            DispatchQueue.main.async
 //            {
 //                let indexPath = IndexPath(row: (self.messages.count-1), section: 0)
@@ -467,13 +471,20 @@ class chatVC: UIViewController
         //self.chat.selectRow(at: indexPath as IndexPath, animated: true, scrollPosition: .bottom)
     }
     
+//    func scrollToLastRow()
+//    {
+//        var scrollPosition: Int = messages.count - 1
+//        let indexPath = IndexPath(row: scrollPosition, section: 0)
+//        chat.scrollToRow(at: indexPath, at: .middle, animated: true)
+//    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
     override func viewDidAppear(_ animated: Bool)
     {
-//        DispatchQueue.main.async
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6)
 //        {
 //            self.scrollToLastRow()
 //        }
@@ -675,6 +686,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
 //        {
             let cell = chat.dequeueReusableCell(withIdentifier: "cell",for: indexPath) as! chatCell
         
+        //cell.bubbleView.isHidden = false
         //This Code Inverts The TableView Completely, not what i need atm
 //        chat.transform = CGAffineTransform(scaleX: 1, y: -1)
 //        cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
@@ -693,6 +705,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
                 if (messages[indexPath.row]!.message?.contains("https://firebasestorage"))!
                 {
                     cell.bubbleView.chatLbl.isHidden = true
+                    cell.bubbleView.imgView.isHidden = false
                     cell.setData1(messages[indexPath.row]!)
                 }
                 else
@@ -701,6 +714,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
 //                    cell.setData(self.messages[indexPath.row]!)
 //                    self.scrollToLastRow()
 //                }
+                    cell.bubbleView.imgView.isHidden = true
                     cell.bubbleView.chatLbl.isHidden = false
                     cell.setData(messages[indexPath.row]!)
                 }
