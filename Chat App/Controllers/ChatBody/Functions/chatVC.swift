@@ -3,6 +3,7 @@ import GrowingTextView
 import IQKeyboardManager
 import FirebaseFirestore
 import YPImagePicker
+import AVFoundation
 
 class chatVC: UIViewController
 {
@@ -16,17 +17,21 @@ class chatVC: UIViewController
     
     
     // MARK: -Variables
-    var receiverID:String?
-    var conversationID:String?
-    var selectedImage:UIImage?
+    var receiverID : String?
+    var conversationID : String?
+    var selectedImage : UIImage?
     var getMoreData = false
-    var dateAndTime:String?
-    var dateOnly:String?
-    var timeOnly:String?
-    var msgImg:UIImage?
-    var msgImgURL:String?
-    var otherUser:User?
-    var users:[String?] = []
+    var dateAndTime : String?
+    var dateOnly : String?
+    var timeOnly : String?
+    var msgImg : UIImage?
+    var msgImgURL : String?
+    var soundRecorder : AVAudioRecorder!
+    var uniqueID : String?
+    var soundPlayer : AVAudioPlayer!
+    var recordingSession : AVAudioSession!
+    var otherUser : User?
+    var users : [String?] = []
     {
         didSet
         {
@@ -62,13 +67,24 @@ class chatVC: UIViewController
                     }
             }
             //messageService.updateIncomingStatus(users: users, convoID: self.conversationID!, message: self.messages)
+            
             chat.reloadData()
             
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1 , execute:
+                {
+                    self.scrollToLastRow()
+                })
+//            {
+//
+//            }
+            
+            //scrollToBottom()
+            
             self.view.layoutIfNeeded()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6)
-            {
-                self.scrollToLastRow()
-            }
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6)
+//            {
+//                self.scrollToLastRow()
+//            }
 //            DispatchQueue.main.async
 //            {
 //                let indexPath = IndexPath(row: (self.messages.count-1), section: 0)
@@ -110,6 +126,8 @@ class chatVC: UIViewController
 
     @IBAction func micBtn(_ sender: UIButton)
     {
+        AudioServicesPlayAlertSound(1519)
+        recordTapped()
         print("mic")
     }
     
@@ -185,11 +203,11 @@ class chatVC: UIViewController
         let picker = YPImagePicker()
         picker.didFinishPicking { [unowned picker] items, _ in
             if let photo = items.singlePhoto {
-                print(photo.fromCamera) // Image source (camera or library)
-                print(photo.image) // Final image selected by the user
-                print(photo.originalImage) // original image selected by the user, unfiltered
-                print(photo.modifiedImage) // Transformed image, can be nil
-                print(photo.exifMeta) // Print exif meta data of original image.
+                //print(photo.fromCamera) // Image source (camera or library)
+                //print(photo.image) // Final image selected by the user
+                //print(photo.originalImage) // original image selected by the user, unfiltered
+                //print(photo.modifiedImage) // Transformed image, can be nil
+                //print(photo.exifMeta) // Print exif meta data of original image.
                 self.msgImg = photo.image
             }
 //            picker.dismiss(animated: true, completion: nil)
@@ -201,24 +219,6 @@ class chatVC: UIViewController
         }
         present(picker, animated: true, completion: nil)
     }
-//    func getMessages(userArr:[String?],completion:@escaping([Message?]?)->Void)
-//    {
-//        self.messageService.getMsgs(convoID: self.conversationID, users: userArr)
-//        {
-//            (msgArray, error) in
-//            guard let msgArray = msgArray else
-//            {
-//                print("Error : \(error)")
-//                completion(nil)
-//                return
-//            }
-//
-//            print(msgArray.count)
-//            completion(msgArray)
-//        }
-//    }
-    
-    
     
     func createConvo(users:[String?],completion:@escaping(Bool,String?)->Void)
     {
@@ -334,120 +334,6 @@ class chatVC: UIViewController
         }
     }
     
-//    func getConvoUsers2(completion:@escaping([Conversation?]?)->Void)
-//    {
-//        oneToOneConvoServices.getConvoUsers(convoID: self.conversationID, completion:
-//            {
-//                (conversation, error) in
-//                
-//                if error != nil
-//                {
-//                    print(error)
-//                }
-//                else
-//                {
-//                    print(conversation)
-//                    completion(conversation!)
-//                }
-//        })
-//    }
-    
-//    func getConvoUsers(completion:@escaping([String?]?)->Void)
-//    {
-//
-//        oneToOneConvoService.getConvoUsers(convoID: self.conversationID!)
-//        {
-//            (usersArray, error) in
-//            guard let usersArray = usersArray else
-//            {
-//                print("Error: \(error)")
-//                completion(nil)
-//                return
-//            }
-//
-//            for i in usersArray
-//            {
-//                self.users.append(i!.uid)
-//                print(i!.uid)
-//            }
-//            completion(self.users)
-//            print(self.users)
-//        }
-//    }
-    
-//    func getConvoID(completion:@escaping(String)->Void)
-//    {
-//        if users.count != nil
-//        {
-//            conversationService.getConversationID(users: users as! [String])
-//            {
-//                (id, err, userCount, convoCount) in
-//                guard let id = id
-//                    else
-//                {
-//                    print(err)
-//                    return
-//                }
-//
-//                self.conversationID = id
-//                completion(self.conversationID!)
-//            }
-//        }
-//    }
-//
-//    func checkIfConvoExists()
-//    {
-//        users1 = users
-//        conversationService.checkIfConvoExists(users: self.users1 as! [String])
-//        {
-//            (count) in
-//            if count == nil
-//            {
-//                print("No Such Convo Exists")
-//
-//                let convo1 = Conversation(conversationID: "asd", dateCreated: "12321", users: self.users1 as! [String])
-//
-//                self.createConversation(completion:
-//                    {
-//                        (convoID) in
-//                        print(convoID)
-//                    })
-//            }
-//            else
-//            {
-//                print("Convo already exists")
-//            }
-//        }
-//    }
-//
-//    func createConversation(completion:@escaping(String)->Void)
-//    {
-//        if users.count == 2
-//        {
-//            let convo1 = Conversation(conversationID: "asd", dateCreated: "12321", users: users as! [String])
-//
-//            conversationService.createConversation(conversation: convo1)
-//            {
-//                (convo, success, error) in
-//                if error != nil
-//                {
-//                    print(error)
-//                }
-//                else
-//                {
-//                    self.conversationID = convo?.conversationID
-//                    print(self.conversationID)
-//
-//                    self.userService.updateConversationList(convoID: self.conversationID, users: self.users1)
-//                }
-//            }
-//        }
-//        else
-//        {
-//
-//        }
-//    }
-    
     func handleCurrentUser(){
         if users.contains(delegate.currentUser!.uid) == true{
             return
@@ -464,19 +350,33 @@ class chatVC: UIViewController
         }
     }
     
-    func scrollToLastRow()
-    {
-        let indexPath = IndexPath(row: messages.count - 1, section: 0)
-        self.chat.scrollToRow(at: indexPath, at: .bottom, animated: true)
-        //self.chat.selectRow(at: indexPath as IndexPath, animated: true, scrollPosition: .bottom)
-    }
-    
 //    func scrollToLastRow()
 //    {
-//        var scrollPosition: Int = messages.count - 1
-//        let indexPath = IndexPath(row: scrollPosition, section: 0)
-//        chat.scrollToRow(at: indexPath, at: .middle, animated: true)
+//        let indexPath = IndexPath(row: messages.count - 1, section: 0)
+//        self.chat.scrollToRow(at: indexPath, at: .bottom, animated: true)
+//        //self.chat.selectRow(at: indexPath as IndexPath, animated: true, scrollPosition: .bottom)
 //    }
+    
+    func scrollToBottom()
+    {
+        if chat.contentSize.height > chat.bounds.size.height
+        {
+            let bottomOffset = CGPoint(x: 0, y: chat.contentSize.height - chat.bounds.size.height + chat.contentInset.bottom)
+            chat.setContentOffset(bottomOffset, animated: true)
+        }
+        else
+        {
+            let bottomOffset = CGPoint(x: 0, y: chat.contentSize.height)
+            chat.setContentOffset(bottomOffset, animated: true)
+        }
+    }
+    
+    func scrollToLastRow()
+    {
+        let scrollPosition: Int = messages.count - 1
+        let indexPath = IndexPath(row: scrollPosition, section: 0)
+        chat.scrollToRow(at: indexPath, at: .none, animated: true)
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -503,37 +403,6 @@ class chatVC: UIViewController
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = true
         
-//        getConvoUsers2
-//            {
-//                (conversations) in
-//                guard let conversations = conversations else
-//                {
-//                    return
-//                }
-//
-//                self.users = []
-//
-//                for i in conversations
-//                {
-//                    self.users = i!.users!
-//                }
-//            }
-        
-//        getConvoUsers
-//            {
-//                (usersArray) in
-//                guard let usersArray = usersArray else
-//                {
-//                    print("Get ready for error Error Time")
-//                    return
-//                }
-//
-//                self.users.removeAll()
-//                self.users = usersArray
-//
-//                print(self.users)
-//        }
-        
         if users.isEmpty == true || users.count == 1
         {
             handleCurrentUser()
@@ -549,34 +418,6 @@ class chatVC: UIViewController
                 {
                     print("Enjoy")
                     self.getMsgs()
-        
-//                    self.getConvoUsers
-//                        {
-//                            (usersArray) in
-//                            guard let usersArray = usersArray else
-//                            {
-//                                print("Get ready for error Error Time")
-//                                return
-//                            }
-//
-//                            self.users.removeAll()
-//                            self.users = usersArray
-//
-//                            print(self.users)
-//                    }
-//                    self.messages = []
-//                    self.getMessages(userArr: self.users, completion:
-//                        {
-//                            (msgArr) in
-//                            guard let msgArr = msgArr else
-//                            {
-//                                print("No Messages")
-//                                return
-//                            }
-//                            self.messages.removeAll()
-//                            self.messages = msgArr
-//                            print(msgArr.count)
-//                    })
                 }
                 else
                 {
@@ -587,39 +428,8 @@ class chatVC: UIViewController
                             {
                                 print("Convo Created")
                                 self.conversationID = result
-                                //print("1:\(self.conversationID)")
 
                                 self.getMsgs()
-                                
-//                                self.getConvoUsers
-//                                    {
-//                                        (usersArray) in
-//                                        guard let usersArray = usersArray else
-//                                        {
-//                                            print("Get ready for error Error Time")
-//                                            return
-//                                        }
-//
-//                                        self.users.removeAll()
-//                                        self.users = usersArray
-//
-//                                        print(self.users)
-//                                }
-                                
-//                                self.messages = []
-//
-//                                self.getMessages(userArr: self.users, completion:
-//                                    {
-//                                        (msgArr) in
-//                                        guard let msgArr = msgArr else
-//                                        {
-//                                            print("No Messages")
-//                                            return
-//                                        }
-//                                        self.messages.removeAll()
-//                                        self.messages = msgArr
-//                                        print(msgArr.count)
-//                                })
                             }
                             else
                             {
@@ -648,15 +458,6 @@ class chatVC: UIViewController
                 }
             }
         }
-        
-//        checkIfConvoExists()
-//        createConversation()
-//        getConvoID
-//            {
-//                (id) in
-//
-//                print(id)
-//            }
     }
     
     override func viewDidLoad() {
@@ -675,6 +476,11 @@ class chatVC: UIViewController
         
         //Dont need HeightForRowAt when making tableviewcell like this
         //self.chat.rowHeight = UITableView.automaticDimension
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let dest = segue.destination as! recordingVC
+        dest.uniqueID = uniqueID!
     }
 }
 
@@ -702,7 +508,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
                 noMsgTxt.isHidden = true
                 chat.isHidden = false
             
-                if (messages[indexPath.row]!.message?.contains("https://firebasestorage"))!
+                if (messages[indexPath.row]!.type) == "Image"
                 {
                     cell.bubbleView.chatLbl.isHidden = true
                     cell.bubbleView.imgView.isHidden = false
@@ -804,43 +610,128 @@ extension chatVC: UITextViewDelegate
 }
 
 
-//extension chatVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate
-//{
-//    func presentPhotoPicker(source: UIImagePickerController.SourceType)
-//    {
-//        let picker = UIImagePickerController()
-//        picker.delegate = self
-//        picker.sourceType = source
-//        present(picker , animated: true , completion: nil)
-//    }
-//
-//    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//        picker.dismiss(animated: true) {
-//            self.performSegue(withIdentifier: "imgView", sender: self)
-//        }
-//
-//        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-//            print("got image")
-//            selectedImage = image
-//            //profileImgOut.setImage(image, for: .normal)
-//        }else {
-//            print("no image")
-//            let image = UIImage(named: "profilePic")
-//            //profileImgOut.setImage(image, for: .normal)
-//        }
-//    }
-//}
+extension chatVC: AVAudioPlayerDelegate, AVAudioRecorderDelegate
+{
+    
+    func getDocumentsDirectory() -> URL
+    {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentsDirectory = paths[0]
+        return documentsDirectory
+    }
 
-//extension chatVC
-//{
-//    //MARK: -Prepare for Segue
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-//    {
-//        if segue.identifier == "imgView"
-//        {
-//            let imgData = segue.destination as! ImageVC
-//
-//            imgData.img = selectedImage
-//        }
-//    }
-//}
+    
+    //MARK: -Recording Audio
+    func recordSession()
+    {
+        recordingSession = AVAudioSession.sharedInstance()
+        
+        do
+        {
+            try recordingSession.setCategory(.playAndRecord, mode: .default)
+            try recordingSession.setActive(true)
+            recordingSession.requestRecordPermission()
+                {
+                    [unowned self] allowed in
+                    DispatchQueue.main.async
+                        {
+                            if allowed
+                            {
+                                //self.loadRecordingUI()
+                                print("allowed")
+                            }
+                            else
+                            {
+                                print("not allowed")
+                                // failed to record!
+                            }
+                        }
+                }
+        }
+        catch
+        {
+            // failed to record!
+        }
+    }
+    
+    
+    func startRecording()
+    {
+        uniqueID = UUID().uuidString
+        let audioFileName = self.getDocumentsDirectory().appendingPathComponent("\(uniqueID!).m4a")
+
+        let settings = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 12000,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+
+        //Start Recording
+        do
+        {
+            soundRecorder = try AVAudioRecorder(url: audioFileName, settings: settings)
+            soundRecorder.delegate = self
+            soundRecorder.record()
+
+            //recordButton.setTitle("Tap to Stop", for: .normal)
+        }
+        catch
+        {
+            finishRecording(success: false)
+        }
+    }
+    
+    func finishRecording(success: Bool)
+    {
+        soundRecorder.stop()
+        soundRecorder = nil
+        
+        if success
+        {
+            //recordButton.setTitle("Tap to Re-record", for: .normal)
+        }
+        else
+        {
+            //recordButton.setTitle("Tap to Record", for: .normal)
+            // recording failed :(
+        }
+    }
+    
+    @objc func recordTapped()
+    {
+        if soundRecorder == nil
+        {
+            startRecording()
+        }
+        else
+        {
+            finishRecording(success: true)
+            performSegue(withIdentifier: "recording", sender: self)
+        }
+    }
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool)
+    {
+        if !flag
+        {
+            finishRecording(success: false)
+        }
+    }
+    
+    
+    func startPlaying()
+    {
+        
+    }
+    
+    func pausePlaying()
+    {
+        
+    }
+    
+    func stopPlaying()
+    {
+        
+    }
+}

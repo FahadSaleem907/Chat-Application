@@ -58,6 +58,57 @@ class chatCell: UITableViewCell
         
     }
     
+    func setData2(_ message: Message) -> Void
+    {
+        bubbleView.dateLbl.text = "\(message.date!)"
+        bubbleView.timeLbl.text = "\(message.time!)"
+        bubbleView.chatLbl.text = message.message
+        bubbleView.toggleButton.bringSubviewToFront(self)
+        
+        if message.uid == delegate.currentUser?.uid
+        {
+            bubbleView.isIncoming   = message.incoming!
+        }
+        else
+        {
+            bubbleView.isIncoming   = !message.incoming!
+        }
+        
+        leadingOrTrailingConstraints.isActive = false
+        
+        if bubbleView.isIncoming == true
+        {
+            NSLayoutConstraint.activate([
+                bubbleView.toggleButton.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 8),
+                bubbleView.toggleButton.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 22),
+                bubbleView.toggleButton.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 12),
+                bubbleView.toggleButton.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: 10),
+                bubbleView.timeLbl.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 0)
+                ])
+        }
+        else if bubbleView.isIncoming == false
+        {
+            NSLayoutConstraint.activate([
+                bubbleView.toggleButton.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 8),
+                bubbleView.toggleButton.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 22),
+                bubbleView.toggleButton.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 12),
+                bubbleView.toggleButton.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: 10),
+                bubbleView.timeLbl.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 0)
+                ])
+        }
+        
+        if delegate.currentUser?.uid == message.uid
+        {
+            leadingOrTrailingConstraints = bubbleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12.0)
+        }
+        else
+        {
+            leadingOrTrailingConstraints = bubbleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12.0)
+        }
+        
+        leadingOrTrailingConstraints.isActive = true
+    }
+    
     func setData1(_ message: Message) -> Void
     {
         bubbleView.dateLbl.text = "\(message.date!)"

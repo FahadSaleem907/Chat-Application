@@ -25,6 +25,7 @@
 		A3E3FDB12310929900BD23FB /* chatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB02310929900BD23FB /* chatVC.swift */; };
 		A3E3FDB32310938200BD23FB /* chatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB22310938200BD23FB /* chatBubbleView.swift */; };
 		A3E3FDB5231096BB00BD23FB /* chatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E3FDB4231096BB00BD23FB /* chatCell.swift */; };
+		E14AC34A2339BC0B0047170C /* recordingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14AC3492339BC0B0047170C /* recordingVC.swift */; };
 		E15BB27A23267AD2001D4C28 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15BB27923267AD2001D4C28 /* extensions.swift */; };
 		E179CC2C231CD02100765E4D /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E179CC2B231CD02100765E4D /* Conversation.swift */; };
 		E179CC2E231CD10300765E4D /* conversationServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E179CC2D231CD10300765E4D /* conversationServices.swift */; };
@@ -64,6 +65,7 @@
 		A3E3FDB4231096BB00BD23FB /* chatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatCell.swift; sourceTree = "<group>"; };
 		AD89F57B78F1AF9F1A9E13F6 /* Pods_Chat_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Chat_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0D9A95B729E3274EB90382B /* Pods-Chat App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat App.debug.xcconfig"; path = "Target Support Files/Pods-Chat App/Pods-Chat App.debug.xcconfig"; sourceTree = "<group>"; };
+		E14AC3492339BC0B0047170C /* recordingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recordingVC.swift; sourceTree = "<group>"; };
 		E15BB27923267AD2001D4C28 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = "<group>"; };
 		E179CC2B231CD02100765E4D /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		E179CC2D231CD10300765E4D /* conversationServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = conversationServices.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				E1DB0EC72317E0EA00992092 /* newMessageVC.swift */,
 				E1DB0EC92317E14300992092 /* newMessageCell.swift */,
 				E1CDF3B223292EA700F99409 /* ImageVC.swift */,
+				E14AC3492339BC0B0047170C /* recordingVC.swift */,
 			);
 			path = Functions;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				E1DB0ECA2317E14300992092 /* newMessageCell.swift in Sources */,
 				E1B166C6231A832500E1DD97 /* userServices.swift in Sources */,
 				A37AEADF231087F900699D29 /* resetPassVC.swift in Sources */,
+				E14AC34A2339BC0B0047170C /* recordingVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

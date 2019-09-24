@@ -40,6 +40,16 @@ class ChatBubbleView :UIView
         return img
     }()
     
+    let toggleButton : UIButton = {
+        let recordButton = UIButton()
+        recordButton.translatesAutoresizingMaskIntoConstraints = false
+        recordButton.setImage(UIImage(named: "Play"), for: .normal)
+        recordButton.imageView?.contentMode = .scaleToFill
+        recordButton.setTitle("", for: .normal)
+        
+        return recordButton
+    }()
+    
     var isIncoming = false
     
     override init(frame: CGRect) {
@@ -58,6 +68,7 @@ class ChatBubbleView :UIView
         addSubview(dateLbl)
         addSubview(chatLbl)
         addSubview(imgView)
+        addSubview(toggleButton)
         chatLbl.addSubview(timeLbl)
         
         NSLayoutConstraint.activate([

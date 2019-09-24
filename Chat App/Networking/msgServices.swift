@@ -25,7 +25,7 @@ public class messageFunctions
         let message1 = Message(type: message!.type!, uid: message!.uid, dateTime: message!.dateTime!, date: message!.date!, time: message!.time!, conversationID: message!.conversationID!, incoming: true, message: message!.message!)
         
         let dataDic : [String:Any] = [
-                                        "msgid":"\(message1.type!)",
+                                        "msgType":"\(message1.type!)",
                                         "uid":"\(message1.uid!)",
                                         "dateTime":"\(message1.dateTime!)",
                                         "date":"\(message1.date!)",
@@ -77,7 +77,7 @@ public class messageFunctions
 //                    self.tmpArray = []
                     for j in snapshot.documents
                     {
-                        let tmpMessage = Message(type: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                        let tmpMessage = Message(type: j.data()["msgType"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                         
                         print(tmpMessage)
                         tmpArray.append(tmpMessage)
@@ -131,7 +131,7 @@ public class messageFunctions
                 tmpArray = []
                 for j in snapshot.documents
                 {
-                    let tmpMessage = Message(type: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                    let tmpMessage = Message(type: j.data()["msgType"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                     
                     tmpArray.append(tmpMessage)
                 }
@@ -158,7 +158,7 @@ public class messageFunctions
                 tmpArray = []
                 for j in snapshot.documents
                 {
-                    let tmpMessage = Message(type: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                    let tmpMessage = Message(type: j.data()["msgType"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                     
                     print(tmpArray)
                     
@@ -185,7 +185,7 @@ public class messageFunctions
                     
                     for j in nextSnapshot.documents
                     {
-                        let tmpMessage = Message(type: j.data()["msgid"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
+                        let tmpMessage = Message(type: j.data()["msgType"] as? String, uid: j.data()["uid"] as? String, dateTime: j.data()["dateTime"] as? String, date: j.data()["date"] as? String, time: j.data()["time"] as? String, conversationID: "\(convoID!)", incoming: true, message: j.data()["message"] as? String)
                         
                         tmpArray.append(tmpMessage)
                     }
@@ -240,6 +240,11 @@ public class messageFunctions
                 })
             }
         }
+    }
+    
+    func uploadAudioMsg(convoID:String?,completion:@escaping(_ url:String?,_ error:String?)->Void)
+    {
+        
     }
     
     func deleteMessage()

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AGN-6f-QyJ">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AGN-6f-QyJ">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,13 +13,13 @@
             <objects>
                 <viewController storyboardIdentifier="chatVC" id="7bC-YX-f90" customClass="chatVC" customModule="Chat_App" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yAh-ob-8Am">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Il9-8G-oZ8">
-                                <rect key="frame" x="10.5" y="826.5" width="393" height="54.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Il9-8G-oZ8">
+                                <rect key="frame" x="10.5" y="772.5" width="393" height="54.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cSb-NU-Mzl">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cSb-NU-Mzl">
                                         <rect key="frame" x="7" y="7.5" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="SWe-8a-S18"/>
@@ -32,7 +30,7 @@
                                             <action selector="cameraBtn:" destination="7bC-YX-f90" eventType="touchUpInside" id="wRM-2o-3fR"/>
                                         </connections>
                                     </button>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jhk-fF-ssu" customClass="GrowingTextView" customModule="GrowingTextView">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jhk-fF-ssu" customClass="GrowingTextView" customModule="GrowingTextView">
                                         <rect key="frame" x="52" y="5.5" width="246" height="43.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
@@ -50,7 +48,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wEz-n8-IxV">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="wEz-n8-IxV">
                                         <rect key="frame" x="298" y="7.5" width="85" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oUJ-Zx-AW1">
@@ -92,13 +90,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Messages Exchanged. Send Now!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ZaO-uT-80I">
-                                <rect key="frame" x="0.0" y="441" width="414" height="24.5"/>
+                                <rect key="frame" x="0.0" y="392" width="414" height="24.5"/>
                                 <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="22"/>
                                 <color key="textColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U7S-zb-VfY">
-                                <rect key="frame" x="0.0" y="44" width="414" height="782.5"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U7S-zb-VfY">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="772.5"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
@@ -126,11 +124,101 @@
                         <outlet property="msgTxt" destination="Jhk-fF-ssu" id="gGd-Od-yJw"/>
                         <outlet property="noMsgTxt" destination="ZaO-uT-80I" id="mBA-Jp-nOZ"/>
                         <outlet property="typedMsgView" destination="Il9-8G-oZ8" id="fQB-qR-t2L"/>
+                        <segue destination="mIb-rw-nhO" kind="presentation" identifier="recording" id="Zab-nZ-LJp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="76D-nT-TdH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1516" y="102"/>
+        </scene>
+        <!--RecordingVC-->
+        <scene sceneID="ZaZ-ar-VRJ">
+            <objects>
+                <viewController modalPresentationStyle="overCurrentContext" id="mIb-rw-nhO" customClass="recordingVC" customModule="Chat_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BNc-Sp-YNk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gUA-ba-MOi" userLabel="backgroundBtn">
+                                <rect key="frame" x="0.0" y="17" width="414" height="808"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <action selector="dismissBtn:" destination="mIb-rw-nhO" eventType="touchUpInside" id="TQF-cM-Pd0"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Npv-ml-ary">
+                                <rect key="frame" x="41.5" y="283" width="331" height="242"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2O2-pT-dab" userLabel="playBtn">
+                                        <rect key="frame" x="25" y="72.5" width="97" height="97"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="2O2-pT-dab" secondAttribute="height" multiplier="1:1" id="WrF-aA-WXz"/>
+                                        </constraints>
+                                        <state key="normal" image="play1"/>
+                                        <connections>
+                                            <action selector="playBtn:" destination="mIb-rw-nhO" eventType="touchUpInside" id="ppf-jl-lUl"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9X3-ty-lwf">
+                                        <rect key="frame" x="288" y="131" width="33" height="13.5"/>
+                                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mqv-Kf-8Ma">
+                                        <rect key="frame" x="284.5" y="196" width="36.5" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Mqv-Kf-8Ma" secondAttribute="height" multiplier="1:1" id="Pph-ef-bWc"/>
+                                        </constraints>
+                                        <state key="normal" image="send"/>
+                                        <connections>
+                                            <action selector="sendAudio:" destination="mIb-rw-nhO" eventType="touchUpInside" id="tXA-t4-kmx"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.72757919520547942" green="0.57598458904109584" blue="0.69600813356164382" alpha="0.82544948630136983" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="9X3-ty-lwf" secondAttribute="trailing" constant="10" id="0cM-eh-Xau"/>
+                                    <constraint firstItem="9X3-ty-lwf" firstAttribute="width" secondItem="Npv-ml-ary" secondAttribute="width" multiplier="0.1" id="3qt-6a-AHn"/>
+                                    <constraint firstItem="Mqv-Kf-8Ma" firstAttribute="height" secondItem="Npv-ml-ary" secondAttribute="height" multiplier="0.15" id="91f-p3-uUr"/>
+                                    <constraint firstAttribute="bottom" secondItem="Mqv-Kf-8Ma" secondAttribute="bottom" constant="10" id="Lk6-SC-oP2"/>
+                                    <constraint firstAttribute="trailing" secondItem="Mqv-Kf-8Ma" secondAttribute="trailing" constant="10" id="QBL-k4-Hrc"/>
+                                    <constraint firstItem="2O2-pT-dab" firstAttribute="leading" secondItem="Npv-ml-ary" secondAttribute="leading" constant="25" id="TXZ-Nf-Uif"/>
+                                    <constraint firstItem="2O2-pT-dab" firstAttribute="centerY" secondItem="Npv-ml-ary" secondAttribute="centerY" id="euZ-vW-yI8"/>
+                                    <constraint firstItem="2O2-pT-dab" firstAttribute="height" secondItem="Npv-ml-ary" secondAttribute="height" multiplier="0.4" id="vFF-V5-hxd"/>
+                                </constraints>
+                            </view>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" translatesAutoresizingMaskIntoConstraints="NO" id="lLW-Zv-oaw">
+                                <rect key="frame" x="183.5" y="403.5" width="165.5" height="2.5"/>
+                                <color key="progressTintColor" red="0.61568627450980395" green="0.3411764705882353" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="trackTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </progressView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="9X3-ty-lwf" firstAttribute="top" secondItem="lLW-Zv-oaw" secondAttribute="bottom" constant="9" id="10u-9O-MUO"/>
+                            <constraint firstItem="Npv-ml-ary" firstAttribute="width" secondItem="vh8-bJ-I4K" secondAttribute="width" multiplier="0.8" id="7sz-Sw-n4j"/>
+                            <constraint firstItem="lLW-Zv-oaw" firstAttribute="width" secondItem="Npv-ml-ary" secondAttribute="width" multiplier="0.5" id="EFV-qM-UPA"/>
+                            <constraint firstItem="Npv-ml-ary" firstAttribute="centerY" secondItem="vh8-bJ-I4K" secondAttribute="centerY" id="FSU-JI-wBP"/>
+                            <constraint firstItem="Npv-ml-ary" firstAttribute="height" secondItem="vh8-bJ-I4K" secondAttribute="height" multiplier="0.3" id="Tys-QT-tp9"/>
+                            <constraint firstItem="lLW-Zv-oaw" firstAttribute="leading" secondItem="2O2-pT-dab" secondAttribute="trailing" constant="20" id="dlO-h3-bUc"/>
+                            <constraint firstItem="lLW-Zv-oaw" firstAttribute="centerY" secondItem="Npv-ml-ary" secondAttribute="centerY" id="j4y-KN-Aau"/>
+                            <constraint firstItem="Npv-ml-ary" firstAttribute="centerX" secondItem="vh8-bJ-I4K" secondAttribute="centerX" id="qSg-EG-i7K"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="vh8-bJ-I4K"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="TeJ-gR-r3F"/>
+                    <connections>
+                        <outlet property="audioTimeBar" destination="lLW-Zv-oaw" id="K3u-zK-VLf"/>
+                        <outlet property="backgroundMainView" destination="Npv-ml-ary" id="ddE-bx-xhm"/>
+                        <outlet property="durationLbl" destination="9X3-ty-lwf" id="Y0D-qZ-UUf"/>
+                        <outlet property="playBtnOutlet" destination="2O2-pT-dab" id="yia-CJ-uH6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xay-eh-Zl9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2313.04347826087" y="101.78571428571428"/>
         </scene>
         <!--New MessageVC-->
         <scene sceneID="ihN-cy-k3K">
@@ -239,5 +327,7 @@
         <image name="gallery" width="60" height="60"/>
         <image name="mic60" width="60" height="60"/>
         <image name="offline" width="50" height="50"/>
+        <image name="play1" width="100" height="100"/>
+        <image name="send" width="60" height="60"/>
     </resources>
 </document>
