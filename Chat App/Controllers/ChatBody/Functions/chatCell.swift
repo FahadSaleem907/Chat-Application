@@ -14,6 +14,7 @@ class chatCell: UITableViewCell
     }()
     
     var leadingOrTrailingConstraints = NSLayoutConstraint()
+    var msgAudioURL : String?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,7 +40,11 @@ class chatCell: UITableViewCell
             bubbleView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30.0),
             bubbleView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12.0),
             bubbleView.widthAnchor.constraint(lessThanOrEqualTo: contentView.widthAnchor, multiplier: 0.66),
-            bubbleView.imgView.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
+        bubbleView.imgView.heightAnchor.constraint(lessThanOrEqualToConstant: 200),
+            
+        bubbleView.toggleButton.heightAnchor.constraint(lessThanOrEqualToConstant: 100),
+        
+        bubbleView.toggleButton.widthAnchor.constraint(lessThanOrEqualToConstant: 150)
             ])
         
         bubbleView.addSubview(bubbleView.timeLbl)
@@ -80,7 +85,7 @@ class chatCell: UITableViewCell
         {
             NSLayoutConstraint.activate([
                 bubbleView.toggleButton.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 8),
-                bubbleView.toggleButton.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 22),
+                bubbleView.toggleButton.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: -8),
                 bubbleView.toggleButton.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 12),
                 bubbleView.toggleButton.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: 10),
                 bubbleView.timeLbl.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 0)
@@ -90,7 +95,7 @@ class chatCell: UITableViewCell
         {
             NSLayoutConstraint.activate([
                 bubbleView.toggleButton.topAnchor.constraint(equalTo: bubbleView.topAnchor, constant: 8),
-                bubbleView.toggleButton.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 22),
+                bubbleView.toggleButton.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: -8),
                 bubbleView.toggleButton.leadingAnchor.constraint(equalTo: bubbleView.leadingAnchor, constant: 12),
                 bubbleView.toggleButton.trailingAnchor.constraint(equalTo: bubbleView.trailingAnchor, constant: 10),
                 bubbleView.timeLbl.bottomAnchor.constraint(equalTo: bubbleView.bottomAnchor, constant: 0)

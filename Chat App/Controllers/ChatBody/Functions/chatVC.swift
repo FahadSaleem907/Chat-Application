@@ -26,10 +26,15 @@ class chatVC: UIViewController
     var timeOnly : String?
     var msgImg : UIImage?
     var msgImgURL : String?
+    var msgAudioURL : String?
     var soundRecorder : AVAudioRecorder!
     var uniqueID : String?
     var soundPlayer : AVAudioPlayer!
+//    var isPlaying : Bool? = false
+    var audioTime : Double?
+    var player : AVPlayer!
     var recordingSession : AVAudioSession!
+    var audioIndexPath : IndexPath?
     var otherUser : User?
     var users : [String?] = []
     {
@@ -509,8 +514,34 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
                 noMsgTxt.isHidden = true
                 chat.isHidden = false
             
-                if (messages[indexPath.row]!.type) == "Image"
+                if (messages[indexPath.row]!.type) == "Audio"
                 {
+                    cell.bubbleView.chatLbl.isHidden = true
+                    cell.bubbleView.imgView.isHidden = true
+                    cell.bubbleView.toggleButton.isHidden = false
+                    //cell.msgAudioURL = messages[indexPath.row]!.message!
+                    cell.bubbleView.toggleButton.setImage(UIImage(named: "play"), for: .normal)
+                    cell.bubbleView.toggleButton.tag = indexPath.row
+                    cell.bubbleView.toggleButton.addTarget(self, action: #selector(playAudio(sender:)), for: .touchUpInside)
+                    
+//                    cell.isPlaying = !cell.isPlaying!
+                    
+//                    if cell.isPlaying == true
+//                    {
+//                        cell.bubbleView.toggleButton.setImage(UIImage(named: "pause")!, for: .normal)
+//                        cell.isPlaying = !cell.isPlaying!
+//                    }
+//                    else
+//                    {
+//                        cell.bubbleView.toggleButton.setImage(UIImage(named: "play")!, for: .normal)
+//                    }
+                    
+                    cell.setData2(messages[indexPath.row]!)
+                    
+                }
+                else if (messages[indexPath.row]!.type) == "Image"
+                {
+                    cell.bubbleView.toggleButton.isHidden = true
                     cell.bubbleView.chatLbl.isHidden = true
                     cell.bubbleView.imgView.isHidden = false
                     cell.setData1(messages[indexPath.row]!)
@@ -521,6 +552,7 @@ extension chatVC : UITableViewDelegate,UITableViewDataSource
 //                    cell.setData(self.messages[indexPath.row]!)
 //                    self.scrollToLastRow()
 //                }
+                    cell.bubbleView.toggleButton.isHidden = true
                     cell.bubbleView.imgView.isHidden = true
                     cell.bubbleView.chatLbl.isHidden = false
                     cell.setData(messages[indexPath.row]!)
@@ -613,14 +645,47 @@ extension chatVC: UITextViewDelegate
 
 extension chatVC: AVAudioPlayerDelegate, AVAudioRecorderDelegate
 {
-    
     func getDocumentsDirectory() -> URL
     {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
-
+    
+    //MARK: -PlayingAudio
+    @objc func playAudio(sender:UIButton)
+    {
+//        print(sender.tag)
+        audioIndexPath = [0, sender.tag]
+        msgAudioURL = messages[audioIndexPath!.row]?.message!
+        let url = msgAudioURL
+        let audioURL = URL(string: url!)
+        print(audioURL!)
+        
+        let playItem = AVPlayerItem(url: audioURL!)
+        do
+        {
+            player = try AVPlayer(playerItem: playItem)
+            player.play()
+            
+             
+            let cell = chat.cellForRow(at: audioIndexPath!) as! chatCell
+            
+            if player.currentItem?.currentTime() != nil
+            {
+                cell.bubbleView.toggleButton.setImage(UIImage(named: "pause"), for: .normal)
+            }
+            else
+            {
+                cell.bubbleView.toggleButton.setImage(UIImage(named: "play"), for: .normal)
+            }
+            audioTime = player.currentItem?.asset.duration.seconds
+        }
+        catch
+        {
+            print("Doesnt ExisT")
+        }
+    }
     
     //MARK: -Recording Audio
     func recordSession()
@@ -654,7 +719,6 @@ extension chatVC: AVAudioPlayerDelegate, AVAudioRecorderDelegate
             // failed to record!
         }
     }
-    
     
     func startRecording()
     {

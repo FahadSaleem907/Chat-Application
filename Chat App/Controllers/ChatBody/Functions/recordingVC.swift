@@ -110,7 +110,7 @@ class recordingVC: UIViewController
             
             self.audioMsgUrl = url.absoluteString
             
-            let message1 = Message(type: "Image", uid: self.delegate.currentUser!.uid!, dateTime: "\(self.dateAndTime!)", date: "\(self.dateOnly!)", time: "\(self.timeOnly!)", conversationID: self.convoID!, incoming: false, message: self.audioMsgUrl!)
+            let message1 = Message(type: "Audio", uid: self.delegate.currentUser!.uid!, dateTime: "\(self.dateAndTime!)", date: "\(self.dateOnly!)", time: "\(self.timeOnly!)", conversationID: self.convoID!, incoming: false, message: self.audioMsgUrl!)
             
             self.messageServices.createMessage(message: message1, ConvoID: self.convoID)
             {
@@ -136,15 +136,8 @@ class recordingVC: UIViewController
         backgroundMainView.layer.cornerRadius = 25
     }
     
-    override func viewDidDisappear(_ animated: Bool)
+    override func viewDidLoad()
     {
-        if soundPlayer.isPlaying
-        {
-            soundPlayer.stop()
-        }
-    }
-    
-    override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.

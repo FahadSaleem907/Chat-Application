@@ -43,7 +43,7 @@ class ChatBubbleView :UIView
     let toggleButton : UIButton = {
         let recordButton = UIButton()
         recordButton.translatesAutoresizingMaskIntoConstraints = false
-        recordButton.setImage(UIImage(named: "Play"), for: .normal)
+        //recordButton.setImage(UIImage(named: "Play"), for: .normal)
         recordButton.imageView?.contentMode = .scaleToFill
         recordButton.setTitle("", for: .normal)
         
