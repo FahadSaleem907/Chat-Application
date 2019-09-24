@@ -14,12 +14,20 @@ class recordingVC: UIViewController
 
     //MARK: -Constants
     let chat = chatVC()
+    let messageServices = messageFunctions()
+    let delegate = UIApplication.shared.delegate as! AppDelegate
+    let oneToOneConvoServices = oneToOneConvoFunctions()
     
     //MARK: -Variables
     var soundPlayer : AVAudioPlayer!
     var uniqueID : String?
     var isPlaying : Bool = false
     var pauseTime : Double? = 0
+    var dateAndTime : String?
+    var dateOnly : String?
+    var timeOnly : String?
+    var convoID : String?
+    var audioMsgUrl : String?
     
     //MARK: -Outlets
     @IBOutlet weak var backgroundMainView: UIView!
@@ -43,15 +51,97 @@ class recordingVC: UIViewController
     
     @IBAction func sendAudio(_ sender: UIButton)
     {
-        
+        if soundPlayer.isPlaying
+        {
+            soundPlayer.stop()
+        }
+        sendAudioMsg(conversationID: convoID!)
+        self.dismiss(animated: true, completion: nil)
     }
     
     //MARK: -Functions
+    
+    func getDateTime()
+    {
+        let dateTime = Date()
+        let dateTimeFormat = DateFormatter()
+        dateTimeFormat.dateStyle = .medium
+        dateTimeFormat.timeStyle = .medium
+        dateAndTime = dateTimeFormat.string(from: dateTime)
+    }
+    
+    
+    func getDate()
+    {
+        let date = Date()
+        let dateFormat = DateFormatter()
+        dateFormat.dateStyle = .medium
+        dateFormat.timeStyle = .none
+        dateOnly = dateFormat.string(from: date)
+    }
+
+    func getTime()
+    {
+        let time = Date()
+        let timeFormat = DateFormatter()
+        timeFormat.dateStyle = .none
+        timeFormat.timeStyle = .medium
+        timeOnly = timeFormat.string(from: time)
+    }
+    
+    func sendAudioMsg(conversationID:String)
+    {
+        getDateTime()
+        getDate()
+        getTime()
+        
+        let url = chat.getDocumentsDirectory().appendingPathComponent("\(uniqueID!).m4a").absoluteString
+        print(uniqueID!)
+        
+        messageServices.uploadAudioMsg(convoID: conversationID, audioPath: url)
+        {
+            (url, error) in
+            
+            guard let url = url else
+            {
+                print(error)
+                return
+            }
+            
+            self.audioMsgUrl = url.absoluteString
+            
+            let message1 = Message(type: "Image", uid: self.delegate.currentUser!.uid!, dateTime: "\(self.dateAndTime!)", date: "\(self.dateOnly!)", time: "\(self.timeOnly!)", conversationID: self.convoID!, incoming: false, message: self.audioMsgUrl!)
+            
+            self.messageServices.createMessage(message: message1, ConvoID: self.convoID)
+            {
+                (message, success, error) in
+                if success == true
+                {
+                    print("Sent Successfully: \(message!)")
+                }
+                else
+                {
+                    print(error!)
+                }
+            }
+            
+            self.oneToOneConvoServices.updateConvo(convoID: self.convoID!, msg: self.audioMsgUrl!, time: self.dateAndTime!)
+        }
+        
+    }
     
     override func viewDidLayoutSubviews() {
         let height = playBtnOutlet.layer.frame.height
         playBtnOutlet.layer.cornerRadius = height/2
         backgroundMainView.layer.cornerRadius = 25
+    }
+    
+    override func viewDidDisappear(_ animated: Bool)
+    {
+        if soundPlayer.isPlaying
+        {
+            soundPlayer.stop()
+        }
     }
     
     override func viewDidLoad() {
@@ -79,7 +169,6 @@ extension recordingVC: AVAudioPlayerDelegate
     {
         Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateAudioProgress), userInfo: nil, repeats: true)
         
-        print(Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateAudioProgress), userInfo: nil, repeats: true))
     }
     
     @objc func updateAudioProgress()
@@ -87,6 +176,17 @@ extension recordingVC: AVAudioPlayerDelegate
         if soundPlayer.isPlaying
         {
             audioTimeBar.setProgress(Float(soundPlayer.currentTime/soundPlayer.duration), animated: true)
+            
+            print(soundPlayer.currentTime)
+            
+            if (soundPlayer.currentTime + 0.1) > soundPlayer.duration
+            {
+                audioTimeBar.progress = 0
+                playBtnOutlet.setImage(UIImage(named: "play1"), for: .normal)
+                isPlaying = !isPlaying
+                pauseTime = 0.0
+                soundPlayer.stop()
+            }
         }
     }
     
@@ -94,20 +194,17 @@ extension recordingVC: AVAudioPlayerDelegate
     {
         if isPlaying == true
         {
-            if pauseTime == 0.0
-            {
-                soundPlayer.play()
-            }
-            else
-            {
-                soundPlayer.play(atTime: pauseTime!)
-            }
+            soundPlayer.play()
+            setAudioProgress()
+            
             playBtnOutlet.setImage(UIImage(named: "pause1"), for: .normal)
         }
         else
         {
+            pauseTime = Double(audioTimeBar.progress) * soundPlayer.duration
             soundPlayer.pause()
-            print(pauseTime!)
+            
+            setAudioProgress()
             playBtnOutlet.setImage(UIImage(named: "play1"), for: .normal)
         }
     }
@@ -122,9 +219,6 @@ extension recordingVC: AVAudioPlayerDelegate
             soundPlayer = try AVAudioPlayer(contentsOf: path)
             isPlaying = !isPlaying
             togglePlaying()
-            setAudioProgress()
-            print(isPlaying)
-            print(soundPlayer.duration)
             getDuration(time: soundPlayer.duration)
         }
         catch

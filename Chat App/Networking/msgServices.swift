@@ -242,9 +242,37 @@ public class messageFunctions
         }
     }
     
-    func uploadAudioMsg(convoID:String?,completion:@escaping(_ url:String?,_ error:String?)->Void)
+    func uploadAudioMsg(convoID:String?, audioPath:String?,completion:@escaping(_ url:URL?,_ error:String?)->Void)
     {
+        let storageRef:StorageReference!
+        storageRef = Storage.storage().reference()
         
+        let uuid = UUID().uuidString
+        let storageFile = storageRef.child("MessageAudios").child("\(convoID!)").child(uuid)
+        
+        storageFile.putFile(from: URL(string: audioPath!)!, metadata: nil)
+        {
+            (metaData, error) in
+            if let err = error
+            {
+                print(err.localizedDescription)
+                completion(nil,err.localizedDescription)
+            }
+            else
+            {
+                storageFile.downloadURL { (url, error) in
+                    if let err = error
+                    {
+                        print(err.localizedDescription)
+                        completion(nil,err.localizedDescription)
+                    }
+                    else
+                    {
+                        completion(url,nil)
+                    }
+                }
+            }
+        }
     }
     
     func deleteMessage()

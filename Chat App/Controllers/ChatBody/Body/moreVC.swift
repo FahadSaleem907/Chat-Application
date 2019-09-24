@@ -33,7 +33,7 @@ class moreVC: UIViewController
            //delegate.currentUser = nil
             navigationController?.navigationController?.popToRootViewController(animated: true)
             
-            print(Auth.auth().currentUser?.uid)
+            print(Auth.auth().currentUser!.uid)
             
             
         }

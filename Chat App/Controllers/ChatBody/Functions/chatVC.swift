@@ -481,6 +481,7 @@ class chatVC: UIViewController
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let dest = segue.destination as! recordingVC
         dest.uniqueID = uniqueID!
+        dest.convoID = conversationID!
     }
 }
 
