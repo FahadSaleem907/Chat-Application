@@ -167,9 +167,9 @@
 		A37AEAD42310862600699D29 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E179CC2B231CD02100765E4D /* Conversation.swift */,
 				A30BF8F92315879600B04EEC /* Message.swift */,
 				A30BF8FB23158B3D00B04EEC /* User.swift */,
-				E179CC2B231CD02100765E4D /* Conversation.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -547,6 +547,7 @@
 			baseConfigurationReference = E0D9A95B729E3274EB90382B /* Pods-Chat App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JZ7ZYM42NV;
 				INFOPLIST_FILE = "Chat App/Info.plist";
@@ -556,6 +557,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Gr33dYTech.Chat-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -566,6 +568,7 @@
 			baseConfigurationReference = 065A03765BD585841267CCE0 /* Pods-Chat App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JZ7ZYM42NV;
 				INFOPLIST_FILE = "Chat App/Info.plist";
@@ -575,6 +578,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "Gr33dYTech.Chat-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

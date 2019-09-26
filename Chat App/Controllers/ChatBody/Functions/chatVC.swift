@@ -166,6 +166,8 @@ class chatVC: UIViewController
         }
         else
         {
+            self.conversationID = "\(users[0]!+users[1]!)"
+            print(self.conversationID)
             sendMessage(conversationID: self.conversationID!)
             print("\(msgTxt.text!)")
             msgTxt.text = ""
@@ -327,7 +329,7 @@ class chatVC: UIViewController
     
     func getMsgs()
     {
-        messageService.getOneToOneMsgs(convoID: /*"\(users[0]!+users[1]!)"*/self.conversationID!) { (messageArray, error) in
+        messageService.getOneToOneMsgs(convoID: "\(users[0]!+users[1]!)")/*self.conversationID!) */{ (messageArray, error) in
             guard let messageArray = messageArray else
             {
                 print("Error: \(error!)")
@@ -378,9 +380,12 @@ class chatVC: UIViewController
     
     func scrollToLastRow()
     {
-        let scrollPosition: Int = messages.count - 1
-        let indexPath = IndexPath(row: scrollPosition, section: 0)
-        chat.scrollToRow(at: indexPath, at: .none, animated: true)
+        if messages.count > 5
+        {
+            let scrollPosition: Int = messages.count - 1
+            let indexPath = IndexPath(row: scrollPosition, section: 0)
+            chat.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
