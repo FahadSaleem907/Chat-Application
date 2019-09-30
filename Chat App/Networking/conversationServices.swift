@@ -1,11 +1,3 @@
-//
-//  conversationFunctions.swift
-//  Chat App
-//
-//  Created by Fahad Saleem on 9/2/19.
-//  Copyright © 2019 SunnyMac. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import Firebase

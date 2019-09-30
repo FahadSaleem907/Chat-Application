@@ -15,90 +15,82 @@ class chatVC: UIViewController
     let userService = userFunctions()
     let imgType = signUpVC()
     
+    //MARK: -General/Support Variables
+    var uniqueID : String?
+    var audioIndexPath : IndexPath?
     
-    // MARK: -Variables
-    var receiverID : String?
-    var conversationID : String?
-    var selectedImage : UIImage?
-    var getMoreData = false
+    // MARK: -Variables for Time
     var dateAndTime : String?
     var dateOnly : String?
     var timeOnly : String?
-    var msgImg : UIImage?
-    var msgImgURL : String?
-    var msgAudioURL : String?
-    var soundRecorder : AVAudioRecorder!
-    var uniqueID : String?
-    var soundPlayer : AVAudioPlayer!
-//    var isPlaying : Bool? = false
-    var audioTime : Double?
-    var player : AVPlayer!
-    var recordingSession : AVAudioSession!
-    var audioIndexPath : IndexPath?
+    
+    //MARK: -Variables for Chat Messages
+    var receiverID : String?
     var otherUser : User?
+    var conversationID : String?
     var users : [String?] = []
     {
         didSet
         {
             self.users.sort
                 {
-                    (a, b) -> Bool in
-                    return a! < b!
+                    (a, b) -> Bool in return a! < b!
                 }
         }
     }
     var messages:[Message?] = []
-    {
-        didSet
         {
-            if self.messages.count > 1
+            didSet
             {
-                self.messages.sort
-                    {
-                        (a, b) -> Bool in
-                        
-                    let isoDateA = a?.dateTime
-                    let isoDateB = b?.dateTime
-
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateStyle = .medium
-                    dateFormatter.timeStyle = .medium
-                    let dateA = dateFormatter.date(from: isoDateA!)
-                    let dateB = dateFormatter.date(from: isoDateB!)
-                        
-                    return dateA! < dateB!
-//                    dateFormatter.dateFormat = "dd-MM-yyyy HH:MM:SS"
-//                    return a!.dateTime > b!.dateTime
-                    }
-            }
-            //messageService.updateIncomingStatus(users: users, convoID: self.conversationID!, message: self.messages)
-            
-            chat.reloadData()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1 , execute:
+                if self.messages.count > 1
                 {
-                    self.scrollToLastRow()
-                })
-//            {
-//
-//            }
-            
-            //scrollToBottom()
-            
-            self.view.layoutIfNeeded()
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6)
-//            {
-//                self.scrollToLastRow()
-//            }
-//            DispatchQueue.main.async
-//            {
-//                let indexPath = IndexPath(row: (self.messages.count-1), section: 0)
-//                self.chat.scrollToRow(at: indexPath, at: .bottom, animated: true)
-//            }
-            
+                    self.messages.sort
+                        {
+                            (a, b) -> Bool in
+                            
+                        let isoDateA = a?.dateTime
+                        let isoDateB = b?.dateTime
+
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateStyle = .medium
+                        dateFormatter.timeStyle = .medium
+                        let dateA = dateFormatter.date(from: isoDateA!)
+                        let dateB = dateFormatter.date(from: isoDateB!)
+                            
+                        return dateA! < dateB!
+    //                    dateFormatter.dateFormat = "dd-MM-yyyy HH:MM:SS"
+    //                    return a!.dateTime > b!.dateTime
+                        }
+                }
+                //messageService.updateIncomingStatus(users: users, convoID: self.conversationID!, message: self.messages)
+                
+                chat.reloadData()
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1 , execute:
+                    {
+                        self.scrollToLastRow()
+                    })
+            }
         }
-    }
     
+    
+    //MARK: -Variables for Image Messages
+    var selectedImage : UIImage?
+    var msgImg : UIImage?
+    var msgImgURL : String?
+    
+    //MARK: -Variables for Audio Messages
+    var recordingSession : AVAudioSession!
+    var soundRecorder : AVAudioRecorder!
+    var soundPlayer : AVAudioPlayer!
+    var player : AVPlayer!
+    var msgAudioURL : String?
+    var audioTime : Double?
+    
+    //MARK: -Variables for Video Messages
+
+//    var getMoreData = false
+//    var isPlaying : Bool? = false
     
     
     // MARK: - Outlets
@@ -166,8 +158,7 @@ class chatVC: UIViewController
         }
         else
         {
-            self.conversationID = "\(users[0]!+users[1]!)"
-            print(self.conversationID)
+            self.conversationID = conversationID! /*"\(users[0]!+users[1]!)"*/
             sendMessage(conversationID: self.conversationID!)
             print("\(msgTxt.text!)")
             msgTxt.text = ""
@@ -329,7 +320,9 @@ class chatVC: UIViewController
     
     func getMsgs()
     {
-        messageService.getOneToOneMsgs(convoID: "\(users[0]!+users[1]!)")/*self.conversationID!) */{ (messageArray, error) in
+        print("User 1 : \(users[0]!) and User 2 : \(users[1]!)")
+        print(conversationID!)
+        messageService.getOneToOneMsgs(convoID: /*"\(users[0]!+users[1]!)")*/self.conversationID!){ (messageArray, error) in
             guard let messageArray = messageArray else
             {
                 print("Error: \(error!)")

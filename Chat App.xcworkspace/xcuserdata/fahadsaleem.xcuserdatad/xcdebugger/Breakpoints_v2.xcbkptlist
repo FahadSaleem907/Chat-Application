@@ -75,23 +75,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "19A3358A-DB1B-4E47-93C8-6907BE3AFA18"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Chat App/Networking/conversationServices.swift"
-            timestampString = "589737870.554926"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "getConversationID(users:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "9BD127EB-969A-48DC-9EC5-9C793652F450"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -272,8 +255,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
             endingLineNumber = "197"
-            landmarkName = "checkIfConvoExists(users:completion:)"
-            landmarkType = "7">
+            landmarkName = "conversationFunctions"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -289,7 +272,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "194"
             endingLineNumber = "194"
-            landmarkName = "checkIfConvoExists(users:completion:)"
+            landmarkName = "deleteConversation(conversationID:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -306,8 +289,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "192"
             endingLineNumber = "192"
-            landmarkName = "checkIfConvoExists(users:completion:)"
-            landmarkType = "7">
+            landmarkName = "conversationFunctions"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -118,6 +118,7 @@ public class messageFunctions
         var tmpArray = [Message]()
         let query = self.db.collection("Messages").whereField("conversationID", isEqualTo: convoID!)
         
+        print(convoID!)
         query.addSnapshotListener(
             {
                 (snapshot, error) in
