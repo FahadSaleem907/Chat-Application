@@ -111,6 +111,7 @@ class chatVC: UIViewController
         
         if UIImagePickerController.isSourceTypeAvailable(.camera)
         {
+            statusAlert(title: "Select Mode", msg: "", controller: self)
             singleSnap()
 //            self.performSegue(withIdentifier: "imgView", sender: self)
 //            presentPhotoPicker(source: .camera)
@@ -218,6 +219,24 @@ class chatVC: UIViewController
         present(picker, animated: true, completion: nil)
     }
     
+    func singleVideo()
+    {
+        var config = YPImagePickerConfiguration()
+        config.screens = [.library, .video]
+        config.library.mediaType = .video
+
+        let picker = YPImagePicker(configuration: config)
+        picker.didFinishPicking { [unowned picker] items, _ in
+            if let video = items.singleVideo {
+                print(video.fromCamera)
+                print(video.thumbnail)
+                print(video.url)
+            }
+            picker.dismiss(animated: true, completion: nil)
+        }
+        present(picker, animated: true, completion: nil)
+    }
+    
     func createConvo(users:[String?],completion:@escaping(Bool,String?)->Void)
     {
         getDateTime()
@@ -236,7 +255,6 @@ class chatVC: UIViewController
             }
         }
     }
-    
     
     func checkForExistance(completion:@escaping(Bool)->Void)
     {
@@ -796,5 +814,38 @@ extension chatVC: AVAudioPlayerDelegate, AVAudioRecorderDelegate
     func stopPlaying()
     {
         
+    }
+}
+
+extension chatVC
+{
+    //MARK: -Alerts
+    
+    func alert(msg:String , controller:UIViewController, textField:UITextField)
+    {
+        let alertValidation = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
+        let buttonOK = UIAlertAction(title: "Okay", style: .default)
+        {
+            (_) in textField.becomeFirstResponder()
+        }
+        alertValidation.addAction(buttonOK)
+        present(alertValidation, animated: true, completion: nil)
+    }
+    
+    
+    func statusAlert(title:String, msg:String, controller:UIViewController)
+    {
+        let alertValidation = UIAlertController(title: title, message: msg, preferredStyle: .actionSheet)
+        let buttonPicture = UIAlertAction(title: "Picture", style: .default, handler:
+        {
+            (_) in print("Picture")
+        })
+        let buttonVideo = UIAlertAction(title: "Video", style: .default)
+        {
+            (_) in print("Video")
+        }
+        alertValidation.addAction(buttonPicture)
+        alertValidation.addAction(buttonVideo)
+        present(alertValidation, animated: true, completion: nil)
     }
 }

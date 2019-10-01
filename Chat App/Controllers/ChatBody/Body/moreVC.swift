@@ -7,8 +7,11 @@ class moreVC: UIViewController
     // MARK: - Constants
     let delegate = UIApplication.shared.delegate as! AppDelegate
     let userServices = userFunctions()
+//    let router = RouteManager.shared
     
     // MARK: - Variables
+    
+    
     // MARK: - Outlets
     @IBOutlet weak var profileImgOut: UIButton!
     @IBOutlet weak var name: UILabel!
@@ -28,14 +31,9 @@ class moreVC: UIViewController
         do
         {
             try Auth.auth().signOut()
-           self.userServices.updateUserOfflineStatus(uid: delegate.currentUser!.uid!)
-           
-           //delegate.currentUser = nil
-            navigationController?.navigationController?.popToRootViewController(animated: true)
-            
-            print(Auth.auth().currentUser!.uid)
-            
-            
+            self.userServices.updateUserOfflineStatus(uid: self.delegate.currentUser!.uid!)
+            delegate.currentUser = nil
+            self.navigationController!.navigationController!.popToRootViewController(animated: true)
         }
         catch let logoutError
         {

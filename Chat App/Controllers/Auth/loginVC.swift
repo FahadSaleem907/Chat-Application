@@ -1,12 +1,17 @@
+import Foundation
 import UIKit
+
 
 class loginVC: UIViewController
 {
 
     // MARK: - Constants
+    let delegate = UIApplication.shared.delegate as! AppDelegate
     let userServiecs = userFunctions()
+//    let router = RouteManager.shared
     
     // MARK: - Variables
+    
     // MARK: - Outlets
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var password: UITextField!
@@ -15,7 +20,18 @@ class loginVC: UIViewController
     // MARK: - Actions
     @IBAction func loginBtn(_ sender: UIButton)
     {
-        login()
+        if userName.text?.isEmpty == true
+        {
+            print("Enter User Name")
+        }
+        else if password.text?.isEmpty == true
+        {
+            print("Enter Password")
+        }
+        else
+        {
+            login()
+        }
     }
     
     
@@ -25,14 +41,22 @@ class loginVC: UIViewController
     {
         userServiecs.login(email: userName.text!, password: password.text!)
         {
-            (user, error) in
+            (user, error, success) in
             if error != nil
             {
                 print(error!)
             }
             else
             {
-                self.performSegue(withIdentifier: "login", sender: self)
+//                self.userName.text = ""
+//                self.password.text = ""
+                guard let success = success else { return }
+                
+                if success == true
+                {
+                    self.performSegue(withIdentifier: "login", sender: self)
+                    //self.router.showHome()
+                }
             }
         }
     }

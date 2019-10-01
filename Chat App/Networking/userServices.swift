@@ -11,7 +11,7 @@ public class userFunctions
     lazy var db = Firestore.firestore()
     var userList = [User?]()
     
-    func login(email:String,password:String,completion:@escaping(User?,String?)->Void)
+    func login(email:String,password:String,completion:@escaping(User?,String?,Bool?)->Void)
     {
         delegate.currentUser = User(name: "asd", email: "asd", password: nil, dateOfBirth: "asd", gender: "asd", downloadURL: "asd", isOnline: true, uid: "asd")
         
@@ -22,7 +22,7 @@ public class userFunctions
             guard let user = result?.user else
             {
                 print("Error : \(error!.localizedDescription)")
-                completion(nil,error!.localizedDescription)
+                completion(nil,error!.localizedDescription,false)
                 return
             }
             
@@ -33,14 +33,15 @@ public class userFunctions
             
             self.updateUserOnlineStatus(uid: "\(uid)")
             
-            ref.addSnapshotListener(
-                {
+            
+            ref.getDocument(
+                completion: {
                     (snapshot, error) in
                     
                     guard let snapshot = snapshot else
                     {
                         print("Error: \(error!.localizedDescription)")
-                        completion(nil,error!.localizedDescription)
+                        completion(nil,error!.localizedDescription,false)
                         return
                     }
                     
@@ -52,7 +53,7 @@ public class userFunctions
                     self.delegate.currentUser!.downloadURL = snapshot.data()!["downloadURL"] as? String
                     self.delegate.currentUser!.isOnline = snapshot.data()!["isOnline"] as? Bool
                     
-                    completion(self.delegate.currentUser,nil)
+                    completion(self.delegate.currentUser,nil,true)
             })
         }
     }

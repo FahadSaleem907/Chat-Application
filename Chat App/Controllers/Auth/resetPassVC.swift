@@ -11,6 +11,7 @@ class resetPassVC: UIViewController
     
     override func viewDidLoad()
     {
+        navigationController?.navigationBar.isHidden = false
         super.viewDidLoad()
     }
 }
